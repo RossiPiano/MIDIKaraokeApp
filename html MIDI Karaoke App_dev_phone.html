@@ -1,0 +1,3094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MIDI Karaoke App — Graphical UI</title>
+
+<style>
+:root{color-scheme:dark;--bg:#0b0d10;--panel:#171b21;--panel2:#222831;--border:#3a424e;--text:#f4f6f8;--muted:#aeb7c4;--accent:#42a5ff;--good:#27a66f;--danger:#c94f59}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{padding:12px}button,input,select{font:inherit}button{min-height:52px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);font-weight:650;cursor:pointer;touch-action:manipulation}button:active{transform:translateY(1px)}button.primary{background:#155c91;border-color:#348fd1}button.good{background:#176342;border-color:#2b9e70}button.danger{background:#713139;border-color:#b84d58}select{width:100%;min-height:52px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text)}input[type=range]{width:100%;min-height:42px;accent-color:var(--accent)}#midiGraphicalUI{max-width:1450px;margin:auto}.hero{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.hero h1{font-size:clamp(22px,4vw,34px);margin:0}.hero p{margin:4px 0 0;color:var(--muted);overflow-wrap:anywhere}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.hero-actions button{flex:1 1 150px}.statusbox{background:#090b0e;border:1px solid var(--border);border-radius:10px;padding:11px 13px;min-height:46px;margin-bottom:12px;color:#dbe2ea}.player{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}.time{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;font-weight:750;font-size:18px}.playergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px}.card h2{font-size:17px;margin:0 0 12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.value{text-align:center;font-size:27px;font-weight:800;margin:0 0 8px;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:13px;text-align:center;margin:7px 0}.sep{height:1px;background:var(--border);margin:12px 0}.markergrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hidden-status{display:none}
+@media(max-width:1050px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){body{padding:7px}.hero{display:block}.hero-actions{margin-top:10px}.cards{grid-template-columns:1fr}.playergrid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.markergrid{grid-template-columns:repeat(2,minmax(0,1fr))}button,select{min-height:56px}}
+@media(max-width:390px){.grid2,.grid3,.grid4,.playergrid,.markergrid{grid-template-columns:1fr}}
+</style>
+
+</head>
+
+<body>
+<div id="midiGraphicalUI">
+  <div class="hero">
+    <div><h1>🎹 MIDI Karaoke App</h1><p id="uiFile">No MIDI loaded</p></div>
+    <div class="hero-actions"><button id="uiMidi">Import MIDI</button><button id="uiSf2">Import SoundFont</button><button id="uiHelp">Help</button><button id="uiFull">Fullscreen</button></div>
+  </div>
+  <div id="uiStatus" class="statusbox">Ready.</div>
+  <div class="player">
+    <div class="time"><span id="uiNow">0:00</span><span id="uiDur">0:00</span></div>
+    <input id="uiSeek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Playback position">
+    <div class="playergrid"><button id="uiPlay" class="primary">▶ Play / Pause</button><button id="uiStop" class="danger">■ Stop</button><button id="uiSection">Current Section</button><button id="uiStart">⏮ Beginning + Play</button></div>
+  </div>
+  <div class="cards">
+    <section class="card"><h2>🎵 Songs</h2><button id="uiSave" class="good" style="width:100%">Save Song As…</button><div style="height:8px"></div><select id="uiSongs"><option value="">Loading saved songs…</option></select><div style="height:8px"></div><div class="grid2"><button id="uiLoad">Load Selected</button><button id="uiDelete" class="danger">Delete Selected</button></div><div style="height:8px"></div><button id="uiJson" style="width:100%">Import Song JSON</button></section>
+    <section class="card"><h2>⏱ BPM</h2><div id="uiBpm" class="value">—</div><input id="uiBpmSlider" type="range" min="5" max="300" step="1" value="120"><div style="height:8px"></div><div class="grid4"><button id="bpmM5">−5</button><button id="bpmM1">−1</button><button id="bpmP1">+1</button><button id="bpmP5">+5</button></div><div style="height:8px"></div><button id="bpmOrig" style="width:100%">Restore Original BPM</button></section>
+    <section class="card"><h2>🎼 Transpose</h2><div id="uiTranspose" class="value">0 semitones</div><div class="grid3"><button id="trDown">−1</button><button id="trReset">Reset</button><button id="trUp">+1</button></div></section>
+    <section class="card"><h2>🔁 Loop / Repeat</h2><div id="uiLoop" class="muted">Start: — · End: —</div><div class="grid2"><button id="loopStart">Set Loop Start</button><button id="loopEnd">Set Loop End</button><button id="loopToggle" class="primary">Loop OFF</button><button id="loopClear">Clear Loop</button></div><div class="sep"></div><div class="grid4"><button id="beatM">Start −1 beat</button><button id="beatP">Start +1 beat</button><button id="barM">Range −1 bar</button><button id="barP">Range +1 bar</button></div></section>
+    <section class="card"><h2>📍 Sections / Markers</h2><div class="grid3"><button id="prev">◀ Previous</button><button id="section2">Current Section</button><button id="next">Next ▶</button></div><div class="sep"></div><div id="markers" class="markergrid"></div></section>
+    <section class="card"><h2>🕒 Timestamps</h2><div class="grid3"><button id="tsPL">P + L</button><button id="tsL">Line</button><button id="tsRemove" class="danger">Remove</button></div></section>
+  </div>
+  <pre id="status" class="hidden-status"></pre>
+</div>
+
+<script>
+'use strict';
+
+/*
+  MIDI-ONLY CONTROLLER — VERSION 1204
+
+  Intentionally minimal:
+  - no CSS
+  - no buttons
+  - no panels
+  - keyboard controlled
+  - plain text only
+  - standalone HTML
+
+  Current shortcuts:
+    Home           MIDI Play / Pause
+    Delete         Remove the current line's timestamp
+    ,              MIDI Stop
+
+    Up Arrow       Transpose MIDI +1 semitone
+    Down Arrow     Transpose MIDI -1 semitone
+
+    Right Arrow    MIDI BPM +5
+    Left Arrow     MIDI BPM -5
+    Shift+Right    MIDI BPM +1
+    Shift+Left     MIDI BPM -1
+    0              MIDI original BPM
+
+    1              Jump to 'Verse 1' rehearsal mark
+    2              Jump to 'Chorus 1' rehearsal mark
+
+    F1             Show shortcut information
+
+    F3             Import MIDI file...
+    F4             Import SoundFont...
+
+    F5             Save Song As...
+    F9             Open Saved Songs...
+
+    F11            Full Screen
+
+    P              Record a 'song Part' + 'first line in that Part' timestamps
+    L              Record a 'Line timestamp
+    Delete         Remove the current line's timestamp
+
+  Communication:
+    BroadcastChannel
+    localStorage event
+    window.opener.postMessage()
+
+  The main Karaoke Band app will later be modified to receive these
+  commands. This version can already run the MIDI engine independently.
+*/
+
+const statusEl = document.getElementById('status');
+
+const shortcuts = {
+  'Home': 'MIDI Play / Pause',
+  'Delete': "Remove the current line's timestamp",
+  ',': 'Move Loop / Repeat Range left by 1 Bar',
+  'Up Arrow': 'Transpose MIDI +1 semitone',
+  'Down Arrow': 'Transpose MIDI -1 semitone',
+  'Right Arrow': 'MIDI BPM +5',
+  'Left Arrow': 'MIDI BPM -5',
+  'Shift+Right Arrow': 'MIDI BPM +1',
+  'Shift+Left Arrow': 'MIDI BPM -1',
+  '0': 'MIDI original BPM',
+  'F1': 'Show shortcut information',
+  'F3': 'Import MIDI file...',
+  'F4': 'Import SoundFont...',
+  'F5': 'Save Song As...',
+  'F9': 'Open Saved Songs...',
+  'F11': 'Full Screen',
+  'P': "Record a 'song Part' + 'first line in that Part' timestamps",
+  'L': "Record a 'Line timestamp",
+  '[': 'Set Loop Start Point',
+  ']': 'Set Loop End Point',
+  'R': 'Toggle Loop / Repeat',
+  '=': 'Raise Loop Start by 1 Beat',
+  '-': 'Lower Loop Start by 1 Beat',
+  'Page Down': 'Jump to Previous MIDI Marker',
+  '.': 'Move Loop / Repeat Range left by 1 Bar',
+  'Page Up': 'MIDI Stop',
+  'End': 'Jump to Next MIDI Marker',
+  'Enter': 'Jump to Current Section Start',
+  '`': 'Jump to Song Beginning and Start Playback',
+  'Space': 'Stop / Start at Current Section Start',
+  '1': 'Jump to 1st MIDI Marker',
+  '2': 'Jump to 2nd MIDI Marker',
+  '3': 'Jump to 3rd MIDI Marker',
+  '4': 'Jump to 4th MIDI Marker',
+  '5': 'Jump to 5th MIDI Marker',
+  '6': 'Jump to 6th MIDI Marker',
+  '7': 'Jump to 7th MIDI Marker',
+  '8': 'Jump to 8th MIDI Marker',
+  '9': 'Jump to 9th MIDI Marker'
+};
+
+function shortcutText() {
+  return [
+    'MIDI Karaoke App',
+    '',
+    'Home          ' + shortcuts.Home,
+    'Delete        ' + shortcuts.Delete,
+    ',             ' + shortcuts[','],
+    '',
+    'Up Arrow      ' + shortcuts['Up Arrow'],
+    'Down Arrow    ' + shortcuts['Down Arrow'],
+    '',
+    'Right Arrow   ' + shortcuts['Right Arrow'],
+    'Left Arrow    ' + shortcuts['Left Arrow'],
+    'Shift+Right Arrow    ' + shortcuts['Shift+Right Arrow'],
+    'Shift+Left Arrow     ' + shortcuts['Shift+Left Arrow'],
+    '0             ' + shortcuts['0'],
+    '1             ' + shortcuts['1'],
+    '2             ' + shortcuts['2'],
+    '',
+    '[             ' + shortcuts['['],
+    ']             ' + shortcuts[']'],
+    'R             ' + shortcuts.R,
+    '=             ' + shortcuts['='],
+    '-             ' + shortcuts['-'],
+    'Page Down     ' + shortcuts['Page Down'],
+    '.             ' + shortcuts['.'],
+    'Page Up       ' + shortcuts['Page Up'],
+    'End           ' + shortcuts.End,
+    'Space         ' + shortcuts.Space,
+    '`             ' + shortcuts['`'],
+    '1             ' + shortcuts['1'],
+    '2             ' + shortcuts['2'],
+    '3             ' + shortcuts['3'],
+    '4             ' + shortcuts['4'],
+    '5             ' + shortcuts['5'],
+    '6             ' + shortcuts['6'],
+    '7             ' + shortcuts['7'],
+    '8             ' + shortcuts['8'],
+    '9             ' + shortcuts['9'],
+    '',
+    'Alternative Shortcuts',
+    'W             Same as Up Arrow',
+    'A             Same as Left Arrow',
+    'S             Same as Down Arrow',
+    'D             Same as Right Arrow',
+    'Q             Same as [',
+    'E             Same as ]',
+    'Z             Same as P',
+    'X             Same as Delete',
+    'C             Same as L',
+    '',
+    'F1            ' + shortcuts.F1,
+    '',
+    'F3            ' + shortcuts.F3,
+    'F4            ' + shortcuts.F4,
+    '',
+    'F5            ' + shortcuts.F5,
+    'F9            ' + shortcuts.F9,
+    '',
+    'F11           ' + shortcuts.F11,
+    '',
+    'P             ' + shortcuts.P,
+    'L             ' + shortcuts.L,
+    ',             ' + shortcuts[',']
+  ].join('\n');
+}
+
+function formatTime(seconds, milliseconds) {
+  seconds = Math.max(0, Number(seconds) || 0);
+  const whole = Math.floor(seconds);
+  const minutes = Math.floor(whole / 60);
+  const secs = whole % 60;
+  const ms = Math.floor((seconds - whole) * 1000);
+
+  if (milliseconds) {
+    return minutes + ':' +
+      String(secs).padStart(2, '0') + '.' +
+      String(ms).padStart(3, '0');
+  }
+
+  return minutes + ':' + String(secs).padStart(2, '0');
+}
+
+let midiStatusMessage = '';
+
+function midiGetStructuralMarkers() {
+  return midiPlayback.rehearsalMarks.filter(function(mark) {
+    return mark.markerType === 'marker' || mark.markerType === 'cuePoint';
+  });
+}
+
+function midiGetCurrentStructuralMarker() {
+  const currentSeconds = midiGetCurrentTime();
+  const markers = midiGetStructuralMarkers();
+  let current = null;
+
+  for (let i = 0; i < markers.length; i++) {
+    if (markers[i].seconds <= currentSeconds + 0.000001) {
+      current = markers[i];
+    } else {
+      break;
+    }
+  }
+
+  return current;
+}
+
+function midiGetDisplayedSectionMarks() {
+  const structuralMarks = midiGetStructuralMarkers();
+  const sourceMarks = structuralMarks.length
+    ? structuralMarks
+    : midiPlayback.rehearsalMarks;
+  const seenNames = Object.create(null);
+  const displayed = [];
+
+  sourceMarks.forEach(function(mark) {
+    const name = String(mark.text || '').trim();
+    const key = name.toLowerCase();
+    if (!name || seenNames[key]) return;
+
+    seenNames[key] = true;
+    displayed.push(mark);
+  });
+
+  return displayed;
+}
+
+function setStatus(message) {
+  if (typeof message === 'string') {
+    midiStatusMessage = message;
+  }
+
+  const displayedMarks = midiGetDisplayedSectionMarks();
+  const currentMarker = midiGetCurrentStructuralMarker();
+  const markLines = [];
+
+  displayedMarks.forEach(function(mark) {
+    const name = String(mark.text || '').trim();
+    const key = name.toLowerCase();
+
+    const isCurrent = currentMarker &&
+      currentMarker.text.trim().toLowerCase() === key;
+
+    markLines.push(
+      (isCurrent ? '> ' : '  ') +
+      name + ' (' + formatTime(mark.seconds, true) + ')'
+    );
+  });
+
+  statusEl.textContent =
+    (midiStatusMessage ? midiStatusMessage + '\n\n' : '') +
+    'MIDI Time: ' +
+    formatTime(midiGetCurrentTime(), true) +
+    ' / ' +
+    formatTime(midiPlayback.durationSeconds, true) +
+    '\n\nBPM: ' +
+    Math.round(midiPlayback.bpm) +
+    '\n\nTranspose: ' +
+    (midiPlayback.transposeSemitones >= 0 ? '+' : '') +
+    midiPlayback.transposeSemitones +
+    '\n\nLooping: ' +
+    (midiPlayback.looping ? 'On' : 'Off') +
+    '\nLoop Starts: ' +
+    (midiPlayback.loopStartSeconds === null
+      ? 'Bar ? | Beat ?'
+      : midiGetBarBeatLabelForSeconds(midiPlayback.loopStartSeconds)) +
+    '\nLoop Ends: ' +
+    (midiPlayback.loopEndSeconds === null
+      ? 'Bar ? | Beat ?'
+      : midiGetBarBeatLabelForSeconds(midiPlayback.loopEndSeconds)) +
+    (markLines.length ? '\n\nSection Marks:\n' + markLines.join('\n') : '') +
+    midiSavedSongListText();
+}
+
+/* =========================================================
+   COMMUNICATION WITH MAIN KARAOKE BAND APP
+   ========================================================= */
+
+const CHANNEL_NAME = 'karaoke-band-midi-controller-v1';
+let commandChannel = null;
+
+try {
+  commandChannel = new BroadcastChannel(CHANNEL_NAME);
+} catch (e) {
+  commandChannel = null;
+}
+
+function sendCommand(command, data) {
+  const message = Object.assign({
+    source: 'midi-controller',
+    type: 'midi-command',
+    command: command,
+    sentAt: Date.now()
+  }, data || {});
+
+  if (commandChannel) {
+    try {
+      commandChannel.postMessage(message);
+    } catch (e) {}
+  }
+
+  try {
+    localStorage.setItem(
+      'karaokeBandMidiCommand',
+      JSON.stringify(message)
+    );
+  } catch (e) {}
+
+  if (window.opener && !window.opener.closed) {
+    try {
+      window.opener.postMessage(message, '*');
+    } catch (e) {}
+  }
+}
+
+/* =========================================================
+   MIDI STORAGE
+   ========================================================= */
+
+const MIDI_DB_NAME = 'karaokeBandMidiController';
+const MIDI_DB_VERSION = 2;
+const MIDI_STORE = 'midi';
+const MIDI_SONG_STORE = 'songs';
+const MIDI_ACTIVE_KEY = 'karaokeBandMidiControllerActiveMIDI';
+let midiDbPromise = null;
+
+/* The minimal controller has no visible BPM readout element.
+   Keep this function as a safe compatibility hook for restore/playback code. */
+function midiUpdateBpmReadout() {
+  return;
+}
+function midiDbOpen() {
+  if (midiDbPromise) return midiDbPromise;
+
+  midiDbPromise = new Promise(function(resolve, reject) {
+    const request = indexedDB.open(MIDI_DB_NAME, MIDI_DB_VERSION);
+
+    request.onupgradeneeded = function() {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(MIDI_STORE)) {
+        db.createObjectStore(MIDI_STORE, { keyPath: 'id' });
+      }
+      if (!db.objectStoreNames.contains(MIDI_SONG_STORE)) {
+        db.createObjectStore(MIDI_SONG_STORE, { keyPath: 'id' });
+      }
+    };
+
+    request.onsuccess = function() {
+      const db = request.result;
+
+      db.onversionchange = function() {
+        try { db.close(); } catch (e) {}
+        midiDbPromise = null;
+      };
+
+      db.onclose = function() {
+        midiDbPromise = null;
+      };
+
+      resolve(db);
+    };
+
+    request.onerror = function() {
+      midiDbPromise = null;
+      reject(request.error);
+    };
+  });
+
+  return midiDbPromise;
+}
+
+function midiDbPut(record) {
+  return midiDbOpen().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      const tx = db.transaction(MIDI_STORE, 'readwrite');
+      tx.objectStore(MIDI_STORE).put(record);
+      tx.oncomplete = function() { resolve(true); };
+      tx.onerror = function() { reject(tx.error); };
+      tx.onabort = function() {
+        reject(tx.error || new Error('MIDI storage transaction aborted.'));
+      };
+    });
+  });
+}
+
+function midiDbGet(id) {
+  return midiDbOpen().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      const tx = db.transaction(MIDI_STORE, 'readonly');
+      const request = tx.objectStore(MIDI_STORE).get(id);
+
+      request.onsuccess = function() {
+        resolve(request.result || null);
+      };
+
+      request.onerror = function() {
+        reject(request.error);
+      };
+    });
+  });
+}
+
+function midiSongDbPut(record) {
+  return midiDbOpen().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      const tx = db.transaction(MIDI_SONG_STORE, 'readwrite');
+      tx.objectStore(MIDI_SONG_STORE).put(record);
+      tx.oncomplete = function() { resolve(true); };
+      tx.onerror = function() { reject(tx.error); };
+      tx.onabort = function() {
+        reject(tx.error || new Error('Song storage transaction aborted.'));
+      };
+    });
+  });
+}
+
+function midiSongDbGetAll() {
+  return midiDbOpen().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      const tx = db.transaction(MIDI_SONG_STORE, 'readonly');
+      const request = tx.objectStore(MIDI_SONG_STORE).getAll();
+      request.onsuccess = function() {
+        resolve(Array.isArray(request.result) ? request.result : []);
+      };
+      request.onerror = function() {
+        reject(request.error);
+      };
+    });
+  });
+}
+
+function midiSongDbDelete(id) {
+  return midiDbOpen().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      const tx = db.transaction(MIDI_SONG_STORE, 'readwrite');
+      tx.objectStore(MIDI_SONG_STORE).delete(id);
+      tx.oncomplete = function() { resolve(true); };
+      tx.onerror = function() { reject(tx.error); };
+      tx.onabort = function() {
+        reject(tx.error || new Error('Song deletion transaction aborted.'));
+      };
+    });
+  });
+}
+
+let midiSongListOpen = false;
+let midiSongList = [];
+let midiSongListIndex = 0;
+
+function midiFormatSavedSongDate(value) {
+  if (!value) return '';
+  try {
+    const date = new Date(value);
+    return Number.isFinite(date.getTime()) ? date.toLocaleString() : '';
+  } catch (e) {
+    return '';
+  }
+}
+
+async function midiRefreshSavedSongList() {
+  midiSongList = await midiSongDbGetAll();
+  midiSongList.sort(function(a, b) {
+    return String(b.savedAt || '').localeCompare(String(a.savedAt || ''));
+  });
+  if (midiSongListIndex >= midiSongList.length) {
+    midiSongListIndex = Math.max(0, midiSongList.length - 1);
+  }
+  setStatus(midiStatusMessage);
+}
+
+async function midiRememberSong(song, fileName) {
+  await midiSongDbPut({
+    id: 'song-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10),
+    name: fileName || song.midiFile || 'Untitled MIDI.midi-song.json',
+    song: song,
+    savedAt: new Date().toISOString()
+  });
+}
+
+function midiSavedSongListText() {
+  if (!midiSongListOpen) return '';
+
+  if (!midiSongList.length) {
+    return [
+      '',
+      '',
+      '------------',
+      'Saved Songs:',
+      '  (No saved Songs yet.)',
+      '',
+      'I = Import Song JSON',
+      'Esc = Close'
+    ].join('\n');
+  }
+
+  const lines = ['', '', '------------', 'Saved Songs:'];
+  midiSongList.forEach(function(record, index) {
+    const selected = index === midiSongListIndex;
+    const dateText = midiFormatSavedSongDate(record.savedAt);
+    lines.push(
+      (selected ? '> ' : '  ') +
+      (index + 1) + '. ' +
+      String(record.name || 'Untitled Song') +
+      (dateText ? ' (' + dateText + ')' : '')
+    );
+  });
+  lines.push('');
+  lines.push('Up/Down = Select');
+  lines.push('Enter = Load');
+  lines.push('Delete = Remove');
+  lines.push('I = Import Song JSON');
+  lines.push('Esc = Close');
+  return lines.join('\n');
+}
+
+async function midiLoadStoredSong(record) {
+  const song = record && record.song;
+  if (!song || song.type !== 'midi-song' || song.version !== 1) {
+    throw new Error('This is not a supported MIDI Song.');
+  }
+  if (typeof song.midiDataBase64 !== 'string') {
+    throw new Error('Saved Song does not contain MIDI data.');
+  }
+
+  const buffer = midiBase64ToArrayBuffer(song.midiDataBase64);
+  const parsed = midiParse(buffer);
+  const midiName = song.midiFile || 'Untitled MIDI';
+
+  const midiRecord = {
+    id: 'midi-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10),
+    name: midiName,
+    type: 'audio/midi',
+    size: buffer.byteLength,
+    data: buffer,
+    savedAt: new Date().toISOString()
+  };
+
+  await midiDbPut(midiRecord);
+  localStorage.setItem(MIDI_ACTIVE_KEY, midiRecord.id);
+  midiLoadParsed(parsed, midiName, buffer);
+
+  if (Number.isFinite(song.bpm)) midiPlayback.bpm = Math.max(5, song.bpm);
+  if (Number.isFinite(song.transpose)) midiPlayback.transposeSemitones = song.transpose;
+
+  midiPlayback.loopStartSeconds = null;
+  midiPlayback.loopEndSeconds = null;
+
+  if (Number.isFinite(song.loopStartSeconds)) {
+    midiPlayback.loopStartSeconds = Math.max(
+      0, Math.min(song.loopStartSeconds, midiPlayback.durationSeconds)
+    );
+  }
+
+  if (Number.isFinite(song.loopEndSeconds) &&
+      midiPlayback.loopStartSeconds !== null &&
+      song.loopEndSeconds > midiPlayback.loopStartSeconds) {
+    midiPlayback.loopEndSeconds = Math.max(
+      midiPlayback.loopStartSeconds,
+      Math.min(song.loopEndSeconds, midiPlayback.durationSeconds)
+    );
+  }
+
+  midiPlayback.looping = Boolean(
+    song.looping &&
+    midiPlayback.loopStartSeconds !== null &&
+    midiPlayback.loopEndSeconds !== null &&
+    midiPlayback.loopEndSeconds > midiPlayback.loopStartSeconds
+  );
+
+  midiUpdateBpmReadout();
+  sendCommand('midi-loaded', {
+    name: midiName,
+    song: true,
+    bpm: midiPlayback.bpm,
+    transpose: midiPlayback.transposeSemitones
+  });
+  setStatus('Song loaded: ' + midiName);
+}
+
+async function midiOpenSavedSongList() {
+  midiSongListOpen = true;
+  midiSongListIndex = 0;
+  try {
+    await midiRefreshSavedSongList();
+  } catch (error) {
+    midiSongList = [];
+    setStatus('Could not open Saved Songs: ' + (error.message || error));
+  }
+}
+
+function midiCloseSavedSongList() {
+  midiSongListOpen = false;
+  setStatus(midiStatusMessage);
+}
+
+async function midiHandleSavedSongListKey(key) {
+  if (!midiSongListOpen) return false;
+
+  if (key === 'F9' || key === 'Escape') {
+    midiCloseSavedSongList();
+    return true;
+  }
+
+  if (key === 'ArrowUp' || key === 'ArrowDown') {
+    if (midiSongList.length) {
+      const delta = key === 'ArrowUp' ? -1 : 1;
+      midiSongListIndex =
+        (midiSongListIndex + delta + midiSongList.length) %
+        midiSongList.length;
+      setStatus(midiStatusMessage);
+    }
+    return true;
+  }
+
+  if (key === 'Enter') {
+    if (!midiSongList.length) return true;
+    const record = midiSongList[midiSongListIndex];
+    try {
+      await midiLoadStoredSong(record);
+      midiSongListOpen = false;
+    } catch (error) {
+      setStatus('Saved Song load error: ' + (error.message || error));
+    }
+    return true;
+  }
+
+  if (key === 'Delete') {
+    if (!midiSongList.length) return true;
+    const record = midiSongList[midiSongListIndex];
+    try {
+      await midiSongDbDelete(record.id);
+      midiSongList.splice(midiSongListIndex, 1);
+      midiSongListIndex = Math.min(
+        midiSongListIndex,
+        Math.max(0, midiSongList.length - 1)
+      );
+      setStatus(midiStatusMessage);
+    } catch (error) {
+      setStatus('Could not remove saved Song: ' + (error.message || error));
+    }
+    return true;
+  }
+
+  if (key.toLowerCase() === 'i') {
+    midiSongListOpen = false;
+    midiLoadSongPicker();
+    return true;
+  }
+
+  return true;
+}
+
+async function midiRestoreActive() {
+  const activeId = localStorage.getItem(MIDI_ACTIVE_KEY);
+
+  if (!activeId) return;
+
+  try {
+    const record = await midiDbGet(activeId);
+
+    if (!record || !record.data) {
+      localStorage.removeItem(MIDI_ACTIVE_KEY);
+      return;
+    }
+
+    const parsed = midiParse(record.data);
+
+    midiLoadParsed(
+      parsed,
+      record.name || 'Untitled MIDI',
+      record.data
+    );
+
+    midiUpdateBpmReadout();
+
+    setStatus(
+      'MIDI restored: ' +
+      (record.name || 'Untitled MIDI')
+    );
+
+    sendCommand('midi-loaded', {
+      name: record.name || 'Untitled MIDI',
+      restored: true
+    });
+  } catch (error) {
+    console.error(
+      '[midi] Could not restore saved MIDI:',
+      error
+    );
+
+    setStatus(
+      'Could not restore saved MIDI: ' +
+      (error.message || error)
+    );
+  }
+}
+
+/* =========================================================
+   SONG FILES
+   A Song JSON is a self-contained bundle: it contains the MIDI
+   data plus the current BPM and transpose settings. This makes
+   Load Song a true one-file operation in the browser.
+   ========================================================= */
+
+function midiArrayBufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const chunkSize = 0x8000;
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode.apply(
+      null,
+      bytes.subarray(i, Math.min(i + chunkSize, bytes.length))
+    );
+  }
+
+  return btoa(binary);
+}
+
+function midiBase64ToArrayBuffer(base64) {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return bytes.buffer;
+}
+
+async function midiSaveSong() {
+  if (!midiPlayback.parsed || !midiPlayback.rawData) {
+    setStatus('No MIDI loaded.');
+    return;
+  }
+
+  try {
+    const midiData = midiPlayback.rawData;
+    const midiName = midiPlayback.fileName || 'Untitled MIDI';
+
+    const song = {
+      type: 'midi-song',
+      version: 1,
+      midiFile: midiName,
+      bpm: midiPlayback.bpm,
+      transpose: midiPlayback.transposeSemitones,
+      loopStartSeconds: midiPlayback.loopStartSeconds,
+      loopEndSeconds: midiPlayback.loopEndSeconds,
+      looping: midiPlayback.looping,
+      midiDataBase64: midiArrayBufferToBase64(midiData)
+    };
+
+    const json = JSON.stringify(song, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const baseName = midiName.replace(/\.[^.]+$/, '') || 'Untitled MIDI';
+    const suggestedName = baseName + '.midi-song.json';
+
+    /*
+       Use the browser's real Save As dialog when the File System Access
+       API is available. The picker is opened directly from the keyboard
+       shortcut, so the browser treats it as a user-initiated save.
+    */
+    if (typeof window.showSaveFilePicker === 'function') {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: suggestedName,
+        types: [{
+          description: 'MIDI Song JSON',
+          accept: { 'application/json': ['.json'] }
+        }]
+      });
+
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+
+      try {
+        await midiRememberSong(song, handle.name || suggestedName);
+      } catch (storageError) {
+        console.error('[midi] Could not remember saved song:', storageError);
+      }
+
+      setStatus('Song saved: ' + (handle.name || suggestedName));
+      return;
+    }
+
+    /* Fallback for browsers that do not support showSaveFilePicker. */
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = suggestedName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+
+    try {
+      await midiRememberSong(song, suggestedName);
+    } catch (storageError) {
+      console.error('[midi] Could not remember saved song:', storageError);
+    }
+
+    setStatus('Song saved: ' + suggestedName);
+  } catch (error) {
+    if (error && error.name === 'AbortError') {
+      setStatus('Song save cancelled.');
+      return;
+    }
+
+    console.error('[midi] Could not save song:', error);
+    setStatus('Song save error: ' + (error.message || error));
+  }
+}
+
+function midiLoadSongPicker() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json,application/json';
+
+  input.onchange = function(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    file.text().then(async function(text) {
+      let song;
+
+      try {
+        song = JSON.parse(text);
+      } catch (error) {
+        throw new Error('Invalid Song JSON file.');
+      }
+
+      if (!song || song.type !== 'midi-song' || song.version !== 1) {
+        throw new Error('This is not a supported MIDI Song file.');
+      }
+
+      if (typeof song.midiDataBase64 !== 'string') {
+        throw new Error('Song file does not contain MIDI data.');
+      }
+
+      const buffer = midiBase64ToArrayBuffer(song.midiDataBase64);
+      const parsed = midiParse(buffer);
+      const midiName = song.midiFile || 'Untitled MIDI';
+
+      const record = {
+        id: 'midi-' + Date.now() + '-' +
+          Math.random().toString(36).slice(2, 10),
+        name: midiName,
+        type: 'audio/midi',
+        size: buffer.byteLength,
+        data: buffer,
+        savedAt: new Date().toISOString()
+      };
+
+      await midiDbPut(record);
+      localStorage.setItem(MIDI_ACTIVE_KEY, record.id);
+
+      midiLoadParsed(parsed, midiName, buffer);
+
+      if (Number.isFinite(song.bpm)) {
+        midiPlayback.bpm = Math.max(5, song.bpm);
+      }
+
+      if (Number.isFinite(song.transpose)) {
+        midiPlayback.transposeSemitones = song.transpose;
+      }
+
+      if (Number.isFinite(song.loopStartSeconds)) {
+        midiPlayback.loopStartSeconds = Math.max(
+          0,
+          Math.min(song.loopStartSeconds, midiPlayback.durationSeconds)
+        );
+      }
+
+      if (Number.isFinite(song.loopEndSeconds) &&
+          midiPlayback.loopStartSeconds !== null &&
+          song.loopEndSeconds > midiPlayback.loopStartSeconds) {
+        midiPlayback.loopEndSeconds = Math.max(
+          midiPlayback.loopStartSeconds,
+          Math.min(song.loopEndSeconds, midiPlayback.durationSeconds)
+        );
+      }
+
+      midiPlayback.looping = Boolean(
+        song.looping &&
+        midiPlayback.loopStartSeconds !== null &&
+        midiPlayback.loopEndSeconds !== null &&
+        midiPlayback.loopEndSeconds > midiPlayback.loopStartSeconds
+      );
+
+      midiUpdateBpmReadout();
+
+      sendCommand('midi-loaded', {
+        name: midiName,
+        song: true,
+        bpm: midiPlayback.bpm,
+        transpose: midiPlayback.transposeSemitones
+      });
+
+      setStatus('Song loaded: ' + midiName);
+    }).catch(function(error) {
+      console.error('[midi] Could not load song:', error);
+      setStatus('Song load error: ' + (error.message || error));
+    });
+  };
+
+  input.click();
+}
+
+/* =========================================================
+   MIDI IMPORT
+   ========================================================= */
+
+function midiOpenFilePicker() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.mid,.midi,audio/midi,audio/x-midi';
+
+  input.onchange = function(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    file.arrayBuffer().then(function(buffer) {
+      const parsed = midiParse(buffer);
+
+      const record = {
+        id: 'midi-' + Date.now() + '-' +
+          Math.random().toString(36).slice(2, 10),
+        name: file.name || 'Untitled MIDI',
+        type: file.type || 'audio/midi',
+        size: file.size || buffer.byteLength,
+        data: buffer,
+        savedAt: new Date().toISOString()
+      };
+
+      return midiDbPut(record).then(function() {
+        localStorage.setItem(MIDI_ACTIVE_KEY, record.id);
+
+        midiLoadParsed(parsed, record.name, buffer);
+
+        midiUpdateBpmReadout();
+
+        sendCommand('midi-loaded', {
+          name: record.name
+        });
+      });
+    }).catch(function(error) {
+      console.error('[midi] Could not open MIDI:', error);
+      setStatus('MIDI error: ' + (error.message || error));
+    });
+  };
+
+  input.click();
+}
+
+/* =========================================================
+   MIDI PARSER
+   =========================================================
+   Directly based on the parser in the current 3566 app.
+*/
+
+function midiReadUint16(view, offset) {
+  return view.getUint16(offset, false);
+}
+
+function midiReadUint32(view, offset) {
+  return view.getUint32(offset, false);
+}
+
+function midiReadVarLen(view, offset) {
+  let value = 0;
+  let bytes = 0;
+
+  while (offset + bytes < view.byteLength) {
+    const b = view.getUint8(offset + bytes);
+    value = (value << 7) | (b & 0x7f);
+    bytes++;
+
+    if (!(b & 0x80)) {
+      return { value: value, bytes: bytes };
+    }
+
+    if (bytes >= 4) break;
+  }
+
+  throw new Error('Invalid MIDI variable-length value.');
+}
+
+    function midiParse(buffer) {
+      const view = new DataView(buffer);
+
+      if (view.byteLength < 14) {
+        throw new Error('MIDI file is too small.');
+      }
+
+      function midiChunkId(offset) {
+        return String.fromCharCode(
+          view.getUint8(offset),
+          view.getUint8(offset + 1),
+          view.getUint8(offset + 2),
+          view.getUint8(offset + 3)
+        );
+      }
+
+      if (midiChunkId(0) !== 'MThd') {
+        throw new Error('Invalid MIDI header.');
+      }
+
+      const headerLength = midiReadUint32(view, 4);
+      if (headerLength < 6 || 8 + headerLength > view.byteLength) {
+        throw new Error('Invalid MIDI header length.');
+      }
+
+      const format = midiReadUint16(view, 8);
+      const trackCount = midiReadUint16(view, 10);
+      const division = midiReadUint16(view, 12);
+
+      if (division & 0x8000) {
+        throw new Error('SMPTE MIDI timing is not supported yet.');
+      }
+
+      const ticksPerQuarter = division & 0x7fff;
+      if (!ticksPerQuarter) {
+        throw new Error('Invalid MIDI ticks-per-quarter value.');
+      }
+
+      const tracks = [];
+      let offset = 8 + headerLength;
+
+      for (let trackIndex = 0; trackIndex < trackCount; trackIndex++) {
+        if (offset + 8 > view.byteLength) {
+          throw new Error('Unexpected end of MIDI file.');
+        }
+
+        if (midiChunkId(offset) !== 'MTrk') {
+          throw new Error('Expected MIDI track chunk.');
+        }
+
+        const trackLength = midiReadUint32(view, offset + 4);
+        const trackStart = offset + 8;
+        const trackEnd = trackStart + trackLength;
+
+        if (trackEnd > view.byteLength) {
+          throw new Error('MIDI track extends beyond the file.');
+        }
+
+        let pos = trackStart;
+        let tick = 0;
+        let runningStatus = null;
+        const events = [];
+
+        while (pos < trackEnd) {
+          const delta = midiReadVarLen(view, pos);
+          pos += delta.bytes;
+          tick += delta.value;
+
+          if (pos >= trackEnd) break;
+
+          let status = view.getUint8(pos);
+
+          if (status < 0x80) {
+            if (runningStatus === null) {
+              throw new Error('Invalid MIDI running status.');
+            }
+            status = runningStatus;
+          } else {
+            pos++;
+            if (status < 0xf0) {
+              runningStatus = status;
+            } else if (status !== 0xf7) {
+              runningStatus = null;
+            }
+          }
+
+          if (status >= 0x80 && status <= 0xef) {
+            const command = status & 0xf0;
+            const channel = status & 0x0f;
+            const dataLength = (command === 0xc0 || command === 0xd0) ? 1 : 2;
+
+            if (view.byteLength < pos + dataLength || pos + dataLength > trackEnd) {
+              throw new Error('Unexpected end of MIDI event.');
+            }
+
+            const data1 = view.getUint8(pos);
+            pos++;
+
+            let data2 = null;
+            if (dataLength === 2) {
+              data2 = view.getUint8(pos);
+              pos++;
+            }
+
+            if (command === 0x80 || command === 0x90) {
+              events.push({
+                tick: tick,
+                type: command === 0x90 && data2 !== 0 ? 'noteOn' : 'noteOff',
+                channel: channel,
+                note: data1,
+                velocity: data2 === null ? 0 : data2
+              });
+            } else if (command === 0xb0) {
+              if (data1 === 0 || data1 === 32) {
+                events.push({
+                  tick: tick,
+                  type: data1 === 0 ? 'bankSelectMSB' : 'bankSelectLSB',
+                  channel: channel,
+                  value: data2 === null ? 0 : data2
+                });
+              } else {
+                events.push({
+                  tick: tick,
+                  type: 'controlChange',
+                  channel: channel,
+                  controller: data1,
+                  value: data2 === null ? 0 : data2
+                });
+              }
+            } else if (command === 0xc0) {
+              events.push({
+                tick: tick,
+                type: 'programChange',
+                channel: channel,
+                program: data1
+              });
+            }
+
+            continue;
+          }
+
+          if (status === 0xff) {
+            if (pos >= trackEnd) throw new Error('Invalid MIDI meta event.');
+
+            const metaType = view.getUint8(pos++);
+            const length = midiReadVarLen(view, pos);
+            pos += length.bytes;
+
+            if (pos + length.value > trackEnd) {
+              throw new Error('MIDI meta event extends beyond track.');
+            }
+
+            if (metaType === 0x51 && length.value === 3) {
+              const microsecondsPerQuarter =
+                (view.getUint8(pos) << 16) |
+                (view.getUint8(pos + 1) << 8) |
+                view.getUint8(pos + 2);
+
+              events.push({
+                tick: tick,
+                type: 'tempo',
+                microsecondsPerQuarter: microsecondsPerQuarter
+              });
+            } else if (
+              metaType === 0x01 ||
+              metaType === 0x06 ||
+              metaType === 0x07
+            ) {
+              let text = '';
+              for (let i = 0; i < length.value; i++) {
+                text += String.fromCharCode(view.getUint8(pos + i));
+              }
+
+              events.push({
+                tick: tick,
+                type: 'marker',
+                markerType: metaType === 0x06
+                  ? 'marker'
+                  : metaType === 0x07
+                    ? 'cuePoint'
+                    : 'text',
+                text: text
+              });
+            }
+
+            pos += length.value;
+            continue;
+          }
+
+          if (status === 0xf0 || status === 0xf7) {
+            const length = midiReadVarLen(view, pos);
+            pos += length.bytes + length.value;
+
+            if (pos > trackEnd) {
+              throw new Error('Invalid MIDI system-exclusive event.');
+            }
+
+            continue;
+          }
+
+          throw new Error('Unsupported MIDI event.');
+        }
+
+        tracks.push(events);
+        offset = trackEnd;
+      }
+
+      return {
+        format: format,
+        trackCount: trackCount,
+        ticksPerQuarter: ticksPerQuarter,
+        tracks: tracks
+      };
+    }
+
+/* =========================================================
+   SF2 STORAGE
+   ========================================================= */
+
+const SF2_DB_NAME = 'karaokeBandMidiControllerSF2';
+const SF2_DB_VERSION = 1;
+const SF2_STORE = 'soundfonts';
+const SF2_ACTIVE_KEY = 'karaokeBandMidiControllerActiveSF2';
+let sf2DbPromise = null;
+
+function sf2DbOpen() {
+  if (sf2DbPromise) return sf2DbPromise;
+
+  sf2DbPromise = new Promise(function(resolve, reject) {
+    const request = indexedDB.open(SF2_DB_NAME, SF2_DB_VERSION);
+
+    request.onupgradeneeded = function() {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(SF2_STORE)) {
+        db.createObjectStore(SF2_STORE, { keyPath: 'id' });
+      }
+    };
+
+    request.onsuccess = function() {
+      const db = request.result;
+
+      db.onversionchange = function() {
+        try { db.close(); } catch (e) {}
+        sf2DbPromise = null;
+      };
+
+      db.onclose = function() {
+        sf2DbPromise = null;
+      };
+
+      resolve(db);
+    };
+
+    request.onerror = function() {
+      sf2DbPromise = null;
+      reject(request.error);
+    };
+  });
+
+  return sf2DbPromise;
+}
+
+function sf2DbPut(record) {
+  return sf2DbOpen().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      const tx = db.transaction(SF2_STORE, 'readwrite');
+      tx.objectStore(SF2_STORE).put(record);
+      tx.oncomplete = function() { resolve(true); };
+      tx.onerror = function() { reject(tx.error); };
+      tx.onabort = function() {
+        reject(tx.error || new Error('SF2 storage transaction aborted.'));
+      };
+    });
+  });
+}
+
+function sf2DbGet(id) {
+  return sf2DbOpen().then(function(db) {
+    return new Promise(function(resolve, reject) {
+      const tx = db.transaction(SF2_STORE, 'readonly');
+      const request = tx.objectStore(SF2_STORE).get(id);
+
+      request.onsuccess = function() {
+        resolve(request.result || null);
+      };
+
+      request.onerror = function() {
+        reject(request.error);
+      };
+    });
+  });
+}
+
+function sf2OpenFilePicker() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.sf2,application/octet-stream,audio/sf2';
+
+  input.onchange = function(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    file.arrayBuffer().then(function(buffer) {
+      const record = {
+        id: 'sf2-' + Date.now() + '-' +
+          Math.random().toString(36).slice(2, 10),
+        name: file.name || 'Untitled SF2',
+        type: file.type || 'audio/sf2',
+        size: file.size || buffer.byteLength,
+        data: buffer,
+        savedAt: new Date().toISOString()
+      };
+
+      return sf2DbPut(record).then(function() {
+        localStorage.setItem(SF2_ACTIVE_KEY, record.id);
+        setStatus('SoundFont loaded: ' + record.name);
+
+        sendCommand('sf2-loaded', {
+          name: record.name
+        });
+
+        sf2SynthReady = false;
+        sf2SynthInitPromise = null;
+        sf2Synth = null;
+      });
+    }).catch(function(error) {
+      console.error('[sf2] Could not open SoundFont:', error);
+      setStatus('SF2 error: ' + (error.message || error));
+    });
+  };
+
+  input.click();
+}
+
+/* =========================================================
+   SF2 SYNTH
+   ========================================================= */
+
+const SF2_SYNTH_LIB_URL =
+  'https://esm.sh/spessasynth_lib@4.3.14?bundle';
+
+const SF2_SYNTH_PROCESSOR_URL =
+  'https://unpkg.com/spessasynth_lib@4.3.14/dist/spessasynth_processor.min.js';
+
+let sf2AudioContext = null;
+let sf2Synth = null;
+let sf2SynthReady = false;
+let sf2SynthInitPromise = null;
+
+async function sf2EnsureSynth() {
+  if (sf2SynthReady && sf2Synth) {
+    return sf2Synth;
+  }
+
+  if (sf2SynthInitPromise) {
+    return sf2SynthInitPromise;
+  }
+
+  sf2SynthInitPromise = (async function() {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) {
+      throw new Error('Web Audio API is not available.');
+    }
+
+    if (!sf2AudioContext) {
+      sf2AudioContext = new AudioContextClass();
+    }
+
+    if (sf2AudioContext.state === 'suspended') {
+      await sf2AudioContext.resume();
+    }
+
+    const module = await import(SF2_SYNTH_LIB_URL);
+    const WorkletSynthesizer = module.WorkletSynthesizer;
+
+    if (!WorkletSynthesizer) {
+      throw new Error('WorkletSynthesizer is not available.');
+    }
+
+    await sf2AudioContext.audioWorklet.addModule(
+      SF2_SYNTH_PROCESSOR_URL
+    );
+
+    sf2Synth = new WorkletSynthesizer(sf2AudioContext);
+    sf2Synth.connect(sf2AudioContext.destination);
+
+    const activeId = localStorage.getItem(SF2_ACTIVE_KEY);
+
+    if (!activeId) {
+      throw new Error('No SoundFont has been loaded yet.');
+    }
+
+    const record = await sf2DbGet(activeId);
+
+    if (!record || !record.data) {
+      throw new Error('Active SoundFont could not be found.');
+    }
+
+    await sf2Synth.soundBankManager.addSoundBank(
+      record.data,
+      'main'
+    );
+
+    while (!sf2Synth.isReady) {
+      await new Promise(function(resolve) {
+        setTimeout(resolve, 50);
+      });
+    }
+
+    sf2SynthReady = true;
+    return sf2Synth;
+  })();
+
+  try {
+    return await sf2SynthInitPromise;
+  } catch (error) {
+    sf2SynthInitPromise = null;
+    sf2SynthReady = false;
+    sf2Synth = null;
+    throw error;
+  }
+}
+
+/* =========================================================
+   MIDI PLAYBACK
+   ========================================================= */
+
+const midiPlayback = {
+  parsed: null,
+  rawData: null,
+  fileName: '',
+  playing: false,
+  pausedTimeSeconds: 0,
+  startTime: 0,
+  timer: null,
+  activeNotes: [],
+  bpm: 100,
+  sourceBpm: 100,
+  currentSourceBpm: 100,
+  sourceBpmKnown: false,
+  originalBpm: null,
+  bpmAdjustment: 0,
+  durationSeconds: 0,
+  rehearsalMarks: [],
+  transposeSemitones: 0,
+  timedEvents: [],
+  tempoEventSeconds: [],
+  loopStartSeconds: null,
+  loopEndSeconds: null,
+  looping: false
+};
+
+function midiFlattenEvents(parsed) {
+  if (!parsed || !Array.isArray(parsed.tracks)) return [];
+
+  const events = [];
+
+  parsed.tracks.forEach(function(track) {
+    if (!Array.isArray(track)) return;
+
+    track.forEach(function(event) {
+      if (!event || typeof event.tick !== 'number') return;
+
+      if (
+        event.type === 'noteOn' ||
+        event.type === 'noteOff' ||
+        event.type === 'programChange' ||
+        event.type === 'bankSelectMSB' ||
+        event.type === 'bankSelectLSB' ||
+        event.type === 'controlChange'
+      ) {
+        events.push({
+          tick: event.tick,
+          type: event.type,
+          channel: event.channel,
+          note: event.note,
+          velocity: event.velocity || 0,
+          program: event.program,
+          controller: event.controller,
+          value: event.value
+        });
+      }
+    });
+  });
+
+  events.sort(function(a, b) {
+    if (a.tick !== b.tick) return a.tick - b.tick;
+    if (a.type === b.type) return 0;
+    return a.type === 'noteOff' ? -1 : 1;
+  });
+
+  return events;
+}
+
+function midiGetTempoEvents(parsed) {
+  const result = [];
+
+  parsed.tracks.forEach(function(track) {
+    if (!Array.isArray(track)) return;
+
+    track.forEach(function(event) {
+      if (
+        event &&
+        event.type === 'tempo' &&
+        typeof event.tick === 'number' &&
+        typeof event.microsecondsPerQuarter === 'number'
+      ) {
+        result.push({
+          tick: event.tick,
+          microsecondsPerQuarter: event.microsecondsPerQuarter
+        });
+      }
+    });
+  });
+
+  result.sort(function(a, b) {
+    return a.tick - b.tick;
+  });
+
+  if (!result.length || result[0].tick > 0) {
+    result.unshift({
+      tick: 0,
+      microsecondsPerQuarter: 600000
+    });
+  }
+
+  return result;
+}
+
+function midiTickToSecondsFactory(parsed, tempoEvents) {
+  return function(targetTick) {
+    let seconds = 0;
+    let previousTick = 0;
+    let microsecondsPerQuarter =
+      tempoEvents[0].microsecondsPerQuarter;
+
+    for (let i = 0; i < tempoEvents.length; i++) {
+      const tempoEvent = tempoEvents[i];
+
+      if (tempoEvent.tick > targetTick) break;
+
+      if (tempoEvent.tick > previousTick) {
+        seconds +=
+          (tempoEvent.tick - previousTick) *
+          (microsecondsPerQuarter / 1000000) /
+          parsed.ticksPerQuarter;
+
+        previousTick = tempoEvent.tick;
+      }
+
+      microsecondsPerQuarter =
+        tempoEvent.microsecondsPerQuarter;
+    }
+
+    if (targetTick > previousTick) {
+      seconds +=
+        (targetTick - previousTick) *
+        (microsecondsPerQuarter / 1000000) /
+        parsed.ticksPerQuarter;
+    }
+
+    return seconds;
+  };
+}
+
+function midiLoadParsed(parsed, name, rawData) {
+  midiStopPlayback();
+
+  midiPlayback.parsed = parsed;
+  midiPlayback.rawData = rawData || null;
+  midiPlayback.fileName = name || 'Untitled MIDI';
+  midiPlayback.transposeSemitones = 0;
+  midiPlayback.pausedTimeSeconds = 0;
+  midiPlayback.loopStartSeconds = null;
+  midiPlayback.loopEndSeconds = null;
+  midiPlayback.looping = false;
+
+  const actualTempoEvents = [];
+  if (parsed && Array.isArray(parsed.tracks)) {
+    parsed.tracks.forEach(function(track) {
+      if (!Array.isArray(track)) return;
+      track.forEach(function(event) {
+        if (event && event.type === 'tempo' &&
+            typeof event.microsecondsPerQuarter === 'number' &&
+            typeof event.tick === 'number') {
+          actualTempoEvents.push(event);
+        }
+      });
+    });
+  }
+  actualTempoEvents.sort(function(a, b) { return a.tick - b.tick; });
+
+  const tempoEvents = midiGetTempoEvents(parsed);
+  const tickToSeconds =
+    midiTickToSecondsFactory(parsed, tempoEvents);
+
+  midiPlayback.sourceBpmKnown = actualTempoEvents.length > 0;
+  midiPlayback.originalBpm = actualTempoEvents.length
+    ? 60000000 / actualTempoEvents[0].microsecondsPerQuarter
+    : null;
+
+  midiPlayback.sourceBpm = midiPlayback.originalBpm || 100;
+
+  midiPlayback.currentSourceBpm = midiPlayback.sourceBpm;
+  midiPlayback.bpm = midiPlayback.sourceBpm;
+  midiPlayback.bpmAdjustment = 0;
+
+  midiPlayback.tempoEventSeconds = tempoEvents.map(function(event) {
+    return {
+      tick: event.tick,
+      sourceSeconds: tickToSeconds(event.tick),
+      bpm: 60000000 / event.microsecondsPerQuarter
+    };
+  });
+
+  const events = midiFlattenEvents(parsed);
+
+  midiPlayback.timedEvents = events.map(function(event) {
+    return {
+      event: event,
+      sourceSeconds: tickToSeconds(event.tick)
+    };
+  });
+
+  midiPlayback.durationSeconds =
+    midiPlayback.timedEvents.length
+      ? midiPlayback.timedEvents[
+          midiPlayback.timedEvents.length - 1
+        ].sourceSeconds
+      : 0;
+
+  midiPlayback.rehearsalMarks = [];
+
+  if (parsed && Array.isArray(parsed.tracks)) {
+    parsed.tracks.forEach(function(track) {
+      if (!Array.isArray(track)) return;
+
+      track.forEach(function(event) {
+        if (
+          event &&
+          event.type === 'marker' &&
+          typeof event.tick === 'number' &&
+          typeof event.text === 'string'
+        ) {
+          const text = event.text.trim();
+          if (!text) return;
+
+          midiPlayback.rehearsalMarks.push({
+            tick: event.tick,
+            seconds: tickToSeconds(event.tick),
+            text: text,
+            markerType: event.markerType || 'marker'
+          });
+        }
+      });
+    });
+  }
+
+  midiPlayback.rehearsalMarks.sort(function(a, b) {
+    if (a.tick !== b.tick) return a.tick - b.tick;
+    return a.text.localeCompare(b.text);
+  });
+
+  setStatus('MIDI loaded: ' + midiPlayback.fileName);
+}
+
+function midiGetCurrentTime() {
+  if (!midiPlayback.playing) {
+    return midiPlayback.pausedTimeSeconds || 0;
+  }
+
+  const elapsed =
+    (performance.now() - midiPlayback.startTime) / 1000;
+
+  const speedScale =
+    midiPlayback.sourceBpm / midiPlayback.bpm;
+
+  return Math.min(
+    elapsed / speedScale,
+    midiPlayback.durationSeconds
+  );
+}
+
+function midiSnapTimeToBeat(seconds) {
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) {
+    return Math.max(0, Math.min(seconds, midiPlayback.durationSeconds));
+  }
+
+  const tempoEvents = midiPlayback.tempoEventSeconds || [];
+  const ticksPerQuarter = midiPlayback.parsed.ticksPerQuarter;
+
+  if (!tempoEvents.length) {
+    return Math.max(0, Math.min(seconds, midiPlayback.durationSeconds));
+  }
+
+  seconds = Math.max(0, Math.min(seconds, midiPlayback.durationSeconds));
+
+  let segmentIndex = 0;
+  while (
+    segmentIndex + 1 < tempoEvents.length &&
+    tempoEvents[segmentIndex + 1].sourceSeconds <= seconds
+  ) {
+    segmentIndex++;
+  }
+
+  const currentSegment = tempoEvents[segmentIndex];
+  const ticksPerSecond =
+    (currentSegment.bpm / 60) * ticksPerQuarter;
+
+  const currentTick =
+    currentSegment.tick +
+    (seconds - currentSegment.sourceSeconds) * ticksPerSecond;
+
+  const snappedTick =
+    Math.max(
+      0,
+      Math.round(currentTick / ticksPerQuarter) * ticksPerQuarter
+    );
+
+  let snapSegment = tempoEvents[0];
+  for (let i = 1; i < tempoEvents.length; i++) {
+    if (tempoEvents[i].tick > snappedTick) break;
+    snapSegment = tempoEvents[i];
+  }
+
+  const snapTicksPerSecond =
+    (snapSegment.bpm / 60) * ticksPerQuarter;
+
+  const snapSeconds =
+    snapSegment.sourceSeconds +
+    (snappedTick - snapSegment.tick) / snapTicksPerSecond;
+
+  return Math.max(
+    0,
+    Math.min(snapSeconds, midiPlayback.durationSeconds)
+  );
+}
+
+async function midiStartPlayback(startAtSourceSeconds) {
+  if (!midiPlayback.parsed) {
+    throw new Error('No MIDI loaded.');
+  }
+
+  const synth = await sf2EnsureSynth();
+
+  if (!midiPlayback.timedEvents.length) {
+    throw new Error('No playable MIDI events found.');
+  }
+
+  const resumeFrom = Math.max(0, Number(startAtSourceSeconds) || 0);
+
+  if (midiPlayback.timer) {
+    clearTimeout(midiPlayback.timer);
+    midiPlayback.timer = null;
+  }
+
+  if (sf2Synth) {
+    try {
+      // Explicitly release every note before rebuilding/restarting playback.
+      // This is especially important at loop boundaries, where a note can
+      // legitimately extend past Loop End and therefore has no note-off
+      // event before the restart point.
+      const notesToRelease = midiPlayback.activeNotes.slice();
+
+      for (const active of notesToRelease) {
+        try {
+          synth.noteOff(active.channel, active.note);
+        } catch (e) {}
+      }
+
+      // Also clear sustain on every channel so a sustained note cannot remain
+      // audible after the loop jumps back to Loop Start.
+      for (let channel = 0; channel < 16; channel++) {
+        try {
+          synth.controllerChange(channel, 64, 0);
+        } catch (e) {}
+      }
+
+      synth.stopAll();
+    } catch (e) {}
+  }
+
+  midiPlayback.activeNotes = [];
+  midiPlayback.playing = true;
+  midiPlayback.pausedTimeSeconds = resumeFrom;
+
+  const speedScaleAtStart = midiPlayback.sourceBpm / midiPlayback.bpm;
+  midiPlayback.startTime =
+    performance.now() - resumeFrom * speedScaleAtStart * 1000;
+
+  // Rebuild the MIDI state at the resume point.
+  // This restores program/controller state and re-triggers notes that
+  // were already sounding when the user paused, so sustained notes
+  // continue instead of disappearing on resume.
+  let eventIndex = 0;
+  const resumeStateNotes = [];
+
+  while (eventIndex < midiPlayback.timedEvents.length &&
+         midiPlayback.timedEvents[eventIndex].sourceSeconds < resumeFrom) {
+    const priorEvent = midiPlayback.timedEvents[eventIndex].event;
+
+    try {
+      if (priorEvent.type === 'bankSelectMSB') {
+        synth.controllerChange(priorEvent.channel, 0, priorEvent.value);
+      } else if (priorEvent.type === 'bankSelectLSB') {
+        synth.controllerChange(priorEvent.channel, 32, priorEvent.value);
+      } else if (priorEvent.type === 'programChange') {
+        synth.programChange(priorEvent.channel, priorEvent.program);
+      } else if (priorEvent.type === 'controlChange') {
+        synth.controllerChange(
+          priorEvent.channel,
+          priorEvent.controller,
+          priorEvent.value
+        );
+      } else if (priorEvent.type === 'noteOn' && priorEvent.velocity > 0) {
+        const priorNote = Math.max(
+          0,
+          Math.min(
+            127,
+            priorEvent.note +
+              (priorEvent.channel === 9 ? 0 : midiPlayback.transposeSemitones)
+          )
+        );
+        resumeStateNotes.push({
+          channel: priorEvent.channel,
+          note: priorNote,
+          velocity: Math.max(0, Math.min(127, Number(priorEvent.velocity) || 0))
+        });
+      } else if (
+        priorEvent.type === 'noteOff' ||
+        (priorEvent.type === 'noteOn' && priorEvent.velocity === 0)
+      ) {
+        const priorNote = Math.max(
+          0,
+          Math.min(
+            127,
+            priorEvent.note +
+              (priorEvent.channel === 9 ? 0 : midiPlayback.transposeSemitones)
+          )
+        );
+        for (let i = resumeStateNotes.length - 1; i >= 0; i--) {
+          if (resumeStateNotes[i].channel === priorEvent.channel &&
+              resumeStateNotes[i].note === priorNote) {
+            resumeStateNotes.splice(i, 1);
+            break;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('[midi] Could not rebuild MIDI state:', error);
+    }
+
+    eventIndex++;
+  }
+
+  for (const active of resumeStateNotes) {
+    try {
+      synth.noteOn(
+        active.channel,
+        active.note,
+        active.velocity
+      );
+      midiPlayback.activeNotes.push(active);
+    } catch (error) {
+      console.error('[midi] Could not resume active note:', error);
+    }
+  }
+
+  let tempoEventIndex = 0;
+  while (tempoEventIndex + 1 < midiPlayback.tempoEventSeconds.length &&
+         midiPlayback.tempoEventSeconds[tempoEventIndex + 1].sourceSeconds <= resumeFrom) {
+    tempoEventIndex++;
+  }
+
+  function scheduleNext() {
+    if (!midiPlayback.playing) return;
+
+    const elapsedSeconds =
+      (performance.now() - midiPlayback.startTime) / 1000;
+
+    const speedScale =
+      midiPlayback.sourceBpm / midiPlayback.bpm;
+
+    const sourceElapsedSeconds =
+      elapsedSeconds / speedScale;
+
+    while (
+      tempoEventIndex + 1 <
+        midiPlayback.tempoEventSeconds.length &&
+      midiPlayback.tempoEventSeconds[
+        tempoEventIndex + 1
+      ].sourceSeconds <= sourceElapsedSeconds
+    ) {
+      tempoEventIndex++;
+    }
+
+    if (midiPlayback.tempoEventSeconds.length) {
+      midiPlayback.currentSourceBpm =
+        midiPlayback.tempoEventSeconds[
+          tempoEventIndex
+        ].bpm;
+    }
+
+    while (
+      eventIndex < midiPlayback.timedEvents.length &&
+      midiPlayback.timedEvents[eventIndex].sourceSeconds *
+        speedScale <= elapsedSeconds &&
+      (!midiPlayback.looping ||
+       midiPlayback.loopEndSeconds === null ||
+       midiPlayback.timedEvents[eventIndex].sourceSeconds < midiPlayback.loopEndSeconds)
+    ) {
+      const event =
+        midiPlayback.timedEvents[eventIndex++].event;
+
+      try {
+        if (event.type === 'bankSelectMSB') {
+          synth.controllerChange(
+            event.channel, 0, event.value
+          );
+        } else if (event.type === 'bankSelectLSB') {
+          synth.controllerChange(
+            event.channel, 32, event.value
+          );
+        } else if (event.type === 'programChange') {
+          synth.programChange(
+            event.channel, event.program
+          );
+        } else if (event.type === 'controlChange') {
+          synth.controllerChange(
+            event.channel,
+            event.controller,
+            event.value
+          );
+        } else if (
+          event.type === 'noteOn' &&
+          event.velocity > 0
+        ) {
+          const note = Math.max(
+            0,
+            Math.min(
+              127,
+              event.note + (event.channel === 9 ? 0 : midiPlayback.transposeSemitones)
+            )
+          );
+
+          synth.noteOn(
+            event.channel,
+            note,
+            event.velocity
+          );
+
+          midiPlayback.activeNotes.push({
+            channel: event.channel,
+            note: note
+          });
+        } else if (event.type === 'noteOff') {
+          const note = Math.max(
+            0,
+            Math.min(
+              127,
+              event.note + (event.channel === 9 ? 0 : midiPlayback.transposeSemitones)
+            )
+          );
+
+          synth.noteOff(
+            event.channel,
+            note
+          );
+        }
+      } catch (error) {
+        console.error(
+          '[midi] MIDI event failed:',
+          error
+        );
+      }
+    }
+
+    const currentSourceTime =
+      midiGetCurrentTime();
+
+    if (
+      midiPlayback.looping &&
+      midiPlayback.loopStartSeconds !== null &&
+      midiPlayback.loopEndSeconds !== null &&
+      currentSourceTime >= midiPlayback.loopEndSeconds
+    ) {
+      midiStartPlayback(midiPlayback.loopStartSeconds).catch(function(error) {
+        console.error('[midi] Could not restart loop:', error);
+        midiPlayback.looping = false;
+        setStatus('Loop playback error: ' + (error.message || error));
+      });
+      return;
+    }
+
+    if (eventIndex >= midiPlayback.timedEvents.length) {
+      midiStopPlayback();
+      return;
+    }
+
+    setStatus(
+      'Playing: ' +
+      midiPlayback.fileName
+    );
+
+    midiPlayback.timer =
+      setTimeout(scheduleNext, 8);
+  }
+
+  sendCommand('midi-started', {
+    time: resumeFrom,
+    duration: midiPlayback.durationSeconds
+  });
+
+  scheduleNext();
+}
+
+function midiStopPlayback() {
+  midiPlayback.playing = false;
+
+  if (midiPlayback.timer) {
+    clearTimeout(midiPlayback.timer);
+    midiPlayback.timer = null;
+  }
+
+  if (sf2Synth) {
+    try {
+      sf2Synth.stopAll();
+    } catch (e) {}
+  }
+
+  midiPlayback.activeNotes = [];
+  midiPlayback.pausedTimeSeconds = 0;
+
+  sendCommand('midi-stopped', {
+    time: 0
+  });
+
+  setStatus('Stopped.');
+}
+
+function midiPausePlayback() {
+  if (!midiPlayback.playing) return;
+
+  midiPlayback.pausedTimeSeconds = Math.min(
+    midiGetCurrentTime(),
+    midiPlayback.durationSeconds
+  );
+
+  midiPlayback.playing = false;
+
+  if (midiPlayback.timer) {
+    clearTimeout(midiPlayback.timer);
+    midiPlayback.timer = null;
+  }
+
+  if (sf2Synth) {
+    try {
+      sf2Synth.stopAll();
+    } catch (e) {}
+  }
+
+  midiPlayback.activeNotes = [];
+
+  sendCommand('midi-paused', {
+    time: midiPlayback.pausedTimeSeconds,
+    duration: midiPlayback.durationSeconds
+  });
+
+  setStatus('Paused.');
+}
+
+function midiStartOrPausePlayback() {
+  if (midiPlayback.playing) {
+    midiPausePlayback();
+    return;
+  }
+
+  const resumeFrom = midiPlayback.pausedTimeSeconds || 0;
+  midiStartPlayback(resumeFrom).catch(function(error) {
+    console.error('[midi] Could not start playback:', error);
+    setStatus('Playback error: ' + (error.message || error));
+  });
+}
+
+function midiTogglePlayback() {
+  if (midiPlayback.playing) {
+    midiStopPlayback();
+    return;
+  }
+
+  midiStartPlayback().catch(function(error) {
+    console.error('[midi] Could not start playback:', error);
+    setStatus('Playback error: ' + (error.message || error));
+  });
+}
+
+function midiGetBarNumberForSeconds(seconds) {
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) {
+    return 1;
+  }
+
+  const tempoEvents = midiPlayback.tempoEventSeconds || [];
+  const ticksPerQuarter = midiPlayback.parsed.ticksPerQuarter;
+
+  if (!tempoEvents.length) return 1;
+
+  seconds = Math.max(0, Math.min(seconds, midiPlayback.durationSeconds));
+
+  let segmentIndex = 0;
+  while (
+    segmentIndex + 1 < tempoEvents.length &&
+    tempoEvents[segmentIndex + 1].sourceSeconds <= seconds
+  ) {
+    segmentIndex++;
+  }
+
+  const segment = tempoEvents[segmentIndex];
+  const ticksPerSecond =
+    (segment.bpm / 60) * ticksPerQuarter;
+
+  const tick = Math.max(
+    0,
+    segment.tick +
+      (seconds - segment.sourceSeconds) * ticksPerSecond
+  );
+
+  // The MIDI Karaoke App currently uses a quarter-note beat grid,
+  // so one bar is four beats (standard 4/4 time).
+  return Math.floor(tick / (ticksPerQuarter * 4)) + 1;
+}
+
+function midiMoveLoopStartByBeats(deltaBeats) {
+  if (midiPlayback.loopStartSeconds === null) {
+    setStatus('Set Loop Start [ first.');
+    return;
+  }
+
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) {
+    return;
+  }
+
+  const ticksPerQuarter = midiPlayback.parsed.ticksPerQuarter;
+  const currentTick = Math.round(
+    midiGetTickForSeconds(midiPlayback.loopStartSeconds) / ticksPerQuarter
+  ) * ticksPerQuarter;
+
+  const targetTick = Math.max(0, currentTick + deltaBeats * ticksPerQuarter);
+
+  midiPlayback.loopStartSeconds =
+    midiSnapTimeToBeat(midiGetSecondsForTick(targetTick));
+
+  if (
+    midiPlayback.loopEndSeconds !== null &&
+    midiPlayback.loopEndSeconds <= midiPlayback.loopStartSeconds
+  ) {
+    midiPlayback.loopEndSeconds = null;
+  }
+
+  setStatus('Loop Start: ' + midiGetBarBeatLabelForSeconds(midiPlayback.loopStartSeconds));
+}
+
+function midiGetBarBeatLabelForSeconds(seconds) {
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) {
+    return 'Bar ? | Beat ?';
+  }
+
+  const ticksPerQuarter = midiPlayback.parsed.ticksPerQuarter;
+  const tick = Math.max(0, Math.round(midiGetTickForSeconds(seconds)));
+  const beatIndex = Math.floor(tick / ticksPerQuarter);
+
+  return 'Bar ' + Math.floor(beatIndex / 4 + 1) +
+    ' | Beat ' + (beatIndex % 4 + 1);
+}
+
+function midiMoveLoopRangeByBars(deltaBars) {
+  if (midiPlayback.loopStartSeconds === null || midiPlayback.loopEndSeconds === null) {
+    setStatus('Set both Loop Start [ and Loop End ] first.');
+    return;
+  }
+
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) return;
+
+  const tpq = midiPlayback.parsed.ticksPerQuarter;
+  const startTick = Math.round(midiGetTickForSeconds(midiPlayback.loopStartSeconds) / tpq) * tpq;
+  const endTick = Math.round(midiGetTickForSeconds(midiPlayback.loopEndSeconds) / tpq) * tpq;
+  const rangeTicks = endTick - startTick;
+  const durationTick = Math.max(0, Math.round(midiGetTickForSeconds(midiPlayback.durationSeconds) / tpq) * tpq);
+
+  const ticksPerBar = tpq * 4;
+  let targetStartTick = Math.max(0, startTick + deltaBars * ticksPerBar);
+  let targetEndTick = targetStartTick + rangeTicks;
+
+  if (targetEndTick > durationTick) {
+    targetEndTick = durationTick;
+    targetStartTick = Math.max(0, targetEndTick - rangeTicks);
+  }
+
+  if (targetEndTick <= targetStartTick) return;
+
+  midiPlayback.loopStartSeconds = midiSnapTimeToBeat(midiGetSecondsForTick(targetStartTick));
+  midiPlayback.loopEndSeconds = midiSnapTimeToBeat(midiGetSecondsForTick(targetEndTick));
+
+  setStatus(
+    'Loop Range: ' +
+    midiGetBarBeatLabelForSeconds(midiPlayback.loopStartSeconds) +
+    ' -> ' +
+    midiGetBarBeatLabelForSeconds(midiPlayback.loopEndSeconds)
+  );
+
+  // If Loop Mode is currently playing, apply the moved range immediately.
+  // Otherwise the new range will be used the next time Loop Mode starts.
+  if (midiPlayback.looping) {
+    midiPlayback.pausedTimeSeconds = midiPlayback.loopStartSeconds;
+
+    if (midiPlayback.playing) {
+      midiStartPlayback(midiPlayback.loopStartSeconds).catch(function(error) {
+        console.error('[midi] Could not restart moved loop range:', error);
+        setStatus('Moved loop playback error: ' + (error.message || error));
+      });
+    }
+  }
+}
+
+function midiGetTickForSeconds(seconds) {
+  const tempoEvents = midiPlayback.tempoEventSeconds || [];
+  const ticksPerQuarter = midiPlayback.parsed && midiPlayback.parsed.ticksPerQuarter;
+
+  if (!tempoEvents.length || !ticksPerQuarter) return 0;
+
+  seconds = Math.max(0, Math.min(seconds, midiPlayback.durationSeconds));
+
+  let segmentIndex = 0;
+  while (
+    segmentIndex + 1 < tempoEvents.length &&
+    tempoEvents[segmentIndex + 1].sourceSeconds <= seconds
+  ) {
+    segmentIndex++;
+  }
+
+  const segment = tempoEvents[segmentIndex];
+  const ticksPerSecond =
+    (segment.bpm / 60) * ticksPerQuarter;
+
+  return segment.tick +
+    (seconds - segment.sourceSeconds) * ticksPerSecond;
+}
+
+function midiGetSecondsForTick(targetTick) {
+  const tempoEvents = midiPlayback.tempoEventSeconds || [];
+  const ticksPerQuarter = midiPlayback.parsed && midiPlayback.parsed.ticksPerQuarter;
+
+  if (!tempoEvents.length || !ticksPerQuarter) return 0;
+
+  let segment = tempoEvents[0];
+  for (let i = 1; i < tempoEvents.length; i++) {
+    if (tempoEvents[i].tick > targetTick) break;
+    segment = tempoEvents[i];
+  }
+
+  const ticksPerSecond =
+    (segment.bpm / 60) * ticksPerQuarter;
+
+  return Math.max(
+    0,
+    Math.min(
+      midiPlayback.durationSeconds,
+      segment.sourceSeconds +
+        (targetTick - segment.tick) / ticksPerSecond
+    )
+  );
+}
+
+function midiSetLoopStart() {
+  const seconds = midiSnapTimeToBeat(midiGetCurrentTime());
+
+  midiPlayback.loopStartSeconds = seconds;
+
+  if (
+    midiPlayback.loopEndSeconds !== null &&
+    midiPlayback.loopEndSeconds <= seconds
+  ) {
+    midiPlayback.loopEndSeconds = null;
+  }
+
+  setStatus('Loop Start: ' + formatTime(seconds, true));
+}
+
+function midiSetLoopEnd() {
+  const seconds = midiSnapTimeToBeat(midiGetCurrentTime());
+
+  if (midiPlayback.loopStartSeconds === null) {
+    setStatus('Set Loop Start Point [ first.');
+    return;
+  }
+
+  if (seconds <= midiPlayback.loopStartSeconds) {
+    setStatus('Loop End must be after Loop Start.');
+    return;
+  }
+
+  midiPlayback.loopEndSeconds = seconds;
+
+  setStatus(
+    'Loop: ' +
+    formatTime(midiPlayback.loopStartSeconds, true) +
+    ' - ' +
+    formatTime(midiPlayback.loopEndSeconds, true)
+  );
+}
+
+function midiToggleLoop() {
+  if (
+    midiPlayback.loopStartSeconds === null ||
+    midiPlayback.loopEndSeconds === null ||
+    midiPlayback.loopEndSeconds <= midiPlayback.loopStartSeconds
+  ) {
+    setStatus('Set Loop Start [ and Loop End ] first.');
+    return;
+  }
+
+  midiPlayback.looping = !midiPlayback.looping;
+
+  if (midiPlayback.looping) {
+    midiStartPlayback(midiPlayback.loopStartSeconds).catch(function(error) {
+      console.error('[midi] Could not start loop:', error);
+      midiPlayback.looping = false;
+      setStatus('Loop playback error: ' + (error.message || error));
+    });
+  } else {
+    setStatus('Loop OFF.');
+  }
+}
+
+/* =========================================================
+   MIDI BPM
+   ========================================================= */
+
+function midiChangeBpm(delta) {
+  const oldBpm = midiPlayback.bpm;
+  const newBpm = Math.max(5, oldBpm + delta);
+
+  if (midiPlayback.playing) {
+    const now = performance.now();
+
+    const oldSpeedScale =
+      midiPlayback.sourceBpm / oldBpm;
+
+    const sourceElapsedSeconds =
+      ((now - midiPlayback.startTime) / 1000) /
+      oldSpeedScale;
+
+    midiPlayback.bpm = newBpm;
+
+    const newSpeedScale =
+      midiPlayback.sourceBpm / midiPlayback.bpm;
+
+    midiPlayback.startTime =
+      now -
+      sourceElapsedSeconds *
+        newSpeedScale *
+        1000;
+  } else {
+    midiPlayback.bpm = newBpm;
+  }
+
+  sendCommand('midi-bpm', {
+    bpm: midiPlayback.bpm
+  });
+
+
+  setStatus('BPM changed.');
+}
+
+function midiRestoreOriginalBpm() {
+  if (!midiPlayback.sourceBpmKnown || !midiPlayback.originalBpm) {
+    setStatus('No BPM data in the MIDI file.');
+    return;
+  }
+
+  const targetBpm = midiPlayback.originalBpm;
+  const oldBpm = midiPlayback.bpm;
+
+  if (midiPlayback.playing) {
+    const now = performance.now();
+    const oldSpeedScale = midiPlayback.sourceBpm / oldBpm;
+    const sourceElapsedSeconds =
+      ((now - midiPlayback.startTime) / 1000) / oldSpeedScale;
+
+    midiPlayback.bpm = targetBpm;
+
+    const newSpeedScale = midiPlayback.sourceBpm / midiPlayback.bpm;
+    midiPlayback.startTime =
+      now - sourceElapsedSeconds * newSpeedScale * 1000;
+  } else {
+    midiPlayback.bpm = targetBpm;
+  }
+
+  sendCommand('midi-bpm', { bpm: midiPlayback.bpm });
+  setStatus('Original MIDI BPM: ' + Math.round(targetBpm));
+}
+
+/* =========================================================
+   MIDI TRANSPOSE
+   ========================================================= */
+
+function midiTranspose(delta) {
+  if (sf2Synth && midiPlayback.activeNotes.length) {
+    midiPlayback.activeNotes.forEach(function(activeNote) {
+      try {
+        sf2Synth.noteOff(
+          activeNote.channel,
+          activeNote.note
+        );
+      } catch (error) {
+        console.error(
+          '[midi] Could not release active note:',
+          error
+        );
+      }
+    });
+
+    midiPlayback.activeNotes = [];
+  }
+
+  midiPlayback.transposeSemitones += delta;
+
+
+  sendCommand('midi-transpose', {
+    semitones: midiPlayback.transposeSemitones,
+    delta: delta
+  });
+
+  setStatus('');
+}
+
+/* =========================================================
+   MIDI TIMESTAMPS
+   ========================================================= */
+
+function midiRecordTimestamp(kind) {
+  const seconds = midiGetCurrentTime();
+
+  const stamp = {
+    kind: kind,
+    seconds: seconds,
+    text: formatTime(seconds, true)
+  };
+
+  sendCommand('timestamp', stamp);
+
+  setStatus(
+    'Timestamp: ' +
+    (kind === 'P+L' ? 'P + L ' : 'L ') +
+    stamp.text
+  );
+}
+
+function midiRemoveTimestamp() {
+  sendCommand('timestamp-remove', {
+    seconds: midiGetCurrentTime()
+  });
+
+  setStatus('Timestamp removed.');
+}
+
+/* =========================================================
+   F1 HELP WINDOW
+   Non-blocking so MIDI playback timers and note-off events
+   continue running while the shortcut list is open.
+   ========================================================= */
+
+let shortcutHelpOverlay = null;
+
+function showShortcutInfo() {
+  if (shortcutHelpOverlay) {
+    shortcutHelpOverlay.remove();
+    shortcutHelpOverlay = null;
+    return;
+  }
+
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.inset = '0';
+  overlay.style.zIndex = '2147483647';
+  overlay.style.background = 'rgba(0,0,0,0.72)';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.padding = '24px';
+  overlay.style.boxSizing = 'border-box';
+
+  const box = document.createElement('div');
+  box.style.background = '#fff';
+  box.style.color = '#000';
+  box.style.width = 'min(620px, 100%)';
+  box.style.maxHeight = '90vh';
+  box.style.overflow = 'auto';
+  box.style.padding = '24px';
+  box.style.boxSizing = 'border-box';
+  box.style.border = '1px solid #888';
+  box.style.borderRadius = '8px';
+
+  const pre = document.createElement('pre');
+  pre.textContent = shortcutText();
+  pre.style.margin = '0';
+  pre.style.fontFamily = 'monospace';
+  pre.style.fontSize = '16px';
+  pre.style.lineHeight = '1.45';
+  pre.style.whiteSpace = 'pre-wrap';
+
+  box.appendChild(pre);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  shortcutHelpOverlay = overlay;
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      overlay.remove();
+      shortcutHelpOverlay = null;
+    }
+  });
+}
+
+function midiJumpToRehearsalMark(name) {
+  midiExitLoopForSectionJump();
+  const targetName = String(name || '').trim().toLowerCase();
+
+  if (!targetName) return;
+
+  const exactMatches = midiPlayback.rehearsalMarks.filter(function(item) {
+    return item.text.trim().toLowerCase() === targetName;
+  });
+
+  // Prefer genuine MIDI Marker/Cue Point events over ordinary Text events.
+  // This prevents an ordinary text item with the same name from being
+  // mistaken for the structural section marker.
+  const structuralMatch = exactMatches.find(function(item) {
+    return item.markerType === 'marker' || item.markerType === 'cuePoint';
+  });
+
+  // Ordinary MIDI Text events are intentionally NOT accepted as rehearsal
+  // marks.  Only actual Marker/Cue Point meta-events count as structural
+  // Section Marks.
+  const mark = structuralMatch;
+
+  if (!mark) {
+    setStatus("Rehearsal mark not found: '" + name + "'.");
+    return;
+  }
+
+  const targetSeconds = Math.max(
+    0,
+    Math.min(mark.seconds, midiPlayback.durationSeconds)
+  );
+
+  midiPlayback.pausedTimeSeconds = targetSeconds;
+
+  if (midiPlayback.playing) {
+    midiStartPlayback(targetSeconds).catch(function(error) {
+      console.error('[midi] Could not jump to rehearsal mark:', error);
+      setStatus('Rehearsal mark jump error: ' + (error.message || error));
+    });
+    return;
+  }
+
+  setStatus(
+    "Moved to '" + mark.text + "' rehearsal mark: " +
+    formatTime(targetSeconds, true)
+  );
+}
+
+function midiExitLoopForSectionJump() {
+  if (midiPlayback.looping) {
+    midiPlayback.looping = false;
+  }
+}
+
+function midiJumpToPreviousMarker() {
+  midiExitLoopForSectionJump();
+  const currentSeconds = midiGetCurrentTime();
+  const markers = midiGetDisplayedSectionMarks();
+
+  if (!markers.length) {
+    setStatus('No MIDI Markers found.');
+    return;
+  }
+
+  // Determine the current section from the displayed Section Marks list,
+  // using the last displayed marker at or before the current playback time.
+  // This remains valid no matter how many seconds have passed since the
+  // section marker.
+  let currentIndex = -1;
+  for (let i = 0; i < markers.length; i++) {
+    if (markers[i].seconds <= currentSeconds + 0.000001) {
+      currentIndex = i;
+    } else {
+      break;
+    }
+  }
+
+  const targetIndex = currentIndex - 1;
+  if (currentIndex <= 0 || targetIndex < 0) {
+    setStatus('Already at the first MIDI Marker.');
+    return;
+  }
+
+  const target = markers[targetIndex];
+
+  midiPlayback.pausedTimeSeconds = Math.max(
+    0,
+    Math.min(target.seconds, midiPlayback.durationSeconds)
+  );
+
+  midiStartPlayback(target.seconds).catch(function(error) {
+    console.error('[midi] Could not jump to previous MIDI marker:', error);
+    setStatus('Previous MIDI Marker jump error: ' + (error.message || error));
+  });
+}
+
+function midiJumpToMarkerNumber(markerNumber) {
+  midiExitLoopForSectionJump();
+  const markers = midiGetDisplayedSectionMarks();
+  const marker = markers[markerNumber - 1];
+
+  if (!marker) {
+    setStatus('MIDI Marker ' + markerNumber + ' not found.');
+    return;
+  }
+
+  const targetSeconds = Math.max(
+    0,
+    Math.min(marker.seconds, midiPlayback.durationSeconds)
+  );
+
+  midiPlayback.pausedTimeSeconds = targetSeconds;
+
+  midiStartPlayback(targetSeconds).catch(function(error) {
+    console.error('[midi] Could not jump to MIDI Marker ' + markerNumber + ':', error);
+    setStatus('Marker ' + markerNumber + ' jump error: ' + (error.message || error));
+  });
+}
+
+function midiJumpToCurrentSectionStart() {
+  midiExitLoopForSectionJump();
+  const currentMarker = midiGetCurrentStructuralMarker();
+
+  if (!currentMarker) {
+    setStatus('No current MIDI Section found.');
+    return;
+  }
+
+  const targetSeconds = Math.max(
+    0,
+    Math.min(currentMarker.seconds, midiPlayback.durationSeconds)
+  );
+
+  midiPlayback.pausedTimeSeconds = targetSeconds;
+
+  midiStartPlayback(targetSeconds).catch(function(error) {
+    console.error('[midi] Could not jump to current section start:', error);
+    setStatus('Current Section jump error: ' + (error.message || error));
+  });
+}
+
+function midiSpaceSectionToggle() {
+  if (midiPlayback.looping &&
+      midiPlayback.loopStartSeconds !== null &&
+      midiPlayback.loopEndSeconds !== null &&
+      midiPlayback.loopEndSeconds > midiPlayback.loopStartSeconds) {
+    const loopStartSeconds = Math.max(
+      0,
+      Math.min(midiPlayback.loopStartSeconds, midiPlayback.durationSeconds)
+    );
+
+    if (midiPlayback.playing) {
+      midiStopPlayback();
+      midiPlayback.pausedTimeSeconds = loopStartSeconds;
+      setStatus('Stopped at Loop Start: ' + formatTime(loopStartSeconds, true));
+      return;
+    }
+
+    midiPlayback.pausedTimeSeconds = loopStartSeconds;
+    midiStartPlayback(loopStartSeconds).catch(function(error) {
+      console.error('[midi] Could not start loop:', error);
+      setStatus('Loop playback error: ' + (error.message || error));
+    });
+    return;
+  }
+
+  const currentMarker = midiGetCurrentStructuralMarker();
+
+  if (!currentMarker) {
+    const currentSeconds = Math.max(
+      0,
+      Math.min(midiGetCurrentTime(), midiPlayback.durationSeconds)
+    );
+
+    if (midiPlayback.playing) {
+      midiStopPlayback();
+      midiPlayback.pausedTimeSeconds = currentSeconds;
+      setStatus('Stopped at current position: ' + formatTime(currentSeconds, true));
+      return;
+    }
+
+    midiPlayback.pausedTimeSeconds = currentSeconds;
+    midiStartPlayback(currentSeconds).catch(function(error) {
+      console.error('[midi] Could not start from current position:', error);
+      setStatus('Current-position playback error: ' + (error.message || error));
+    });
+    return;
+  }
+
+  const targetSeconds = Math.max(
+    0,
+    Math.min(currentMarker.seconds, midiPlayback.durationSeconds)
+  );
+
+  if (midiPlayback.playing) {
+    midiStopPlayback();
+    midiPlayback.pausedTimeSeconds = targetSeconds;
+    setStatus('Stopped at current Section start: ' + formatTime(targetSeconds, true));
+    return;
+  }
+
+  midiPlayback.pausedTimeSeconds = targetSeconds;
+  midiStartPlayback(targetSeconds).catch(function(error) {
+    console.error('[midi] Could not start current section:', error);
+    setStatus('Current Section playback error: ' + (error.message || error));
+  });
+}
+
+function midiJumpToNextMarker() {
+  midiExitLoopForSectionJump();
+  const currentSeconds = midiGetCurrentTime();
+  const markers = midiGetDisplayedSectionMarks();
+
+  if (!markers.length) {
+    setStatus('No MIDI Markers found.');
+    return;
+  }
+
+  // Determine the current section from the displayed Section Marks list,
+  // then move exactly one displayed section forward.  This means Next
+  // Section also works at any point after the current marker, not only
+  // immediately around the marker itself.
+  let currentIndex = -1;
+  for (let i = 0; i < markers.length; i++) {
+    if (markers[i].seconds <= currentSeconds + 0.000001) {
+      currentIndex = i;
+    } else {
+      break;
+    }
+  }
+
+  const targetIndex = currentIndex + 1;
+  if (targetIndex >= markers.length) {
+    setStatus('Already at the last MIDI Marker.');
+    return;
+  }
+
+  const target = markers[targetIndex];
+
+  midiPlayback.pausedTimeSeconds = Math.max(
+    0,
+    Math.min(target.seconds, midiPlayback.durationSeconds)
+  );
+
+  midiStartPlayback(target.seconds).catch(function(error) {
+    console.error('[midi] Could not jump to next MIDI marker:', error);
+    setStatus('Next MIDI Marker jump error: ' + (error.message || error));
+  });
+}
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'F11') {
+    // Let the browser's native F11 fullscreen handling work.
+    return;
+  }
+
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  if (midiSongListOpen) {
+    e.preventDefault();
+    midiHandleSavedSongListKey(e.key);
+    return;
+  }
+
+  if (e.shiftKey && e.key === 'ArrowLeft') {
+    e.preventDefault();
+    midiChangeBpm(-1);
+    return;
+  }
+
+  if (e.shiftKey && e.key === 'ArrowRight') {
+    e.preventDefault();
+    midiChangeBpm(1);
+    return;
+  }
+
+  switch (e.key) {
+    case 'p':
+    case 'P':
+    case 'z':
+    case 'Z':
+      e.preventDefault();
+      midiRecordTimestamp('P+L');
+      break;
+
+    case 'l':
+    case 'L':
+    case 'c':
+    case 'C':
+      e.preventDefault();
+      midiRecordTimestamp('L');
+      break;
+
+    case 'Delete':
+    case 'x':
+    case 'X':
+      e.preventDefault();
+      midiRemoveTimestamp();
+      break;
+
+    case 'ArrowDown':
+    case 's':
+    case 'S':
+      e.preventDefault();
+      midiTranspose(-1);
+      break;
+
+    case 'ArrowUp':
+    case 'w':
+    case 'W':
+      e.preventDefault();
+      midiTranspose(1);
+      break;
+
+    case 'Home':
+      e.preventDefault();
+      midiStartOrPausePlayback();
+      break;
+
+    case ',':
+      e.preventDefault();
+      midiMoveLoopRangeByBars(-1);
+      break;
+
+    case 'ArrowLeft':
+    case 'a':
+    case 'A':
+      e.preventDefault();
+      midiChangeBpm(-5);
+      break;
+
+    case '0':
+      e.preventDefault();
+      midiRestoreOriginalBpm();
+      break;
+
+    case 'ArrowRight':
+    case 'd':
+    case 'D':
+      e.preventDefault();
+      midiChangeBpm(5);
+      break;
+
+    case '[':
+    case 'q':
+    case 'Q':
+      e.preventDefault();
+      midiSetLoopStart();
+      break;
+
+    case ']':
+    case 'e':
+    case 'E':
+      e.preventDefault();
+      midiSetLoopEnd();
+      break;
+
+    case 'r':
+    case 'R':
+      e.preventDefault();
+      midiToggleLoop();
+      break;
+
+    case '=':
+      e.preventDefault();
+      midiMoveLoopStartByBeats(1);
+      break;
+
+    case '-':
+      e.preventDefault();
+      midiMoveLoopStartByBeats(-1);
+      break;
+
+    case 'PageDown':
+      e.preventDefault();
+      midiJumpToPreviousMarker();
+      break;
+
+    case '.':
+      e.preventDefault();
+      midiMoveLoopRangeByBars(1);
+      break;
+
+    case 'Enter':
+      e.preventDefault();
+      midiJumpToCurrentSectionStart();
+      break;
+
+    case '1':
+      e.preventDefault();
+      midiJumpToMarkerNumber(1);
+      break;
+    case '2':
+      e.preventDefault();
+      midiJumpToMarkerNumber(2);
+      break;
+    case '3':
+      e.preventDefault();
+      midiJumpToMarkerNumber(3);
+      break;
+    case '4':
+      e.preventDefault();
+      midiJumpToMarkerNumber(4);
+      break;
+    case '5':
+      e.preventDefault();
+      midiJumpToMarkerNumber(5);
+      break;
+    case '6':
+      e.preventDefault();
+      midiJumpToMarkerNumber(6);
+      break;
+    case '7':
+      e.preventDefault();
+      midiJumpToMarkerNumber(7);
+      break;
+    case '8':
+      e.preventDefault();
+      midiJumpToMarkerNumber(8);
+      break;
+    case '9':
+      e.preventDefault();
+      midiJumpToMarkerNumber(9);
+      break;
+    case '`':
+      e.preventDefault();
+      midiStartPlayback(0).catch(function(error) {
+        console.error('[midi] Could not jump to song beginning:', error);
+        setStatus('Song beginning jump error: ' + (error.message || error));
+      });
+      break;
+
+    case 'PageUp':
+      e.preventDefault();
+      midiStopPlayback();
+      break;
+
+    case ' ':
+      e.preventDefault();
+      midiSpaceSectionToggle();
+      break;
+
+    case 'End':
+      e.preventDefault();
+      midiJumpToNextMarker();
+      break;
+
+    case '1':
+      e.preventDefault();
+      midiJumpToRehearsalMark('Verse 1');
+      break;
+
+    case '2':
+      e.preventDefault();
+      midiJumpToRehearsalMark('Chorus 1');
+      break;
+
+    case 'F1':
+      e.preventDefault();
+      showShortcutInfo();
+      break;
+
+    case 'F3':
+      e.preventDefault();
+      midiOpenFilePicker();
+      break;
+
+    case 'F4':
+      e.preventDefault();
+      sf2OpenFilePicker();
+      break;
+
+    case 'F5':
+      e.preventDefault();
+      midiSaveSong();
+      break;
+
+    case 'F9':
+      e.preventDefault();
+      if (midiSongListOpen) {
+        midiCloseSavedSongList();
+      } else {
+        midiOpenSavedSongList();
+      }
+      break;
+  }
+}, true);
+
+/* =========================================================
+   MIDI CLOCK MESSAGE
+   The main app can use this later if it needs continuous
+   MIDI playback position updates.
+   ========================================================= */
+
+let midiLastDisplayedMarkerKey = null;
+
+setInterval(function() {
+  if (!midiPlayback.playing) return;
+
+  sendCommand('midi-time', {
+    seconds: midiGetCurrentTime(),
+    duration: midiPlayback.durationSeconds,
+    bpm: midiPlayback.bpm,
+    transpose: midiPlayback.transposeSemitones
+  });
+
+  const currentMarker = midiGetCurrentStructuralMarker();
+  const currentMarkerKey = currentMarker
+    ? currentMarker.text.trim().toLowerCase()
+    : '';
+
+  if (currentMarkerKey !== midiLastDisplayedMarkerKey) {
+    midiLastDisplayedMarkerKey = currentMarkerKey;
+    setStatus(midiStatusMessage);
+  }
+}, 50);
+
+midiRestoreActive();
+
+setStatus('Ready.');
+
+</script>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const fmt=x=>{x=Math.max(0,Number(x)||0);return Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0')};
+const call=(fn,...a)=>{try{if(typeof window[fn]==='function'){let r=window[fn](...a);if(r&&r.catch)r.catch(e=>show('Error: '+e.message));}}catch(e){show('Error: '+e.message)}};
+function show(t){$('uiStatus').textContent=String(t||'Ready.')}
+function refreshMarkers(){if(typeof midiGetDisplayedSectionMarks!=='function')return;const box=$('markers');box.innerHTML='';midiGetDisplayedSectionMarks().forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.textContent=(i+1)+'. '+(m.text||'Marker '+(i+1));b.onclick=()=>call('midiJumpToMarkerNumber',i+1);box.appendChild(b)})}
+async function refreshSongs(){if(typeof midiSongDbGetAll!=='function')return;try{const list=await midiSongDbGetAll();$('uiSongs').innerHTML='';if(!list.length){$('uiSongs').add(new Option('(No saved songs yet)',''));return}list.sort((a,b)=>String(b.savedAt||'').localeCompare(String(a.savedAt||'')));list.forEach(r=>$('uiSongs').add(new Option(r.name||'Untitled Song',String(r.id))))}catch(e){show('Could not read saved songs.')}}
+function refresh(){if(typeof midiPlayback==='undefined')return;const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0,dur=Number(midiPlayback.durationSeconds)||0,bpm=Number(midiPlayback.bpm)||0,tr=Number(midiPlayback.transposeSemitones)||0;$('uiNow').textContent=fmt(now);$('uiDur').textContent=fmt(dur);$('uiSeek').max=String(dur);$('uiSeek').value=String(Math.min(now,dur));$('uiFile').textContent=midiPlayback.fileName||'No MIDI loaded';$('uiBpm').textContent=bpm?Math.round(bpm):'—';if(bpm)$('uiBpmSlider').value=String(Math.max(5,Math.min(300,Math.round(bpm))));$('uiTranspose').textContent=(tr>0?'+':'')+tr+' semitone'+(Math.abs(tr)===1?'':'s');$('uiLoop').textContent='Start: '+(midiPlayback.loopStartSeconds==null?'—':fmt(midiPlayback.loopStartSeconds))+' · End: '+(midiPlayback.loopEndSeconds==null?'—':fmt(midiPlayback.loopEndSeconds));$('loopToggle').textContent=midiPlayback.looping?'Loop ON':'Loop OFF';refreshMarkers()}
+$('uiMidi').onclick=()=>call('midiOpenFilePicker');$('uiSf2').onclick=()=>call('sf2OpenFilePicker');$('uiHelp').onclick=()=>call('showShortcutInfo');$('uiFull').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();$('uiPlay').onclick=()=>call('midiStartOrPausePlayback');$('uiStop').onclick=()=>call('midiStopPlayback');$('uiSection').onclick=()=>call('midiJumpToCurrentSectionStart');$('section2').onclick=()=>call('midiJumpToCurrentSectionStart');$('uiStart').onclick=()=>call('midiStartPlayback',0);$('uiSave').onclick=()=>call('midiSaveSong');$('uiJson').onclick=()=>call('midiLoadSongPicker');$('uiLoad').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll();const r=list.find(x=>String(x.id)===id);if(r)await midiLoadStoredSong(r);refresh()};$('uiDelete').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll(),r=list.find(x=>String(x.id)===id);if(r&&confirm('Delete saved song “'+(r.name||'Untitled Song')+'”?')){await midiSongDbDelete(r.id);refreshSongs()}};
+$('uiSeek').oninput=()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const t=Number($('uiSeek').value),was=midiPlayback.playing;if(was)call('midiStopPlayback');midiPlayback.pausedTimeSeconds=t;if(was)call('midiStartPlayback',t);refresh()};[['bpmM5',-5],['bpmM1',-1],['bpmP1',1],['bpmP5',5]].forEach(([id,d])=>$(id).onclick=()=>call('midiChangeBpm',d));$('bpmOrig').onclick=()=>call('midiRestoreOriginalBpm');$('uiBpmSlider').oninput=()=>{if(typeof midiPlayback==='undefined')return;call('midiChangeBpm',Number($('uiBpmSlider').value)-(Number(midiPlayback.bpm)||0))};$('trDown').onclick=()=>call('midiTranspose',-1);$('trUp').onclick=()=>call('midiTranspose',1);$('trReset').onclick=()=>call('midiTranspose',-(Number(midiPlayback.transposeSemitones)||0));$('loopStart').onclick=()=>call('midiSetLoopStart');$('loopEnd').onclick=()=>call('midiSetLoopEnd');$('loopToggle').onclick=()=>call('midiToggleLoop');$('loopClear').onclick=()=>{if(typeof midiPlayback!=='undefined'){midiPlayback.loopStartSeconds=null;midiPlayback.loopEndSeconds=null;midiPlayback.looping=false;show('Loop cleared.')}};$('beatM').onclick=()=>call('midiMoveLoopStartByBeats',-1);$('beatP').onclick=()=>call('midiMoveLoopStartByBeats',1);$('barM').onclick=()=>call('midiMoveLoopRangeByBars',-1);$('barP').onclick=()=>call('midiMoveLoopRangeByBars',1);$('prev').onclick=()=>call('midiJumpToPreviousMarker');$('next').onclick=()=>call('midiJumpToNextMarker');$('tsPL').onclick=()=>call('midiRecordTimestamp','P+L');$('tsL').onclick=()=>call('midiRecordTimestamp','L');$('tsRemove').onclick=()=>call('midiRemoveTimestamp');
+setInterval(refresh,200);refreshSongs();refresh();
+})();
+</script>
+</body>
+</html>
