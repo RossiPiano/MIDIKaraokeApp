@@ -7,8 +7,8 @@
 
 <style>
 :root{color-scheme:dark;--bg:#0b0d10;--panel:#171b21;--panel2:#222831;--border:#3a424e;--text:#f4f6f8;--muted:#aeb7c4;--accent:#42a5ff;--good:#27a66f;--danger:#c94f59}
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{padding:12px}button,input,select{font:inherit}button{min-height:52px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);font-weight:650;cursor:pointer;touch-action:manipulation}button:active{transform:translateY(1px)}button.primary{background:#155c91;border-color:#348fd1}button.good{background:#176342;border-color:#2b9e70}button.danger{background:#713139;border-color:#b84d58}select{width:100%;min-height:52px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text)}input[type=range]{width:100%;min-height:42px;accent-color:var(--accent)}#midiGraphicalUI{max-width:1450px;margin:auto}#midiTimelineCard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:12px;user-select:none}.timeline-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}.timeline-head strong{font-size:16px}.timeline-head span{color:var(--muted);font-size:13px}.timeline{display:flex;width:100%;min-height:58px;overflow-x:auto;overflow-y:hidden;border:1px solid var(--border);border-radius:10px;background:#090b0e;touch-action:none;-webkit-user-select:none;user-select:none;scrollbar-width:thin}.timeline.empty{align-items:center;justify-content:center;color:var(--muted);padding:10px}.bar{position:relative;flex:1 1 0;min-width:24px;height:58px;border:0;border-right:1px solid #343b45;border-radius:0;background:#20262e;color:#cbd3dd;padding:0 3px;font-size:11px;font-weight:700;touch-action:none;cursor:pointer}.bar:last-child{border-right:0}.bar:nth-child(4n+1){background:#252c35}.bar:hover{background:#303a46}.bar.selected{background:#155c91;color:#fff}.bar.anchor{box-shadow:inset 0 4px 0 #5eb8ff}.bar.current{box-shadow:inset 0 -4px 0 #27a66f}.bar.selected.current{background:#176342}.bar-number{display:block;padding-top:7px;pointer-events:none}.bar-time{display:block;font-size:9px;font-weight:500;color:#8f9aa8;margin-top:3px;pointer-events:none}.bar.selected .bar-time{color:#d8ecff}.timeline-help{margin-top:7px;color:var(--muted);font-size:12px}.hero{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.hero h1{font-size:clamp(22px,4vw,34px);margin:0}.hero p{margin:4px 0 0;color:var(--muted);overflow-wrap:anywhere}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.hero-actions button{flex:1 1 150px}.statusbox{background:#090b0e;border:1px solid var(--border);border-radius:10px;padding:11px 13px;min-height:46px;margin-bottom:12px;color:#dbe2ea}.player{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}.time{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;font-weight:750;font-size:18px}.playergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px}.card h2{font-size:17px;margin:0 0 12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.value{text-align:center;font-size:27px;font-weight:800;margin:0 0 8px;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:13px;text-align:center;margin:7px 0}.sep{height:1px;background:var(--border);margin:12px 0}.markergrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hidden-status{display:none}
-@media(max-width:1050px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{padding:12px}button,input,select{font:inherit}button{min-height:52px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);font-weight:650;cursor:pointer;touch-action:manipulation}button:active{transform:translateY(1px)}button.primary{background:#155c91;border-color:#348fd1}button.good{background:#176342;border-color:#2b9e70}button.danger{background:#713139;border-color:#b84d58}select{width:100%;min-height:52px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text)}input[type=range]{width:100%;min-height:42px;accent-color:var(--accent)}#midiGraphicalUI{max-width:1450px;margin:auto}#midiTimelineCard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:12px;user-select:none}.timeline-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}.timeline-head strong{font-size:16px}.timeline-head span{color:var(--muted);font-size:13px}.timeline{display:flex;width:100%;min-height:58px;overflow-x:auto;overflow-y:hidden;border:1px solid var(--border);border-radius:10px;background:#090b0e;touch-action:none;-webkit-user-select:none;user-select:none;scrollbar-width:thin}.timeline.empty{align-items:center;justify-content:center;color:var(--muted);padding:10px}.bar{position:relative;flex:1 1 0;min-width:24px;height:58px;border:0;border-right:1px solid #343b45;border-radius:0;background:#20262e;color:#cbd3dd;padding:0 3px;font-size:11px;font-weight:700;touch-action:none;cursor:pointer}.bar:last-child{border-right:0}.bar:nth-child(4n+1){background:#252c35}.bar:hover{background:#303a46}.bar.selected{background:#155c91;color:#fff}.bar.anchor{box-shadow:inset 0 4px 0 #5eb8ff}.bar.current{box-shadow:inset 0 -4px 0 #27a66f}.bar.selected.current{background:#176342}.bar-number{display:block;padding-top:7px;pointer-events:none}.bar-time{display:block;font-size:9px;font-weight:500;color:#8f9aa8;margin-top:3px;pointer-events:none}.bar.selected .bar-time{color:#d8ecff}.beat{position:relative;flex:0 0 48px;min-width:48px;height:58px;border:0;border-right:1px solid #343b45;border-radius:0;background:#20262e;color:#cbd3dd;padding:0 3px;font-size:11px;font-weight:700;touch-action:none;cursor:pointer}.beat:nth-child(4n+1){background:#252c35}.beat:hover{background:#303a46}.beat.selected{background:#155c91;color:#fff}.beat.anchor{box-shadow:inset 0 4px 0 #5eb8ff}.beat.current{box-shadow:inset 0 -4px 0 #27a66f}.beat.selected.current{background:#176342}.beat-number{display:block;padding-top:7px;pointer-events:none}.beat-time{display:block;font-size:9px;font-weight:500;color:#8f9aa8;margin-top:3px;pointer-events:none}.beat.selected .beat-time{color:#d8ecff}.timeline-loop-control{margin-top:8px}.timeline-loop-control button{width:100%;min-height:48px}.timeline-help{margin-top:7px;color:var(--muted);font-size:12px}.hero{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.hero h1{font-size:clamp(22px,4vw,34px);margin:0}.hero p{margin:4px 0 0;color:var(--muted);overflow-wrap:anywhere}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.hero-actions button{flex:1 1 150px}.statusbox{background:#090b0e;border:1px solid var(--border);border-radius:10px;padding:11px 13px;min-height:46px;margin-bottom:12px;color:#dbe2ea}.player{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}.time{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;font-weight:750;font-size:18px}.playergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.cards{display:block}.category{background:var(--panel);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}.category>summary{list-style:none;cursor:pointer;min-height:54px;padding:15px 16px;font-size:17px;font-weight:750;display:flex;align-items:center;justify-content:space-between;touch-action:manipulation}.category>summary::-webkit-details-marker{display:none}.category>summary::after{content:'▾';color:var(--muted);font-size:18px}.category:not([open])>summary::after{content:'▸'}.category>summary:active{background:var(--panel2)}.category-content{padding:0 14px 14px}.category[open]>summary{border-bottom:1px solid var(--border)}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.value{text-align:center;font-size:27px;font-weight:800;margin:0 0 8px;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:13px;text-align:center;margin:7px 0}.sep{height:1px;background:var(--border);margin:12px 0}.markergrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hidden-status{display:none}
+
 @media(max-width:700px){body{padding:7px}.hero{display:block}.hero-actions{margin-top:10px}.cards{grid-template-columns:1fr}.playergrid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.markergrid{grid-template-columns:repeat(2,minmax(0,1fr))}button,select{min-height:56px}}
 @media(max-width:390px){.grid2,.grid3,.grid4,.playergrid,.markergrid{grid-template-columns:1fr}}
 </style>
@@ -19,27 +19,55 @@
 <div id="midiGraphicalUI">
   <div class="hero">
     <div><h1>🎹 MIDI Karaoke App</h1><p id="uiFile">No MIDI loaded</p></div>
-    <div class="hero-actions"><button id="uiMidi">Import MIDI</button><button id="uiSf2">Import SoundFont</button><button id="uiHelp">Help</button><button id="uiFull">Fullscreen</button></div>
+    <div class="hero-actions"><button id="uiMidi">Import MIDI</button><button id="uiSf2">Import SoundFont</button></div>
   </div>
   <section id="midiTimelineCard">
     <div class="timeline-head"><strong>🎼 Song Timeline / Loop Selection</strong><span id="uiTimelineInfo">Load a MIDI song</span></div>
-    <div id="midiTimeline" class="timeline empty">Load a MIDI file to show the song bars.</div>
-    <div class="timeline-help">Press and hold a bar, drag across the bars you want, then release. The selected bars become the loop range.</div>
+    <div id="midiTimeline" class="timeline empty">Load a MIDI file to show the song beats.</div>
+    <div class="timeline-loop-control"><button id="loopToggle" class="primary">Loop OFF</button></div>
+    <div class="timeline-help">Press and hold a beat, drag across the beats you want, then release. The selected beats become the loop range.</div>
   </section>
   <div id="uiStatus" class="statusbox">Ready.</div>
-  <div class="player">
-    <div class="time"><span id="uiNow">0:00</span><span id="uiDur">0:00</span></div>
-    <input id="uiSeek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Playback position">
-    <div class="playergrid"><button id="uiPlay" class="primary">▶ Play / Pause</button><button id="uiStop" class="danger">■ Stop</button><button id="uiSection">Current Section</button><button id="uiStart">⏮ Beginning + Play</button></div>
-  </div>
+  <details class="category" open>
+    <summary>▶ Playback</summary>
+    <div class="category-content">
+      <div class="time"><span id="uiNow">0:00</span><span id="uiDur">0:00</span></div>
+      <input id="uiSeek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Playback position">
+      <div class="playergrid"><button id="uiPlay" class="primary">▶ Play / Pause</button><button id="uiStop" class="danger">■ Stop</button><button id="uiSection">Current Section</button><button id="uiStart">⏮ Beginning + Play</button></div>
+    </div>
+  </details>
   <div class="cards">
-    <section class="card"><h2>🎵 Songs</h2><button id="uiSave" class="good" style="width:100%">Save Song As…</button><div style="height:8px"></div><select id="uiSongs"><option value="">Loading saved songs…</option></select><div style="height:8px"></div><div class="grid2"><button id="uiLoad">Load Selected</button><button id="uiDelete" class="danger">Delete Selected</button></div><div style="height:8px"></div><button id="uiJson" style="width:100%">Import Song JSON</button></section>
-    <section class="card"><h2>⏱ BPM</h2><div id="uiBpm" class="value">—</div><input id="uiBpmSlider" type="range" min="5" max="300" step="1" value="120"><div style="height:8px"></div><div class="grid4"><button id="bpmM5">−5</button><button id="bpmM1">−1</button><button id="bpmP1">+1</button><button id="bpmP5">+5</button></div><div style="height:8px"></div><button id="bpmOrig" style="width:100%">Restore Original BPM</button></section>
-    <section class="card"><h2>🎼 Transpose</h2><div id="uiTranspose" class="value">0 semitones</div><div class="grid3"><button id="trDown">−1</button><button id="trReset">Reset</button><button id="trUp">+1</button></div></section>
-    <section class="card"><h2>🔁 Loop / Repeat</h2><div id="uiLoop" class="muted">Start: — · End: —</div><div class="grid2"><button id="loopStart">Set Loop Start</button><button id="loopEnd">Set Loop End</button><button id="loopToggle" class="primary">Loop OFF</button><button id="loopClear">Clear Loop</button></div><div class="sep"></div><div class="grid4"><button id="beatM">Start −1 beat</button><button id="beatP">Start +1 beat</button><button id="barM">Range −1 bar</button><button id="barP">Range +1 bar</button></div></section>
-    <section class="card"><h2>📍 Sections / Markers</h2><div class="grid3"><button id="prev">◀ Previous</button><button id="section2">Current Section</button><button id="next">Next ▶</button></div><div class="sep"></div><div id="markers" class="markergrid"></div></section>
-    <section class="card"><h2>🕒 Timestamps</h2><div class="grid3"><button id="tsPL">P + L</button><button id="tsL">Line</button><button id="tsRemove" class="danger">Remove</button></div></section>
+    <details class="category">
+      <summary>🎵 Songs</summary>
+      <div class="category-content"><button id="uiSave" class="good" style="width:100%">Save Song As…</button><div style="height:8px"></div><select id="uiSongs"><option value="">Loading saved songs…</option></select><div style="height:8px"></div><div class="grid2"><button id="uiLoad">Load Selected</button><button id="uiDelete" class="danger">Delete Selected</button></div><div style="height:8px"></div><button id="uiJson" style="width:100%">Import Song JSON</button></div>
+    </details>
+    <details class="category">
+      <summary>⏱ BPM</summary>
+      <div class="category-content"><div id="uiBpm" class="value">—</div><input id="uiBpmSlider" type="range" min="5" max="300" step="1" value="120"><div style="height:8px"></div><div class="grid4"><button id="bpmM5">−5</button><button id="bpmM1">−1</button><button id="bpmP1">+1</button><button id="bpmP5">+5</button></div><div style="height:8px"></div><button id="bpmOrig" style="width:100%">Restore Original BPM</button></div>
+    </details>
+    <details class="category">
+      <summary>🎼 Transpose</summary>
+      <div class="category-content"><div id="uiTranspose" class="value">0 semitones</div><div class="grid3"><button id="trDown">−1</button><button id="trReset">Reset</button><button id="trUp">+1</button></div></div>
+    </details>
+    <details class="category">
+      <summary>🔁 Loop / Repeat</summary>
+      <div class="category-content"><div id="uiLoop" class="muted">Start: — · End: —</div><div class="grid2"><button id="loopStart">Set Loop Start</button><button id="loopEnd">Set Loop End</button><button id="loopClear">Clear Loop</button></div><div class="sep"></div><div class="grid4"><button id="beatM">Start −1 beat</button><button id="beatP">Start +1 beat</button><button id="barM">Range −1 bar</button><button id="barP">Range +1 bar</button></div></div>
+    </details>
+    <details class="category">
+      <summary>📍 Sections / Markers</summary>
+      <div class="category-content"><div class="grid3"><button id="prev">◀ Previous</button><button id="section2">Current Section</button><button id="next">Next ▶</button></div><div class="sep"></div><div id="markers" class="markergrid"></div></div>
+    </details>
+    <details class="category">
+      <summary>🕒 Timestamps</summary>
+      <div class="category-content"><div class="grid3"><button id="tsPL">P + L</button><button id="tsL">Line</button><button id="tsRemove" class="danger">Remove</button></div></div>
+    </details>
   </div>
+    <details class="category">
+      <summary>⚙ Tools</summary>
+      <div class="category-content">
+        <div class="grid2"><button id="uiHelp">Help / Shortcuts</button><button id="uiFull">Fullscreen</button></div>
+      </div>
+    </details>
   <pre id="status" class="hidden-status"></pre>
 </div>
 
@@ -3100,44 +3128,58 @@ setInterval(refresh,200);refreshSongs();refresh();
 'use strict';
 const timeline=document.getElementById('midiTimeline');
 const info=document.getElementById('uiTimelineInfo');
-let bars=[]; let dragStart=-1; let dragEnd=-1; let dragging=false; let lastBarCount=0;
+let beats=[]; let dragStart=-1; let dragEnd=-1; let dragging=false; let lastBeatCount=0;
 const fmt=x=>{x=Math.max(0,Number(x)||0);return Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0')};
-function countBars(){
+function countBeats(){
   if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter||typeof midiGetTickForSeconds!=='function') return 0;
-  return Math.max(1,Math.ceil(midiGetTickForSeconds(Number(midiPlayback.durationSeconds)||0)/(midiPlayback.parsed.ticksPerQuarter*4)));
+  return Math.max(1,Math.ceil(midiGetTickForSeconds(Number(midiPlayback.durationSeconds)||0)/midiPlayback.parsed.ticksPerQuarter));
 }
-function barTime(n){
+function beatTime(n){
   if(typeof midiGetSecondsForTick!=='function'||!midiPlayback.parsed) return 0;
-  return midiGetSecondsForTick(n*midiPlayback.parsed.ticksPerQuarter*4);
+  return midiGetSecondsForTick(n*midiPlayback.parsed.ticksPerQuarter);
 }
 function render(){
-  const n=countBars();
-  if(n===lastBarCount && bars.length) return;
-  lastBarCount=n; bars=[]; timeline.innerHTML='';
-  if(!n){timeline.classList.add('empty');timeline.textContent='Load a MIDI file to show the song bars.';info.textContent='Load a MIDI song';return;}
-  timeline.classList.remove('empty'); info.textContent=n+' bars · 4/4 grid';
+  const n=countBeats();
+  if(n===lastBeatCount && beats.length) return;
+  lastBeatCount=n; beats=[]; timeline.innerHTML='';
+  if(!n){timeline.classList.add('empty');timeline.textContent='Load a MIDI file to show the song beats.';info.textContent='Load a MIDI song';return;}
+  timeline.classList.remove('empty'); info.textContent=n+' beats · 1 beat per cell';
   const frag=document.createDocumentFragment();
   for(let i=0;i<n;i++){
-    const b=document.createElement('button'); b.type='button'; b.className='bar'; b.dataset.bar=i;
-    b.innerHTML='<span class="bar-number">'+(i+1)+'</span><span class="bar-time">'+fmt(barTime(i))+'</span>';
-    frag.appendChild(b); bars.push(b);
+    const b=document.createElement('button'); b.type='button'; b.className='beat'; b.dataset.beat=i;
+    b.innerHTML='<span class="beat-number">'+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
+    frag.appendChild(b); beats.push(b);
   }
   timeline.appendChild(frag); update();
 }
 function update(){
-  if(!bars.length||typeof midiPlayback==='undefined') return;
+  if(!beats.length||typeof midiPlayback==='undefined') return;
   const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0;
-  const cur=Math.max(0,Math.min(bars.length-1,(typeof midiGetBarNumberForSeconds==='function'?midiGetBarNumberForSeconds(now):1)-1));
+  const curTick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(now):0;
+  const tpq=midiPlayback.parsed&&midiPlayback.parsed.ticksPerQuarter||480;
+  const cur=Math.max(0,Math.min(beats.length-1,Math.floor(curTick/tpq)));
   let lo=null,hi=null;
   if(midiPlayback.loopStartSeconds!=null&&midiPlayback.loopEndSeconds!=null){
-    lo=Math.max(0,(typeof midiGetBarNumberForSeconds==='function'?midiGetBarNumberForSeconds(midiPlayback.loopStartSeconds):1)-1);
-    hi=Math.max(lo,(typeof midiGetBarNumberForSeconds==='function'?midiGetBarNumberForSeconds(Math.max(0,midiPlayback.loopEndSeconds-0.0001)):1)-1);
+    const st=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiPlayback.loopStartSeconds):0;
+    const et=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(Math.max(0,midiPlayback.loopEndSeconds-0.0001)):0;
+    lo=Math.max(0,Math.min(beats.length-1,Math.floor(st/tpq)));
+    hi=Math.max(lo,Math.min(beats.length-1,Math.floor(et/tpq)));
   }
-  bars.forEach((b,i)=>{b.classList.toggle('current',i===Math.floor(cur));b.classList.toggle('selected',lo!==null&&i>=lo&&i<=hi);b.classList.toggle('anchor',lo!==null&&i===lo);});
+  beats.forEach((b,i)=>{b.classList.toggle('current',i===cur);b.classList.toggle('selected',lo!==null&&i>=lo&&i<=hi);b.classList.toggle('anchor',lo!==null&&i===lo);});
 }
-function hit(x,y){const el=document.elementFromPoint(x,y);const b=el&&el.closest?el.closest('.bar'):null;return b&&b.dataset.bar!==undefined?Number(b.dataset.bar):-1;}
-function preview(){if(dragStart<0||dragEnd<0)return;const lo=Math.min(dragStart,dragEnd),hi=Math.max(dragStart,dragEnd);bars.forEach((b,i)=>b.classList.toggle('selected',i>=lo&&i<=hi));info.textContent='Bars '+(lo+1)+'–'+(hi+1)+' · '+fmt(barTime(lo))+' – '+fmt(barTime(Math.min(hi+1,bars.length)));}
-function finish(){if(dragStart<0||dragEnd<0)return;const lo=Math.min(dragStart,dragEnd),hi=Math.max(dragStart,dragEnd);const start=barTime(lo),end=barTime(Math.min(hi+1,bars.length));if(end>start&&typeof midiPlayback!=='undefined'){midiPlayback.loopStartSeconds=start;midiPlayback.loopEndSeconds=end;midiPlayback.looping=false;const loop=document.getElementById('loopToggle');if(loop)loop.textContent='Loop OFF';const status=document.getElementById('uiStatus');if(status)status.textContent='Loop selected: Bars '+(lo+1)+'–'+(hi+1)+' ('+fmt(start)+' – '+fmt(end)+')';}update();}
+function hit(x,y){const el=document.elementFromPoint(x,y);const b=el&&el.closest?el.closest('.beat'):null;return b&&b.dataset.beat!==undefined?Number(b.dataset.beat):-1;}
+function preview(){if(dragStart<0||dragEnd<0)return;const lo=Math.min(dragStart,dragEnd),hi=Math.max(dragStart,dragEnd);beats.forEach((b,i)=>b.classList.toggle('selected',i>=lo&&i<=hi));info.textContent='Beats '+(lo+1)+'–'+(hi+1)+' · '+fmt(beatTime(lo))+' – '+fmt(beatTime(Math.min(hi+1,beats.length)));}
+function finish(){
+  if(dragStart<0||dragEnd<0)return;
+  const lo=Math.min(dragStart,dragEnd),hi=Math.max(dragStart,dragEnd);
+  const start=beatTime(lo),end=beatTime(Math.min(hi+1,beats.length));
+  if(end>start&&typeof midiPlayback!=='undefined'){
+    midiPlayback.loopStartSeconds=start;midiPlayback.loopEndSeconds=end;midiPlayback.looping=false;
+    const loop=document.getElementById('loopToggle');if(loop)loop.textContent='Loop OFF';
+    const status=document.getElementById('uiStatus');if(status)status.textContent='Loop selected: Beats '+(lo+1)+'–'+(hi+1)+' ('+fmt(start)+' – '+fmt(end)+')';
+  }
+  update();
+}
 timeline.addEventListener('pointerdown',e=>{const i=hit(e.clientX,e.clientY);if(i<0)return;dragging=true;dragStart=dragEnd=i;try{timeline.setPointerCapture(e.pointerId)}catch(_){}preview();e.preventDefault();});
 timeline.addEventListener('pointermove',e=>{if(!dragging)return;const i=hit(e.clientX,e.clientY);if(i>=0&&i!==dragEnd){dragEnd=i;preview();}e.preventDefault();});
 timeline.addEventListener('pointerup',e=>{if(!dragging)return;const i=hit(e.clientX,e.clientY);if(i>=0)dragEnd=i;dragging=false;try{timeline.releasePointerCapture(e.pointerId)}catch(_){}finish();e.preventDefault();});
