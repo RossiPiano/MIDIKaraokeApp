@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MIDI Karaoke App — Graphical UI v100</title>
+<title>MIDI Karaoke App — Graphical UI v107</title>
 
 <style>
 :root{color-scheme:dark;--bg:#0b0d10;--panel:#171b21;--panel2:#222831;--border:#3a424e;--text:#f4f6f8;--muted:#aeb7c4;--accent:#42a5ff;--good:#2f7d62;--danger:#c94f59}
@@ -4425,7 +4425,7 @@ function updateSeekTrack(){
 }
 let seeking=false;let seekWasPlaying=false;function refresh(){if(typeof midiPlayback==='undefined')return;const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0,dur=Number(midiPlayback.durationSeconds)||0,bpm=Number(midiPlayback.bpm)||0,tr=Number(midiPlayback.transposeSemitones)||0;$('uiNow').textContent=fmt(now);$('uiDur').textContent=fmt(dur);$('uiSeek').max=String(dur);updateSeekTrack();if(!seeking)$('uiSeek').value=String(Math.min(now,dur));$('uiFile').textContent=midiPlayback.fileName||'No MIDI loaded';if($('uiBpm'))$('uiBpm').textContent=bpm?Math.round(bpm):'—';if($('uiTranspose'))$('uiTranspose').textContent=(tr>0?'+':'')+tr+' semitone'+(Math.abs(tr)===1?'':'s');if($('loopToggle'))$('loopToggle').classList.toggle('loop-on',!!midiPlayback.looping);refreshMarkers()}
 $('uiMidi').onclick=()=>call('midiOpenFilePicker');$('uiSf2').onclick=()=>call('sf2OpenFilePicker');$('uiFull').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();$('uiPlay').onclick=()=>call('midiStartOrPausePlayback');$('uiStop').onclick=()=>call('midiStopPlayback');$('uiSave').onclick=()=>call('midiSaveSong');$('uiJson').onclick=()=>call('midiLoadSongPicker');$('uiSongs').addEventListener('change',()=>{const id=$('uiSongs').value;if(id)localStorage.setItem('karaokeBandMidiControllerActiveSong',id)});$('uiLoad').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;localStorage.setItem('karaokeBandMidiControllerActiveSong',id);const list=await midiSongDbGetAll();const r=list.find(x=>String(x.id)===id);if(r)await midiLoadStoredSong(r);refresh()};$('uiDelete').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll(),r=list.find(x=>String(x.id)===id);if(r&&confirm('Delete saved song “'+(r.name||'Untitled Song')+'”?')){await midiSongDbDelete(r.id);refreshSongs()}};
-$('uiSeek').addEventListener('pointerdown',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;seeking=true;seekWasPlaying=!!midiPlayback.playing;if(seekWasPlaying)call('midiStopPlayback')});$('uiSeek').addEventListener('input',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;$('uiNow').textContent=fmt(t)});$('uiSeek').addEventListener('pointerup',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});$('uiSeek').addEventListener('change',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});[['bpmM5',-5],['bpmM1',-1],['bpmP1',1],['bpmP5',5]].forEach(([id,d])=>$(id).onclick=()=>call('midiChangeBpm',d));$('bpmOrig').onclick=()=>call('midiRestoreOriginalBpm');$('metronomeVolDown').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(-0.05)};$('metronomeVolUp').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(0.05)};$('masterVolDown').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(-0.10)};$('masterVolUp').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(0.10)};midiUpdateVolumeButtons();$('trDown').onclick=()=>call('midiTranspose',-1);$('trUp').onclick=()=>call('midiTranspose',1);$('trReset').onclick=()=>{if(typeof midiPlayback!=='undefined')call('midiTranspose',-(Number(midiPlayback.transposeSemitones)||0));};$('loopToggle').onclick=()=>call('midiToggleLoop');$('prev').onclick=()=>call('midiJumpToPreviousMarker');$('next').onclick=()=>call('midiJumpToNextMarker');$('tsPL').onclick=()=>call('midiRecordTimestamp','P+L');$('tsL').onclick=()=>call('midiRecordTimestamp','L');$('tsRemove').onclick=()=>call('midiRemoveTimestamp');
+$('uiSeek').addEventListener('pointerdown',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;seeking=true;seekWasPlaying=!!midiPlayback.playing;if(seekWasPlaying)call('midiStopPlayback');if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(Number($('uiSeek').value),true)});$('uiSeek').addEventListener('input',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;$('uiNow').textContent=fmt(t);if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false)});$('uiSeek').addEventListener('pointerup',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false);if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});$('uiSeek').addEventListener('change',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false);if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});[['bpmM5',-5],['bpmM1',-1],['bpmP1',1],['bpmP5',5]].forEach(([id,d])=>$(id).onclick=()=>call('midiChangeBpm',d));$('bpmOrig').onclick=()=>call('midiRestoreOriginalBpm');$('metronomeVolDown').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(-0.05)};$('metronomeVolUp').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(0.05)};$('masterVolDown').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(-0.10)};$('masterVolUp').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(0.10)};midiUpdateVolumeButtons();$('trDown').onclick=()=>call('midiTranspose',-1);$('trUp').onclick=()=>call('midiTranspose',1);$('trReset').onclick=()=>{if(typeof midiPlayback!=='undefined')call('midiTranspose',-(Number(midiPlayback.transposeSemitones)||0));};$('loopToggle').onclick=()=>call('midiToggleLoop');$('prev').onclick=()=>call('midiJumpToPreviousMarker');$('next').onclick=()=>call('midiJumpToNextMarker');$('tsPL').onclick=()=>call('midiRecordTimestamp','P+L');$('tsL').onclick=()=>call('midiRecordTimestamp','L');$('tsRemove').onclick=()=>call('midiRemoveTimestamp');
 setInterval(refresh,200);refreshSongs();refresh();
 })();
 </script>
@@ -4596,11 +4596,45 @@ function update(){
   });
   syncBeatTimelines(false);
 }
+
+function syncAllDragViewsFromSeconds(seconds,sourceTimeline){
+  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return 0;
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  const target=Math.max(0,Math.min(duration,Number(seconds)||0));
+  midiPlayback.pausedTimeSeconds=target;
+  const seek=document.getElementById('uiSeek');
+  if(seek)seek.value=String(target);
+  const nowEl=document.getElementById('uiNow');
+  if(nowEl)nowEl.textContent=fmt(target);
+  if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(target,false);
+  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
+  const tick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(target):0;
+  const beatPosition=Math.max(0,Number(tick)||0)/tpq;
+  const scrollForBeat=function(view){
+    if(!view)return;
+    const desired=(beatPosition*48)+24-(view.clientWidth/2);
+    const maxScroll=Math.max(0,view.scrollWidth-view.clientWidth);
+    view.scrollLeft=Math.max(0,Math.min(maxScroll,desired));
+  };
+  if(sourceTimeline!==timeline)scrollForBeat(timeline);
+  if(sourceTimeline!==markerTimeline)scrollForBeat(markerTimeline);
+  syncBeatTimelines(false);
+  return target;
+}
+function timelineSecondsFromScroll(view){
+  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!view)return 0;
+  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
+  const beatPosition=Math.max(0,(view.scrollLeft+(view.clientWidth/2)-24)/48);
+  const tick=beatPosition*tpq;
+  const target=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(tick):0;
+  return Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,target));
+}
+
 function updateTimelineView(){const view=document.getElementById('timelineView');if(!view||!beats.length){if(view)view.textContent='All beats';return;}const first=Math.max(0,Math.floor(timeline.scrollLeft/48));const visible=Math.max(1,Math.ceil(timeline.clientWidth/48));const last=Math.min(beats.length,first+visible);view.textContent='Beats '+(first+1)+'–'+last+' / '+beats.length;}
 let dragState=null;
-timeline.addEventListener('pointerdown',e=>{if(!beats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.beat');dragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:timeline.scrollLeft,moved:false,beatTarget:beatTarget};timeline.setPointerCapture?.(e.pointerId);});
-timeline.addEventListener('pointermove',e=>{if(!dragState||e.pointerId!==dragState.pointerId)return;const dx=e.clientX-dragState.startX;if(Math.abs(dx)>6)dragState.moved=true;if(dragState.moved){timeline.scrollLeft=dragState.startScrollLeft-dx;timeline.classList.add('dragging');updateTimelineView();e.preventDefault();}});
-function finishTimelineDrag(e){if(!dragState||e.pointerId!==dragState.pointerId)return;const state=dragState;dragState=null;timeline.classList.remove('dragging');if(state.moved){e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){const wasPlaying=!!midiPlayback.playing;if(tapStep==='start')seekToBeat(i,wasPlaying);chooseBeat(i);}e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);}}
+timeline.addEventListener('pointerdown',e=>{if(!beats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.beat');const wasPlaying=!!midiPlayback.playing;if(wasPlaying)call('midiStopPlayback');dragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:timeline.scrollLeft,moved:false,beatTarget:beatTarget,wasPlaying:wasPlaying};timeline.setPointerCapture?.(e.pointerId);});
+timeline.addEventListener('pointermove',e=>{if(!dragState||e.pointerId!==dragState.pointerId)return;const dx=e.clientX-dragState.startX;if(Math.abs(dx)>6)dragState.moved=true;if(dragState.moved){timeline.scrollLeft=dragState.startScrollLeft-dx;syncAllDragViewsFromSeconds(timelineSecondsFromScroll(timeline),timeline);updateTimelineView();e.preventDefault();}});
+function finishTimelineDrag(e){if(!dragState||e.pointerId!==dragState.pointerId)return;const state=dragState;dragState=null;timeline.classList.remove('dragging');if(state.moved){const target=timelineSecondsFromScroll(timeline);syncAllDragViewsFromSeconds(target,timeline);if(state.wasPlaying)call('midiStartPlayback',target);e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){if(tapStep==='start')seekToBeat(i,state.wasPlaying);chooseBeat(i);}else if(state.wasPlaying)call('midiStartPlayback',timelineSecondsFromScroll(timeline));e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);}}
 timeline.addEventListener('pointerup',finishTimelineDrag);timeline.addEventListener('pointercancel',finishTimelineDrag);timeline.addEventListener('click',e=>{if(timeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete timeline.dataset.suppressClick;}},{capture:true});
 timeline.addEventListener('scroll',updateTimelineView,{passive:true});
 const loopCenterLockButton=document.getElementById('loopCenterLock');
@@ -4788,9 +4822,9 @@ function updateMarkerView(){
   const first=Math.max(0,Math.floor(markerTimeline.scrollLeft/48));const visible=Math.max(1,Math.ceil(markerTimeline.clientWidth/48));const last=Math.min(markerBeats.length,first+visible);markerView.textContent='Beats '+(first+1)+'–'+last+' / '+markerBeats.length;
   if(!markerEditor.hidden&&pendingMarkerBeat!==null)positionMarkerEditor(pendingMarkerBeat);
 }
-markerTimeline.addEventListener('pointerdown',function(e){if(!markerBeats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.marker-beat');markerDragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:markerTimeline.scrollLeft,moved:false,beatTarget:beatTarget};markerTimeline.setPointerCapture?.(e.pointerId);});
-markerTimeline.addEventListener('pointermove',function(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const dx=e.clientX-markerDragState.startX;if(Math.abs(dx)>6)markerDragState.moved=true;if(markerDragState.moved){markerTimeline.scrollLeft=markerDragState.startScrollLeft-dx;markerTimeline.classList.add('dragging');updateMarkerView();e.preventDefault();}});
-function finishMarkerDrag(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const state=markerDragState;markerDragState=null;markerTimeline.classList.remove('dragging');if(state.moved){e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){const wasPlaying=!!midiPlayback.playing;seekToBeat(i,wasPlaying);openMarkerEditor(i);}e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);}}
+markerTimeline.addEventListener('pointerdown',function(e){if(!markerBeats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.marker-beat');const wasPlaying=!!midiPlayback.playing;if(wasPlaying)call('midiStopPlayback');markerDragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:markerTimeline.scrollLeft,moved:false,beatTarget:beatTarget,wasPlaying:wasPlaying};markerTimeline.setPointerCapture?.(e.pointerId);});
+markerTimeline.addEventListener('pointermove',function(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const dx=e.clientX-markerDragState.startX;if(Math.abs(dx)>6)markerDragState.moved=true;if(markerDragState.moved){markerTimeline.scrollLeft=markerDragState.startScrollLeft-dx;syncAllDragViewsFromSeconds(timelineSecondsFromScroll(markerTimeline),markerTimeline);updateMarkerView();e.preventDefault();}});
+function finishMarkerDrag(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const state=markerDragState;markerDragState=null;markerTimeline.classList.remove('dragging');if(state.moved){const target=timelineSecondsFromScroll(markerTimeline);syncAllDragViewsFromSeconds(target,markerTimeline);if(state.wasPlaying)call('midiStartPlayback',target);e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){seekToBeat(i,state.wasPlaying);openMarkerEditor(i);}e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);}}
 markerTimeline.addEventListener('pointerup',finishMarkerDrag);markerTimeline.addEventListener('pointercancel',finishMarkerDrag);markerTimeline.addEventListener('click',function(e){if(markerTimeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete markerTimeline.dataset.suppressClick;}},{capture:true});markerTimeline.addEventListener('scroll',updateMarkerView,{passive:true});
 setInterval(function(){syncBeatTimelines(true);},200);
 document.addEventListener('pointerdown',function(e){
@@ -4955,57 +4989,28 @@ let chordDisplayHorizontal = false;
 let chordHorizontalTargetOffset = 0;
 let chordHorizontalVisualOffset = 0;
 let chordHorizontalCurrentBar = -1;
-function chordGetReadingZoneRows(){
-  const viewport=document.getElementById('chordDisplayViewport');
-  return viewport?Math.max(0,(viewport.clientHeight/2-26)/52):1.5;
-}
-function chordGetBarPosition(parsed,seconds){
-  if(!parsed||!parsed.bars.length||!midiPlayback.parsed)return {barIndex:0,fraction:0,linePosition:0};
-  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  const target=Math.max(0,Math.min(duration,Number(seconds)||0));
-  const tick=Math.max(0,midiGetTickForSeconds(target));
-  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
-  const maxTick=Math.max(tick+tpq*16,(parsed.bars.length+2)*tpq*64);
-  const barlines=midiGetBarlineTicks(maxTick);
-  if(!barlines.length)return {barIndex:0,fraction:0,linePosition:0};
-  let barIndex=0;
-  for(let i=0;i<barlines.length;i++){
-    if(barlines[i]<=tick+0.000001)barIndex=i;
-    else break;
-  }
-  barIndex=Math.max(0,Math.min(barIndex,parsed.bars.length-1));
-  const startTick=barlines[Math.min(barIndex,barlines.length-1)]||0;
-  let endTick=barlines[Math.min(barIndex+1,barlines.length-1)];
-  if(typeof endTick!=='number'||endTick<=startTick){
-    const remainingBars=Math.max(1,parsed.bars.length-barIndex);
-    endTick=startTick+Math.max(1,(duration>target
-      ?Math.max(0,midiGetTickForSeconds(duration)-startTick)
-      :tpq*4)/remainingBars);
-  }
-  let fraction=0;
-  if(endTick>startTick)fraction=Math.max(0,Math.min(0.999999,(tick-startTick)/(endTick-startTick)));
-  if(barIndex>=parsed.bars.length-1&&target>=duration-0.000001)fraction=1;
-  const bar=parsed.bars[barIndex];
-  const lineIndex=parsed.lines.findIndex(function(line){return line.lineIndex===bar.lineIndex;});
-  const line=Math.max(0,lineIndex);
-  const lineBars=(lineIndex>=0&&parsed.lines[lineIndex].bars)?parsed.lines[lineIndex].bars.length:1;
-  let barOffset=0;
-  if(lineIndex>=0){
-    barOffset=Math.max(0,parsed.lines[lineIndex].bars.findIndex(function(item){return item===bar;}));
-  }
-  const linePosition=line+(barOffset+fraction)/Math.max(1,lineBars);
-  return {barIndex:barIndex,fraction:fraction,linePosition:linePosition};
-}
 function chordGetSmoothDisplayPosition(parsed,secondsOverride){
   if(!parsed.lines.length)return 0;
   if(!midiPlayback.parsed||!parsed.bars.length)return 0;
-  const displayTime=typeof secondsOverride==='number'
-    ?secondsOverride
-    :((midiPlayback.chordDisplayKeepEnd&&!midiPlayback.playing)
-      ?Number(midiPlayback.durationSeconds)||0
-      :midiGetCurrentTime());
-  const position=chordGetBarPosition(parsed,displayTime);
-  return Math.max(0,position.linePosition+2-chordGetReadingZoneRows());
+  const hasOverride=typeof secondsOverride==='number'&&Number.isFinite(secondsOverride);
+  const displayTime=hasOverride
+    ? Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,secondsOverride))
+    : ((midiPlayback.chordDisplayKeepEnd && !midiPlayback.playing)
+      ? Number(midiPlayback.durationSeconds)||0
+      : midiGetCurrentTime());
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  if(!duration||parsed.lines.length===1)return 0;
+
+  // Keep the same single continuous time axis as v101, but account for the
+  // two leading spacer rows and the actual Reading Zone position. The previous
+  // version omitted those offsets, so the real chord rows drifted too far up.
+  const normalized=Math.max(0,Math.min(1,displayTime/duration));
+  const linePosition=normalized*Math.max(0,parsed.lines.length-1);
+  const viewport=document.getElementById('chordDisplayViewport');
+  const readingZoneRows=viewport
+    ?Math.max(0,(viewport.clientHeight/2-26)/52)
+    :1.5;
+  return Math.max(0,linePosition+2-readingZoneRows);
 }
 function chordSectionClassForSeconds(seconds){
   if(typeof midiGetStructuralMarkers!=='function')return '';
@@ -5092,6 +5097,29 @@ function chordUpdateHorizontalDisplay(parsed,currentBarIndex){
     chordHorizontalCurrentBar=index;
   }
 }
+function chordUpdateVisualCurrentRow(){
+  const viewport=document.getElementById('chordDisplayViewport');
+  const track=document.getElementById('chordDisplayTrack');
+  if(!viewport||!track||chordDisplayHorizontal)return;
+  const editor=document.getElementById('chordProgressionEditor');
+  if(!editor)return;
+  const parsed=chordParseEditorText(editor.value);
+  if(!parsed.lines.length)return;
+  const rows=[...track.querySelectorAll('.chord-display-row')];
+  const first=2;
+  const last=Math.min(rows.length-3,first+parsed.lines.length-1);
+  if(last<first)return;
+  const viewportRect=viewport.getBoundingClientRect();
+  const viewportCenter=viewportRect.top+(viewport.clientHeight/2);
+  let nearest=first;
+  let nearestDistance=Infinity;
+  for(let index=first;index<=last;index++){
+    const rowRect=rows[index].getBoundingClientRect();
+    const distance=Math.abs((rowRect.top+(rowRect.height/2))-viewportCenter);
+    if(distance<nearestDistance){nearestDistance=distance;nearest=index;}
+  }
+  rows.forEach(function(row,index){row.classList.toggle('current',index===nearest);});
+}
 function updateChordDisplay(){
   const editor=document.getElementById('chordProgressionEditor');
   const track=document.getElementById('chordDisplayTrack');
@@ -5174,48 +5202,93 @@ function updateChordDisplay(){
   });
   chordDisplayTargetPosition=chordGetSmoothDisplayPosition(parsed);
   if(chordDisplayJumpOnNextUpdate){chordDisplayVisualPosition=chordDisplayTargetPosition;chordDisplayJumpOnNextUpdate=false;}
+  track.style.transform='translate3d(0,'+(-chordDisplayVisualPosition*52)+'px,0)';
+  chordUpdateVisualCurrentRow();
+}
+function chordSetVisualFromSeek(seconds,forceBase){
+  const viewport=document.getElementById('chordDisplayViewport');
+  const track=document.getElementById('chordDisplayTrack');
+  const seek=document.getElementById('uiSeek');
+  if(!viewport||!track||!seek||!midiPlayback||!midiPlayback.parsed)return;
+  const seekMin=Number(seek.min)||0;
+  const seekMax=Number(seek.max)||Math.max(seekMin,Number(midiPlayback.durationSeconds)||0);
+  const seekRange=Math.max(0,seekMax-seekMin);
+  const target=Math.max(seekMin,Math.min(seekMax,Number(seconds)||0));
+  const normalized=seekRange?Math.max(0,Math.min(1,(target-seekMin)/seekRange)):0;
+  const sliderTravel=Math.max(1,seek.clientWidth-22);
+  const sliderPixels=normalized*sliderTravel;
+  if(forceBase){
+    chordDisplayLastText=null;
+    updateChordDisplay();
+  }
+  if(chordDisplayHorizontal){
+    const chordTravel=Math.max(0,track.scrollWidth-viewport.clientWidth);
+    const pixelsPerSliderPixel=chordTravel/sliderTravel;
+    chordHorizontalVisualOffset=Math.max(0,Math.min(chordTravel,sliderPixels*pixelsPerSliderPixel));
+  }else{
+    const chordTravel=Math.max(0,track.scrollHeight-viewport.clientHeight);
+    const pixelsPerSliderPixel=chordTravel/sliderTravel;
+    const chordPixels=Math.max(0,Math.min(chordTravel,sliderPixels*pixelsPerSliderPixel));
+    chordDisplayVisualPosition=chordPixels/52;
+  }
+  const editor=document.getElementById('chordProgressionEditor');
+  if(editor){
+    const parsed=chordParseEditorText(editor.value);
+    if(chordDisplayHorizontal){
+      const bars=track.querySelectorAll('.chord-horizontal-bar');
+      if(bars.length){
+        const tick=Math.max(0,midiGetTickForSeconds(target));
+        const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+        let barIndex=0;
+        for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
+        chordHorizontalCurrentBar=Math.max(0,Math.min(barIndex,bars.length-1));
+        bars.forEach(function(bar,index){bar.classList.toggle('current',index===chordHorizontalCurrentBar);});
+      }
+    }else if(parsed.lines.length){
+      chordUpdateVisualCurrentRow();
+    }
+  }
+  track.style.transform=chordDisplayHorizontal
+    ?'translate3d('+(-chordHorizontalVisualOffset)+'px,0,0)'
+    :'translate3d(0,'+(-chordDisplayVisualPosition*52)+'px,0)';
 }
 window.updateChordDisplay=updateChordDisplay;
-function chordGetHorizontalPlaybackOffset(parsed,secondsOverride){
+window.chordSetVisualFromSeek=chordSetVisualFromSeek;
+function chordGetHorizontalPlaybackOffset(parsed){
   const viewport=document.getElementById('chordDisplayViewport');
   const track=document.getElementById('chordDisplayTrack');
   if(!viewport||!track||!parsed||!parsed.bars.length)return 0;
   const bars=track.querySelectorAll('.chord-horizontal-bar');
   if(!bars.length)return 0;
+
+  // Horizontal playback uses the same single continuous time axis as the
+  // vertical view. This deliberately avoids easing toward each new bar.
   const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  const displayTime=typeof secondsOverride==='number'
-    ?secondsOverride
-    :((midiPlayback.chordDisplayKeepEnd&&!midiPlayback.playing)
-      ?duration
-      :midiGetCurrentTime());
-  const position=chordGetBarPosition(parsed,displayTime);
-  const index=Math.max(0,Math.min(position.barIndex,bars.length-1));
-  const current=bars[index];
-  const next=bars[Math.min(index+1,bars.length-1)];
-  const currentCenter=current.offsetLeft+current.offsetWidth/2;
-  const nextCenter=next.offsetLeft+next.offsetWidth/2;
-  const center=currentCenter+(nextCenter-currentCenter)*position.fraction;
+  if(!duration)return 0;
+  const normalized=Math.max(0,Math.min(1,midiGetCurrentTime()/duration));
   const maxOffset=Math.max(0,track.scrollWidth-viewport.clientWidth);
-  return Math.max(0,Math.min(maxOffset,center-viewport.clientWidth/2));
+  return normalized*maxOffset;
 }
 function animateChordDisplay(){
   const track=document.getElementById('chordDisplayTrack');
   if(track){
-    const editor=document.getElementById('chordProgressionEditor');
-    if(editor&&midiPlayback&&midiPlayback.parsed){
-      const parsed=chordParseEditorText(editor.value);
-      if(chordDisplayHorizontal){
-        if(midiPlayback.playing){
-          chordHorizontalVisualOffset=chordGetHorizontalPlaybackOffset(parsed);
+    if(midiPlayback&&midiPlayback.playing){
+      const editor=document.getElementById('chordProgressionEditor');
+      if(editor){
+        const parsed=chordParseEditorText(editor.value);
+        if(chordDisplayHorizontal){
+          const liveOffset=chordGetHorizontalPlaybackOffset(parsed);
+          chordHorizontalVisualOffset=liveOffset;
+        }else{
+          chordDisplayVisualPosition=chordGetSmoothDisplayPosition(parsed);
         }
-      }else if(midiPlayback.playing){
-        chordDisplayVisualPosition=chordGetSmoothDisplayPosition(parsed);
       }
     }
     if(chordDisplayHorizontal){
       track.style.transform='translate3d('+(-chordHorizontalVisualOffset)+'px,0,0)';
     }else{
       track.style.transform='translate3d(0,'+(-chordDisplayVisualPosition*52)+'px,0)';
+      chordUpdateVisualCurrentRow();
     }
   }
   chordDisplayAnimationFrame=requestAnimationFrame(animateChordDisplay);
@@ -5394,62 +5467,15 @@ function chordToggleExpanded(){
   button.setAttribute('aria-label',chordDisplayExpanded?'Reduce Chord Progression height':'Extend Chord Progression height');
   button.title=chordDisplayExpanded?'Reduce Chord Progression height':'Extend Chord Progression height';
 }
-function chordDragTargetSecondsFromDelta(startTime,deltaPixels,axis){
+function chordDragDurationFromDelta(deltaPixels,axis){
   if(!midiPlayback||!midiPlayback.parsed)return 0;
-  const editor=document.getElementById('chordProgressionEditor');
-  if(!editor)return Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,startTime));
-  const parsed=chordParseEditorText(editor.value);
-  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  if(!duration||!parsed.bars.length)return Math.max(0,Math.min(duration,startTime));
   const viewport=document.getElementById('chordDisplayViewport');
   const track=document.getElementById('chordDisplayTrack');
-  if(!viewport||!track)return Math.max(0,Math.min(duration,startTime));
-  const position=chordGetBarPosition(parsed,startTime);
-  if(axis==='horizontal'){
-    const bars=track.querySelectorAll('.chord-horizontal-bar');
-    if(!bars.length)return startTime;
-    const index=Math.max(0,Math.min(position.barIndex,bars.length-1));
-    const current=bars[index];
-    const next=bars[Math.min(index+1,bars.length-1)];
-    const currentCenter=current.offsetLeft+current.offsetWidth/2;
-    const nextCenter=next.offsetLeft+next.offsetWidth/2;
-    const pixelsPerBar=Math.max(1,nextCenter-currentCenter);
-    const barDelta=deltaPixels/pixelsPerBar;
-    return chordSecondsFromBarPosition(parsed,position.barIndex,position.fraction+barDelta);
-  }
-  const lineDelta=deltaPixels/52;
-  return chordSecondsFromLinePosition(parsed,position.linePosition+lineDelta);
-}
-function chordSecondsFromBarPosition(parsed,barIndex,fraction){
-  if(!parsed||!parsed.bars.length||!midiPlayback.parsed)return 0;
-  let index=Math.max(0,Math.min(parsed.bars.length-1,Math.floor(Number(barIndex)||0)));
-  let f=Number(fraction)||0;
-  while(f<0&&index>0){index--;f+=1;}
-  while(f>1&&index<parsed.bars.length-1){index++;f-=1;}
-  if(index>=parsed.bars.length-1&&f>=1)return Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
-  const maxTick=Math.max((parsed.bars.length+2)*tpq*64,midiGetTickForSeconds(Number(midiPlayback.durationSeconds)||0)+tpq);
-  const barlines=midiGetBarlineTicks(maxTick);
-  const startTick=barlines[Math.min(index,barlines.length-1)]||0;
-  const nextTick=barlines[Math.min(index+1,barlines.length-1)];
-  if(typeof nextTick!=='number'||nextTick<=startTick)return 0;
-  const tick=startTick+(nextTick-startTick)*Math.max(0,Math.min(0.999999,f));
-  if(typeof midiGetSecondsForTick==='function')return Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,midiGetSecondsForTick(tick)));
+  if(!viewport||!track)return 0;
+  const travel=axis==='horizontal'?Math.max(1,track.scrollWidth-viewport.clientWidth):Math.max(1,track.scrollHeight-viewport.clientHeight);
   const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  return duration*Math.max(0,Math.min(1,tick/Math.max(1,midiGetTickForSeconds(duration))));
-}
-function chordSecondsFromLinePosition(parsed,linePosition){
-  if(!parsed||!parsed.lines.length)return 0;
-  let pos=Math.max(0,Math.min(parsed.lines.length-0.000001,Number(linePosition)||0));
-  let lineIndex=Math.min(parsed.lines.length-1,Math.floor(pos));
-  let fraction=pos-lineIndex;
-  const line=parsed.lines[lineIndex];
-  const barCount=Math.max(1,line.bars.length);
-  const within=fraction*barCount;
-  const barOffset=Math.min(barCount-1,Math.floor(within));
-  const barFraction=within-barOffset;
-  const bar=line.bars[barOffset];
-  return chordSecondsFromBarPosition(parsed,bar.barIndex,barFraction);
+  if(!duration)return 0;
+  return deltaPixels*(duration/travel);
 }
 function chordSeekFromDrag(targetSeconds){
   if(!midiPlayback||!midiPlayback.parsed)return;
@@ -5469,6 +5495,7 @@ function chordBeginDrag(e){
   if(e.pointerType==='mouse'&&e.button!==0)return;
   chordDragState={pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,startTime:midiGetCurrentTime(),moved:false,wasPlaying:!!midiPlayback.playing,previewStarted:false};
   chordDragPreviewSeconds=chordDragState.startTime;
+  chordDragVisualStart=chordDisplayHorizontal?chordHorizontalVisualOffset:chordDisplayVisualPosition;
   viewport.classList.add('chord-dragging');
   try{viewport.setPointerCapture(e.pointerId);}catch(err){}
   e.preventDefault();
@@ -5482,16 +5509,26 @@ function chordCenterDragPreview(){
   const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
   const target=Math.max(0,Math.min(duration,Number(chordDragPreviewSeconds)||0));
   if(chordDisplayHorizontal){
-    chordHorizontalVisualOffset=chordGetHorizontalPlaybackOffset(parsed,target);
     const bars=track.querySelectorAll('.chord-horizontal-bar');
-    const info=chordGetBarPosition(parsed,target);
-    bars.forEach(function(bar,index){bar.classList.toggle('current',index===info.barIndex);});
+    if(!bars.length)return;
+    const tick=Math.max(0,midiGetTickForSeconds(target));
+    const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+    let barIndex=0;
+    for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
+    barIndex=Math.max(0,Math.min(barIndex,bars.length-1));
+    const barStart=barlines[Math.min(barIndex,barlines.length-1)];
+    const barEnd=barlines[Math.min(barIndex+1,barlines.length-1)];
+    let fraction=0;
+    if(typeof barStart==='number'&&typeof barEnd==='number'&&barEnd>barStart)fraction=Math.max(0,Math.min(0.999999,(tick-barStart)/(barEnd-barStart)));
+    const current=bars[barIndex];
+    const next=bars[Math.min(barIndex+1,bars.length-1)];
+    const center=current.offsetLeft+current.offsetWidth/2+(next.offsetLeft+next.offsetWidth/2-(current.offsetLeft+current.offsetWidth/2))*fraction;
+    const maxOffset=Math.max(0,track.scrollWidth-viewport.clientWidth);
+    chordHorizontalVisualOffset=Math.max(0,Math.min(maxOffset,center-viewport.clientWidth/2));
   }else{
-    chordDisplayVisualPosition=chordGetSmoothDisplayPosition(parsed,target);
-    const info=chordGetBarPosition(parsed,target);
-    const rows=track.querySelectorAll('.chord-display-row');
-    const currentLineIndex=Math.max(0,Math.min(parsed.lines.length-1,Math.floor(info.linePosition+0.000001)));
-    rows.forEach(function(row,index){row.classList.toggle('current',index===currentLineIndex+2);});
+    const position=chordGetSmoothDisplayPosition(parsed,target);
+    const maxVisual=Math.max(0,(track.scrollHeight-viewport.clientHeight)/52);
+    chordDisplayVisualPosition=Math.max(0,Math.min(maxVisual,position));
   }
   track.style.transform=chordDisplayHorizontal
     ?'translate3d('+(-chordHorizontalVisualOffset)+'px,0,0)'
@@ -5500,7 +5537,8 @@ function chordCenterDragPreview(){
 function chordMoveDrag(e){
   if(!chordDragState||e.pointerId!==chordDragState.pointerId)return;
   const viewport=document.getElementById('chordDisplayViewport');
-  if(!viewport)return;
+  const track=document.getElementById('chordDisplayTrack');
+  if(!viewport||!track)return;
   const dx=e.clientX-chordDragState.startX;
   const dy=e.clientY-chordDragState.startY;
   const axisDelta=chordDisplayHorizontal?dx:dy;
@@ -5509,15 +5547,18 @@ function chordMoveDrag(e){
     if(chordDragState.wasPlaying&&!chordDragState.previewStarted){
       chordDragState.startTime=midiGetCurrentTime();
       chordDragState.previewStarted=true;
+      chordDragVisualStart=chordDisplayHorizontal?chordHorizontalVisualOffset:chordDisplayVisualPosition;
       midiStopPlayback();
     }
     const directionDelta=chordDisplayHorizontal?-axisDelta:-axisDelta;
-    chordDragPreviewSeconds=chordDragTargetSecondsFromDelta(
-      chordDragState.startTime,
-      directionDelta,
-      chordDisplayHorizontal?'horizontal':'vertical'
-    );
+    const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+    const travel=chordDisplayHorizontal
+      ?Math.max(1,track.scrollWidth-viewport.clientWidth)
+      :Math.max(1,track.scrollHeight-viewport.clientHeight);
+    const deltaSeconds=duration?directionDelta*(duration/travel):0;
+    chordDragPreviewSeconds=Math.max(0,Math.min(duration,chordDragState.startTime+deltaSeconds));
     midiPlayback.pausedTimeSeconds=chordDragPreviewSeconds;
+    updateChordDisplay();
     chordCenterDragPreview();
   }
   e.preventDefault();
@@ -5536,21 +5577,19 @@ function chordEndDrag(e){
     return;
   }
   if(Math.abs(delta)<6){chordDragPreviewSeconds=null;return;}
-  const target=Number.isFinite(chordDragPreviewSeconds)
-    ?chordDragPreviewSeconds
-    :chordDragTargetSecondsFromDelta(state.startTime,delta,chordDisplayHorizontal?'horizontal':'vertical');
+  const target=Number.isFinite(chordDragPreviewSeconds)?chordDragPreviewSeconds:(state.startTime+chordDragDurationFromDelta(delta,chordDisplayHorizontal?'horizontal':'vertical'));
   chordDragPreviewSeconds=null;
   if(state.wasPlaying){
     chordSeekFromDrag(target);
   }else{
     midiPlayback.pausedTimeSeconds=target;
+    updateChordDisplay();
     chordDragPreviewSeconds=target;
     chordCenterDragPreview();
     chordDragPreviewSeconds=null;
   }
   e.preventDefault();
 }
-
 function chordInitDragControls(){
   const viewport=document.getElementById('chordDisplayViewport');
   if(!viewport)return;
