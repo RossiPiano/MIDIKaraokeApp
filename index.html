@@ -24,9 +24,12 @@ input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;
 input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:none}
 #midiGraphicalUI{max-width:1450px;margin:auto}
 #midiTimelineCard{background:transparent;border:0;border-radius:0;padding:0 0 10px;margin:0 0 10px;border-bottom:1px solid var(--border);user-select:none}
-.timeline-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
+.timeline-head{position:relative;display:flex;justify-content:flex-start;gap:10px;align-items:center;margin-bottom:8px;min-height:24px}
 .timeline-head strong{font-size:16px}
 .timeline-head span{color:var(--muted);font-size:13px}
+.timeline-lock-button{position:absolute;left:calc(50% + 28px);top:50%;transform:translate(-50%,-50%);width:22px;height:22px;min-width:22px;min-height:22px;padding:0;margin:0;border:0;background:transparent;border-radius:5px;font-size:15px;line-height:1;cursor:pointer}
+.timeline-lock-button:hover{background:#303a46}
+.timeline-lock-button.unlocked{opacity:.7}
 .timeline{display:flex;width:100%;min-height:52px;overflow-x:hidden;overflow-y:hidden;border:1px solid var(--border);border-radius:10px;background:#080d16;touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}
 .timeline.dragging{cursor:grabbing}
 .timeline.empty{align-items:center;justify-content:center;color:var(--muted);padding:10px}
@@ -160,7 +163,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   <section class="main-controls playback-controls" id="playbackSectionCard">
     <div id="midiTimelineCard" class="playback-subpanel loop-subpanel">
-      <div class="timeline-head"><strong>🔁 Loop Selector</strong><span id="uiTimelineInfo"></span></div>
+      <div class="timeline-head"><strong>🔁 Loop Selector</strong><span id="uiTimelineInfo"></span><button id="loopCenterLock" class="timeline-lock-button locked" type="button" aria-label="Lock Loop Selector center" title="Lock white frame to center">🔒</button></div>
       <div class="timeline-selector-row">
         <button id="loopToggle" class="loop-icon-button" aria-label="Toggle Loop / Repeat" title="Toggle Loop / Repeat">🔁</button>
         <div class="timeline-selector-wrap">
@@ -186,7 +189,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
       <div class="playback-time"><span id="uiDur">0:00</span></div>
     </div>
     <div class="section-marker-inline">  <div id="sectionMarkerCard" class="playback-subpanel section-marker-card">
-    <div class="timeline-head section-marker-head"><strong>🏷️ Section Marker</strong><span id="sectionMarkerInfo"></span></div>
+    <div class="timeline-head section-marker-head"><strong>🏷️ Section Marker</strong><span id="sectionMarkerInfo"></span><button id="markerCenterLock" class="timeline-lock-button locked" type="button" aria-label="Lock Section Marker center" title="Lock white frame to center">🔒</button></div>
     <div class="section-marker-timeline-row">
       <div class="section-marker-export-wrap">
         <button id="exportMarkedMidi" class="primary marker-export-button" type="button" aria-label="Export MIDI with Section Markers" title="Export MIDI with Section Marker changes">💾</button>
@@ -1308,7 +1311,6 @@ function midiBuildExportBytesWithSectionMarkers() {
         return mark && typeof mark.tick === 'number' && String(mark.text || '').trim();
       }) : [];
   const deleted = Array.isArray(midiPlayback.deletedSectionMarkers) ? midiPlayback.deletedSectionMarkers : [];
-  if (!markers.length && !deleted.length) throw new Error('No Section Marker changes to export.');
 
   const source = new Uint8Array(midiPlayback.rawData);
   if (source.length < 14 || source[0] !== 0x4d || source[1] !== 0x54 || source[2] !== 0x68 || source[3] !== 0x64) {
@@ -1333,6 +1335,10 @@ function midiBuildExportBytesWithSectionMarkers() {
     offset = end;
   }
   if (!trackChunks.length) throw new Error('MIDI contains no tracks.');
+
+  if (!markers.length && !deleted.length) {
+    return source.slice();
+  }
 
   let targetTrackIndex = 0;
   for (let i = 0; i < trackChunks.length; i++) {
@@ -4245,7 +4251,7 @@ function render(){
   const frag=document.createDocumentFragment();
   for(let i=0;i<n;i++){
     const b=document.createElement('button');b.type='button';b.className='beat '+sectionClassForTime(beatTime(i));b.dataset.beat=i;
-    b.innerHTML='<span class="beat-bar-number">Bar '+barNumberForBeatIndex(i)+'</span><span class="beat-number">Beat '+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
+    b.innerHTML=(i===0||barNumberForBeatIndex(i)!==barNumberForBeatIndex(i-1)?'<span class="beat-bar-number">Bar '+barNumberForBeatIndex(i)+'</span>':'<span class="beat-bar-number"></span>')+'<span class="beat-number">Beat '+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
     const tpq=midiPlayback.parsed.ticksPerQuarter;
     midiAppendBarlineToBeat(b,i*tpq,(i+1)*tpq);
     frag.appendChild(b);beats.push(b);
@@ -4274,8 +4280,11 @@ function currentBeatIndexForPlayback(){
   const tick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(now):0;
   return Math.max(0,Math.floor(tick/midiPlayback.parsed.ticksPerQuarter));
 }
-function centerBeatInTimeline(view,beatIndex,beatCount){
+let loopCenterLocked=true;
+let markerCenterLocked=true;
+function centerBeatInTimeline(view,beatIndex,beatCount,forceCenter){
   if(!view||!beatCount)return;
+  if(!forceCenter)return;
   const maxScroll=Math.max(0,view.scrollWidth-view.clientWidth);
   const desired=(beatIndex*48)+24-(view.clientWidth/2);
   view.scrollLeft=Math.max(0,Math.min(maxScroll,desired));
@@ -4285,14 +4294,32 @@ function syncBeatTimelines(center){
   const cur=currentBeatIndexForPlayback();
   if(beats.length){
     beats.forEach(function(b,i){b.classList.toggle('current',i===cur);});
-    if(center)centerBeatInTimeline(timeline,cur,beats.length);
+    if(center)centerBeatInTimeline(timeline,cur,beats.length,loopCenterLocked);
     updateTimelineView();
   }
   if(markerBeats.length){
     markerBeats.forEach(function(b,i){b.classList.toggle('current',i===cur);});
-    if(center)centerBeatInTimeline(markerTimeline,cur,markerBeats.length);
+    if(center)centerBeatInTimeline(markerTimeline,cur,markerBeats.length,markerCenterLocked);
     updateMarkerView();
   }
+}
+function updateCenterLockButton(button,locked,label){
+  if(!button)return;
+  button.textContent=locked?'🔒':'🔓';
+  button.classList.toggle('locked',locked);
+  button.classList.toggle('unlocked',!locked);
+  button.setAttribute('aria-label',(locked?'Unlock ':'Lock ')+label+' center');
+  button.title=locked?'Unlock white frame from center':'Lock white frame to center';
+}
+function toggleLoopCenterLock(){
+  loopCenterLocked=!loopCenterLocked;
+  updateCenterLockButton(document.getElementById('loopCenterLock'),loopCenterLocked,'Loop Selector');
+  syncBeatTimelines(true);
+}
+function toggleMarkerCenterLock(){
+  markerCenterLocked=!markerCenterLocked;
+  updateCenterLockButton(document.getElementById('markerCenterLock'),markerCenterLocked,'Section Marker');
+  syncBeatTimelines(true);
 }
 function seekToBeat(i,keepPlaying){
   if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return;
@@ -4344,6 +4371,12 @@ timeline.addEventListener('pointermove',e=>{if(!dragState||e.pointerId!==dragSta
 function finishTimelineDrag(e){if(!dragState||e.pointerId!==dragState.pointerId)return;const state=dragState;dragState=null;timeline.classList.remove('dragging');if(state.moved){e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){const wasPlaying=!!midiPlayback.playing;if(tapStep==='start')seekToBeat(i,wasPlaying);chooseBeat(i);}e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);}}
 timeline.addEventListener('pointerup',finishTimelineDrag);timeline.addEventListener('pointercancel',finishTimelineDrag);timeline.addEventListener('click',e=>{if(timeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete timeline.dataset.suppressClick;}},{capture:true});
 timeline.addEventListener('scroll',updateTimelineView,{passive:true});
+const loopCenterLockButton=document.getElementById('loopCenterLock');
+const markerCenterLockButton=document.getElementById('markerCenterLock');
+if(loopCenterLockButton)loopCenterLockButton.addEventListener('click',toggleLoopCenterLock);
+if(markerCenterLockButton)markerCenterLockButton.addEventListener('click',toggleMarkerCenterLock);
+updateCenterLockButton(loopCenterLockButton,loopCenterLocked,'Loop Selector');
+updateCenterLockButton(markerCenterLockButton,markerCenterLocked,'Section Marker');
 
 const markerTimeline=document.getElementById('sectionMarkerTimeline');
 const markerEditor=document.getElementById('sectionMarkerEditor');
@@ -4489,7 +4522,7 @@ function renderMarkers(){
     const frag=document.createDocumentFragment();
     for(let i=0;i<n;i++){
       const b=document.createElement('button');b.type='button';b.className='beat marker-beat '+sectionClassForTime(beatTime(i));b.dataset.beat=i;
-      b.innerHTML='<span class="beat-bar-number">Bar '+barNumberForBeatIndex(i)+'</span><span class="beat-number">Beat '+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
+      b.innerHTML=(i===0||barNumberForBeatIndex(i)!==barNumberForBeatIndex(i-1)?'<span class="beat-bar-number">Bar '+barNumberForBeatIndex(i)+'</span>':'<span class="beat-bar-number"></span>')+'<span class="beat-number">Beat '+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
       const tpq=midiPlayback.parsed.ticksPerQuarter;midiAppendBarlineToBeat(b,i*tpq,(i+1)*tpq);
       frag.appendChild(b);markerBeats.push(b);
     }
@@ -4535,9 +4568,8 @@ if(exportButton)exportButton.addEventListener('click',async()=>{
   if(!midiPlayback.rawData||!midiPlayback.parsed){setStatus('No MIDI loaded.');return;}
   const markers=Array.isArray(midiPlayback.addedSectionMarkers)?midiPlayback.addedSectionMarkers.filter(function(mark){return mark&&typeof mark.tick==='number'&&String(mark.text||'').trim()&&!midiIsSectionMarkerDeleted(mark);}):[];
   const deleted=Array.isArray(midiPlayback.deletedSectionMarkers)?midiPlayback.deletedSectionMarkers:[];
-  if(!markers.length&&!deleted.length){setStatus('No Section Marker changes to export.');return;}
   const baseName=(midiPlayback.fileName||'Untitled MIDI').replace(/\.[^.]+$/,'')||'Untitled MIDI';
-  const fileName=baseName+'_with_section_markers.mid';
+  const fileName=(markers.length||deleted.length)?baseName+'_with_section_markers.mid':baseName+'.mid';
 
   // Build and validate the complete MIDI synchronously from the button click.
   // This happens before the Save As dialog, so an invalid export can never
@@ -4545,7 +4577,7 @@ if(exportButton)exportButton.addEventListener('click',async()=>{
   let output;
   try {
     output=midiBuildExportBytesWithSectionMarkers();
-    setStatus('MIDI ready to save ('+output.byteLength+' bytes).');
+    setStatus((markers.length||deleted.length?'MIDI with Section Marker changes':'MIDI')+' ready to save ('+output.byteLength+' bytes).');
   } catch(error) {
     console.error('[midi] Could not build MIDI export:',error);
     setStatus('MIDI export error: '+(error.message||error));
