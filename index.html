@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MIDI Karaoke App — Graphical UI v82</title>
+<title>MIDI Karaoke App — Graphical UI v100</title>
 
 <style>
 :root{color-scheme:dark;--bg:#0b0d10;--panel:#171b21;--panel2:#222831;--border:#3a424e;--text:#f4f6f8;--muted:#aeb7c4;--accent:#42a5ff;--good:#2f7d62;--danger:#c94f59}
@@ -160,7 +160,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .chord-display-details.chord-display-expanded .chord-display-viewport{height:calc(100vh - 170px);min-height:360px}
 .chord-display-expand-button{width:48px;height:40px;min-width:48px;min-height:40px;padding:0;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700}
 .chord-display-viewport.chord-drag-ready{cursor:grab;touch-action:none}
-.chord-display-viewport.chord-dragging{cursor:grabbing;user-select:none}
+.chord-display-viewport.chord-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 @media(max-width:700px){.chord-display-details.chord-display-expanded .chord-display-viewport{height:calc(100vh - 145px);min-height:300px}}
 .chord-display-track{will-change:transform;transform:translateY(0)}
 .chord-display-row{height:52px;min-height:52px;box-sizing:border-box;padding:4px 6px;display:block;overflow:hidden;border-radius:7px;color:#d7e0eb;font-size:clamp(13px,2.4vw,18px);font-weight:750;line-height:1.25;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.chord-display-row:not(.current){border-radius:0}.chord-beat-grid{display:grid;grid-template-columns:repeat(var(--chord-grid-columns,4),minmax(0,1fr));width:100%;height:100%;min-width:0}.chord-beat-cell{min-width:0;display:flex;align-items:center;padding:2px 4px;box-sizing:border-box;overflow:hidden;white-space:nowrap;text-overflow:clip;border-right:1px solid rgba(255,255,255,.08)}.chord-beat-cell:last-child{border-right:0}.chord-grid-manual{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px 8px;color:var(--muted);font-size:12px}.chord-grid-manual label{display:flex;align-items:center;gap:6px}.chord-grid-manual select{height:34px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}
@@ -4955,31 +4955,57 @@ let chordDisplayHorizontal = false;
 let chordHorizontalTargetOffset = 0;
 let chordHorizontalVisualOffset = 0;
 let chordHorizontalCurrentBar = -1;
-function chordGetSmoothDisplayPosition(parsed){
+function chordGetReadingZoneRows(){
+  const viewport=document.getElementById('chordDisplayViewport');
+  return viewport?Math.max(0,(viewport.clientHeight/2-26)/52):1.5;
+}
+function chordGetBarPosition(parsed,seconds){
+  if(!parsed||!parsed.bars.length||!midiPlayback.parsed)return {barIndex:0,fraction:0,linePosition:0};
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  const target=Math.max(0,Math.min(duration,Number(seconds)||0));
+  const tick=Math.max(0,midiGetTickForSeconds(target));
+  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
+  const maxTick=Math.max(tick+tpq*16,(parsed.bars.length+2)*tpq*64);
+  const barlines=midiGetBarlineTicks(maxTick);
+  if(!barlines.length)return {barIndex:0,fraction:0,linePosition:0};
+  let barIndex=0;
+  for(let i=0;i<barlines.length;i++){
+    if(barlines[i]<=tick+0.000001)barIndex=i;
+    else break;
+  }
+  barIndex=Math.max(0,Math.min(barIndex,parsed.bars.length-1));
+  const startTick=barlines[Math.min(barIndex,barlines.length-1)]||0;
+  let endTick=barlines[Math.min(barIndex+1,barlines.length-1)];
+  if(typeof endTick!=='number'||endTick<=startTick){
+    const remainingBars=Math.max(1,parsed.bars.length-barIndex);
+    endTick=startTick+Math.max(1,(duration>target
+      ?Math.max(0,midiGetTickForSeconds(duration)-startTick)
+      :tpq*4)/remainingBars);
+  }
+  let fraction=0;
+  if(endTick>startTick)fraction=Math.max(0,Math.min(0.999999,(tick-startTick)/(endTick-startTick)));
+  if(barIndex>=parsed.bars.length-1&&target>=duration-0.000001)fraction=1;
+  const bar=parsed.bars[barIndex];
+  const lineIndex=parsed.lines.findIndex(function(line){return line.lineIndex===bar.lineIndex;});
+  const line=Math.max(0,lineIndex);
+  const lineBars=(lineIndex>=0&&parsed.lines[lineIndex].bars)?parsed.lines[lineIndex].bars.length:1;
+  let barOffset=0;
+  if(lineIndex>=0){
+    barOffset=Math.max(0,parsed.lines[lineIndex].bars.findIndex(function(item){return item===bar;}));
+  }
+  const linePosition=line+(barOffset+fraction)/Math.max(1,lineBars);
+  return {barIndex:barIndex,fraction:fraction,linePosition:linePosition};
+}
+function chordGetSmoothDisplayPosition(parsed,secondsOverride){
   if(!parsed.lines.length)return 0;
   if(!midiPlayback.parsed||!parsed.bars.length)return 0;
-  const displayTime=(midiPlayback.chordDisplayKeepEnd && !midiPlayback.playing)
-    ? Number(midiPlayback.durationSeconds)||0
-    : midiGetCurrentTime();
-  const tick=Math.max(0,midiGetTickForSeconds(displayTime));
-  const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
-  let barIndex=0;
-  for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
-  barIndex=Math.max(0,Math.min(barIndex,parsed.bars.length-1));
-  const currentBar=parsed.bars[barIndex];
-  const lineIndex=Math.max(0,parsed.lines.findIndex(function(line){return line.lineIndex===currentBar.lineIndex;}));
-  const line=parsed.lines[lineIndex];
-  const firstBarIndex=parsed.bars.findIndex(function(bar){return bar.lineIndex===line.lineIndex;});
-  const lineBarCount=line&&line.bars?line.bars.length:1;
-  const barStart=barlines[Math.min(barIndex,barlines.length-1)];
-  const barEnd=barlines[Math.min(barIndex+1,barlines.length-1)];
-  let barFraction=0;
-  if(typeof barStart==='number'&&typeof barEnd==='number'&&barEnd>barStart){
-    barFraction=Math.max(0,Math.min(0.9999,(tick-barStart)/(barEnd-barStart)));
-  }
-  const withinLine=Math.max(0,Math.min(0.9999,(barIndex-firstBarIndex+barFraction)/Math.max(1,lineBarCount)));
-  const position=lineIndex+withinLine;
-  return Math.max(0,Math.min(position,Math.max(0,parsed.lines.length-1)));
+  const displayTime=typeof secondsOverride==='number'
+    ?secondsOverride
+    :((midiPlayback.chordDisplayKeepEnd&&!midiPlayback.playing)
+      ?Number(midiPlayback.durationSeconds)||0
+      :midiGetCurrentTime());
+  const position=chordGetBarPosition(parsed,displayTime);
+  return Math.max(0,position.linePosition+2-chordGetReadingZoneRows());
 }
 function chordSectionClassForSeconds(seconds){
   if(typeof midiGetStructuralMarkers!=='function')return '';
@@ -5149,34 +5175,46 @@ function updateChordDisplay(){
   chordDisplayTargetPosition=chordGetSmoothDisplayPosition(parsed);
   if(chordDisplayJumpOnNextUpdate){chordDisplayVisualPosition=chordDisplayTargetPosition;chordDisplayJumpOnNextUpdate=false;}
 }
+window.updateChordDisplay=updateChordDisplay;
+function chordGetHorizontalPlaybackOffset(parsed,secondsOverride){
+  const viewport=document.getElementById('chordDisplayViewport');
+  const track=document.getElementById('chordDisplayTrack');
+  if(!viewport||!track||!parsed||!parsed.bars.length)return 0;
+  const bars=track.querySelectorAll('.chord-horizontal-bar');
+  if(!bars.length)return 0;
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  const displayTime=typeof secondsOverride==='number'
+    ?secondsOverride
+    :((midiPlayback.chordDisplayKeepEnd&&!midiPlayback.playing)
+      ?duration
+      :midiGetCurrentTime());
+  const position=chordGetBarPosition(parsed,displayTime);
+  const index=Math.max(0,Math.min(position.barIndex,bars.length-1));
+  const current=bars[index];
+  const next=bars[Math.min(index+1,bars.length-1)];
+  const currentCenter=current.offsetLeft+current.offsetWidth/2;
+  const nextCenter=next.offsetLeft+next.offsetWidth/2;
+  const center=currentCenter+(nextCenter-currentCenter)*position.fraction;
+  const maxOffset=Math.max(0,track.scrollWidth-viewport.clientWidth);
+  return Math.max(0,Math.min(maxOffset,center-viewport.clientWidth/2));
+}
 function animateChordDisplay(){
   const track=document.getElementById('chordDisplayTrack');
   if(track){
-    if(chordDisplayHorizontal){
-      if(midiPlayback&&midiPlayback.playing){
-        const distance=chordHorizontalTargetOffset-chordHorizontalVisualOffset;
-        const absoluteDistance=Math.abs(distance);
-        if(absoluteDistance>0.5){
-          const maxStep=6;
-          const step=Math.min(absoluteDistance,maxStep);
-          chordHorizontalVisualOffset+=Math.sign(distance)*step;
-        }else{
-          chordHorizontalVisualOffset=chordHorizontalTargetOffset;
+    const editor=document.getElementById('chordProgressionEditor');
+    if(editor&&midiPlayback&&midiPlayback.parsed){
+      const parsed=chordParseEditorText(editor.value);
+      if(chordDisplayHorizontal){
+        if(midiPlayback.playing){
+          chordHorizontalVisualOffset=chordGetHorizontalPlaybackOffset(parsed);
         }
+      }else if(midiPlayback.playing){
+        chordDisplayVisualPosition=chordGetSmoothDisplayPosition(parsed);
       }
+    }
+    if(chordDisplayHorizontal){
       track.style.transform='translate3d('+(-chordHorizontalVisualOffset)+'px,0,0)';
     }else{
-      if(midiPlayback&&midiPlayback.playing){
-        const distance=chordDisplayTargetPosition-chordDisplayVisualPosition;
-        const absoluteDistance=Math.abs(distance);
-        if(absoluteDistance>0.00005){
-          const maxStep=0.055;
-          const step=Math.min(absoluteDistance,maxStep);
-          chordDisplayVisualPosition+=Math.sign(distance)*step;
-        }else{
-          chordDisplayVisualPosition=chordDisplayTargetPosition;
-        }
-      }
       track.style.transform='translate3d(0,'+(-chordDisplayVisualPosition*52)+'px,0)';
     }
   }
@@ -5345,6 +5383,7 @@ function chordSetVerticalDisplay(){
 let chordDisplayExpanded=false;
 let chordDragState=null;
 let chordDragPreviewSeconds=null;
+let chordDragVisualStart=0;
 function chordToggleExpanded(){
   const details=document.getElementById('chordDisplayDetails');
   const button=document.getElementById('chordFocusToggle');
@@ -5355,15 +5394,62 @@ function chordToggleExpanded(){
   button.setAttribute('aria-label',chordDisplayExpanded?'Reduce Chord Progression height':'Extend Chord Progression height');
   button.title=chordDisplayExpanded?'Reduce Chord Progression height':'Extend Chord Progression height';
 }
-function chordDragDurationFromDelta(deltaPixels,axis){
+function chordDragTargetSecondsFromDelta(startTime,deltaPixels,axis){
   if(!midiPlayback||!midiPlayback.parsed)return 0;
+  const editor=document.getElementById('chordProgressionEditor');
+  if(!editor)return Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,startTime));
+  const parsed=chordParseEditorText(editor.value);
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  if(!duration||!parsed.bars.length)return Math.max(0,Math.min(duration,startTime));
   const viewport=document.getElementById('chordDisplayViewport');
   const track=document.getElementById('chordDisplayTrack');
-  if(!viewport||!track)return 0;
-  const travel=axis==='horizontal'?Math.max(1,track.scrollWidth-viewport.clientWidth):Math.max(1,track.scrollHeight-viewport.clientHeight);
+  if(!viewport||!track)return Math.max(0,Math.min(duration,startTime));
+  const position=chordGetBarPosition(parsed,startTime);
+  if(axis==='horizontal'){
+    const bars=track.querySelectorAll('.chord-horizontal-bar');
+    if(!bars.length)return startTime;
+    const index=Math.max(0,Math.min(position.barIndex,bars.length-1));
+    const current=bars[index];
+    const next=bars[Math.min(index+1,bars.length-1)];
+    const currentCenter=current.offsetLeft+current.offsetWidth/2;
+    const nextCenter=next.offsetLeft+next.offsetWidth/2;
+    const pixelsPerBar=Math.max(1,nextCenter-currentCenter);
+    const barDelta=deltaPixels/pixelsPerBar;
+    return chordSecondsFromBarPosition(parsed,position.barIndex,position.fraction+barDelta);
+  }
+  const lineDelta=deltaPixels/52;
+  return chordSecondsFromLinePosition(parsed,position.linePosition+lineDelta);
+}
+function chordSecondsFromBarPosition(parsed,barIndex,fraction){
+  if(!parsed||!parsed.bars.length||!midiPlayback.parsed)return 0;
+  let index=Math.max(0,Math.min(parsed.bars.length-1,Math.floor(Number(barIndex)||0)));
+  let f=Number(fraction)||0;
+  while(f<0&&index>0){index--;f+=1;}
+  while(f>1&&index<parsed.bars.length-1){index++;f-=1;}
+  if(index>=parsed.bars.length-1&&f>=1)return Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
+  const maxTick=Math.max((parsed.bars.length+2)*tpq*64,midiGetTickForSeconds(Number(midiPlayback.durationSeconds)||0)+tpq);
+  const barlines=midiGetBarlineTicks(maxTick);
+  const startTick=barlines[Math.min(index,barlines.length-1)]||0;
+  const nextTick=barlines[Math.min(index+1,barlines.length-1)];
+  if(typeof nextTick!=='number'||nextTick<=startTick)return 0;
+  const tick=startTick+(nextTick-startTick)*Math.max(0,Math.min(0.999999,f));
+  if(typeof midiGetSecondsForTick==='function')return Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,midiGetSecondsForTick(tick)));
   const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  if(!duration)return 0;
-  return deltaPixels*(duration/travel);
+  return duration*Math.max(0,Math.min(1,tick/Math.max(1,midiGetTickForSeconds(duration))));
+}
+function chordSecondsFromLinePosition(parsed,linePosition){
+  if(!parsed||!parsed.lines.length)return 0;
+  let pos=Math.max(0,Math.min(parsed.lines.length-0.000001,Number(linePosition)||0));
+  let lineIndex=Math.min(parsed.lines.length-1,Math.floor(pos));
+  let fraction=pos-lineIndex;
+  const line=parsed.lines[lineIndex];
+  const barCount=Math.max(1,line.bars.length);
+  const within=fraction*barCount;
+  const barOffset=Math.min(barCount-1,Math.floor(within));
+  const barFraction=within-barOffset;
+  const bar=line.bars[barOffset];
+  return chordSecondsFromBarPosition(parsed,bar.barIndex,barFraction);
 }
 function chordSeekFromDrag(targetSeconds){
   if(!midiPlayback||!midiPlayback.parsed)return;
@@ -5387,11 +5473,37 @@ function chordBeginDrag(e){
   try{viewport.setPointerCapture(e.pointerId);}catch(err){}
   e.preventDefault();
 }
+function chordCenterDragPreview(){
+  const viewport=document.getElementById('chordDisplayViewport');
+  const track=document.getElementById('chordDisplayTrack');
+  const editor=document.getElementById('chordProgressionEditor');
+  if(!viewport||!track||!editor)return;
+  const parsed=chordParseEditorText(editor.value);
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  const target=Math.max(0,Math.min(duration,Number(chordDragPreviewSeconds)||0));
+  if(chordDisplayHorizontal){
+    chordHorizontalVisualOffset=chordGetHorizontalPlaybackOffset(parsed,target);
+    const bars=track.querySelectorAll('.chord-horizontal-bar');
+    const info=chordGetBarPosition(parsed,target);
+    bars.forEach(function(bar,index){bar.classList.toggle('current',index===info.barIndex);});
+  }else{
+    chordDisplayVisualPosition=chordGetSmoothDisplayPosition(parsed,target);
+    const info=chordGetBarPosition(parsed,target);
+    const rows=track.querySelectorAll('.chord-display-row');
+    const currentLineIndex=Math.max(0,Math.min(parsed.lines.length-1,Math.floor(info.linePosition+0.000001)));
+    rows.forEach(function(row,index){row.classList.toggle('current',index===currentLineIndex+2);});
+  }
+  track.style.transform=chordDisplayHorizontal
+    ?'translate3d('+(-chordHorizontalVisualOffset)+'px,0,0)'
+    :'translate3d(0,'+(-chordDisplayVisualPosition*52)+'px,0)';
+}
 function chordMoveDrag(e){
   if(!chordDragState||e.pointerId!==chordDragState.pointerId)return;
   const viewport=document.getElementById('chordDisplayViewport');
+  if(!viewport)return;
   const dx=e.clientX-chordDragState.startX;
   const dy=e.clientY-chordDragState.startY;
+  const axisDelta=chordDisplayHorizontal?dx:dy;
   if(Math.abs(dx)>=6||Math.abs(dy)>=6)chordDragState.moved=true;
   if(chordDragState.moved){
     if(chordDragState.wasPlaying&&!chordDragState.previewStarted){
@@ -5399,12 +5511,14 @@ function chordMoveDrag(e){
       chordDragState.previewStarted=true;
       midiStopPlayback();
     }
-    const delta=chordDisplayHorizontal?(-dx):(-dy);
-    const deltaSeconds=chordDragDurationFromDelta(delta,chordDisplayHorizontal?'horizontal':'vertical');
-    const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-    chordDragPreviewSeconds=Math.max(0,Math.min(duration,chordDragState.startTime+deltaSeconds));
+    const directionDelta=chordDisplayHorizontal?-axisDelta:-axisDelta;
+    chordDragPreviewSeconds=chordDragTargetSecondsFromDelta(
+      chordDragState.startTime,
+      directionDelta,
+      chordDisplayHorizontal?'horizontal':'vertical'
+    );
     midiPlayback.pausedTimeSeconds=chordDragPreviewSeconds;
-    updateChordDisplay();
+    chordCenterDragPreview();
   }
   e.preventDefault();
 }
@@ -5422,16 +5536,21 @@ function chordEndDrag(e){
     return;
   }
   if(Math.abs(delta)<6){chordDragPreviewSeconds=null;return;}
-  const target=Number.isFinite(chordDragPreviewSeconds)?chordDragPreviewSeconds:(state.startTime+chordDragDurationFromDelta(delta,chordDisplayHorizontal?'horizontal':'vertical'));
+  const target=Number.isFinite(chordDragPreviewSeconds)
+    ?chordDragPreviewSeconds
+    :chordDragTargetSecondsFromDelta(state.startTime,delta,chordDisplayHorizontal?'horizontal':'vertical');
   chordDragPreviewSeconds=null;
   if(state.wasPlaying){
     chordSeekFromDrag(target);
   }else{
     midiPlayback.pausedTimeSeconds=target;
-    updateChordDisplay();
+    chordDragPreviewSeconds=target;
+    chordCenterDragPreview();
+    chordDragPreviewSeconds=null;
   }
   e.preventDefault();
 }
+
 function chordInitDragControls(){
   const viewport=document.getElementById('chordDisplayViewport');
   if(!viewport)return;
@@ -5440,6 +5559,32 @@ function chordInitDragControls(){
   viewport.addEventListener('pointermove',chordMoveDrag);
   viewport.addEventListener('pointerup',chordEndDrag);
   viewport.addEventListener('pointercancel',chordEndDrag);
+  let touchState=null;
+  viewport.addEventListener('touchstart',function(e){
+    if(!e.touches||!e.touches.length)return;
+    const t=e.touches[0];
+    touchState={startX:t.clientX,startY:t.clientY};
+    chordBeginDrag({pointerId:'touch-fallback',pointerType:'touch',button:0,clientX:t.clientX,clientY:t.clientY,preventDefault:function(){}});
+    e.preventDefault();
+  },{passive:false});
+  viewport.addEventListener('touchmove',function(e){
+    if(!touchState||!e.touches||!e.touches.length)return;
+    const t=e.touches[0];
+    chordMoveDrag({pointerId:'touch-fallback',clientX:t.clientX,clientY:t.clientY,preventDefault:function(){}});
+    e.preventDefault();
+  },{passive:false});
+  viewport.addEventListener('touchend',function(e){
+    if(!touchState)return;
+    const t=e.changedTouches&&e.changedTouches[0];
+    if(t)chordEndDrag({pointerId:'touch-fallback',clientX:t.clientX,clientY:t.clientY,preventDefault:function(){}});
+    touchState=null;
+    e.preventDefault();
+  },{passive:false});
+  viewport.addEventListener('touchcancel',function(e){
+    if(touchState)chordEndDrag({pointerId:'touch-fallback',clientX:touchState.startX,clientY:touchState.startY,preventDefault:function(){}});
+    touchState=null;
+    e.preventDefault();
+  },{passive:false});
 }
 (function initChordEditor(){
   const editor=document.getElementById('chordProgressionEditor');
