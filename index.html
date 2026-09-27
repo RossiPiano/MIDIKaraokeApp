@@ -6,13 +6,33 @@
 <title>MIDI Karaoke App — Graphical UI v31</title>
 
 <style>
-:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2a;--panel2:#1c2738;--border:#334155;--text:#e6edf5;--muted:#94a3b8;--accent:#60a5fa;--good:#2f7d62;--danger:#b84a5a}
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{padding:12px}button,input,select{font:inherit}button{min-height:52px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);font-weight:650;cursor:pointer;touch-action:manipulation}button:active{transform:translateY(1px)}button.primary{background:#245b82;border-color:#4c93c2}button.good{background:#2f7d62;border-color:#58a98b}button.danger{background:#8f3f50;border-color:#c86675}select{width:100%;min-height:52px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text)}input[type=range]{width:100%;min-height:42px;accent-color:#fff;background:transparent;display:block;margin:0;padding:0;appearance:none;-webkit-appearance:none;border-radius:999px;overflow:visible}input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:transparent}input[type=range]::-moz-range-track{height:10px;border-radius:999px;background:transparent}input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:none;margin-top:-6px}input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:none}#midiGraphicalUI{max-width:1450px;margin:auto}#midiTimelineCard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:2px 8px 8px;margin-bottom:12px;user-select:none}.timeline-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}.timeline-head strong{font-size:16px}.timeline-head span{color:var(--muted);font-size:13px}.timeline{display:flex;width:100%;min-height:58px;overflow-x:hidden;overflow-y:hidden;border:1px solid var(--border);border-radius:10px;background:#080d16;touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}.timeline.dragging{cursor:grabbing}.timeline.empty{align-items:center;justify-content:center;color:var(--muted);padding:10px}.bar{position:relative;flex:1 1 0;min-width:24px;height:58px;border:0;border-right:1px solid #3a4758;border-radius:0;background:#273343;color:#c7d2df;padding:0 3px;font-size:11px;font-weight:700;touch-action:none;cursor:pointer}.bar:last-child{border-right:0}.bar:nth-child(4n+1){background:#303d4d}.bar:hover{background:#3a495c}.bar.selected{background:#245b82;color:#fff}.bar.anchor{box-shadow:inset 0 4px 0 #7dbcf0}.bar.current{box-shadow:inset 0 -4px 0 #2f7d62}.bar.selected.current{background:#2f7d62}.bar-number{display:block;padding-top:7px;pointer-events:none}.bar-time{display:block;font-size:9px;font-weight:500;color:#8fa0b4;margin-top:3px;pointer-events:none}.bar.selected .bar-time{color:#d9eaf8}.beat{position:relative;flex:0 0 48px;min-width:48px;height:58px;border:0;border-right:1px solid #3a4758;border-radius:0;background:#273343;color:#c7d2df;padding:0 3px;font-size:11px;font-weight:700;touch-action:manipulation;cursor:pointer;user-select:none;-webkit-user-select:none}.beat:nth-child(4n+1){background:#303d4d}.beat:hover{background:#3a495c}.beat.section-verse{background:#2f7d62;color:#fff}.beat.section-chorus{background:#8f3f50;color:#fff}.beat.section-prechorus{background:#b86f2b;color:#fff}.beat.section-intro,.beat.section-outro{background:#3f8fa8;color:#fff}.beat.section-bridge{background:#7656a0;color:#fff}.beat.section-instrumental{background:#3a434f;color:#fff}.beat.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#273343 48% 100%);color:#fff;box-shadow:inset 0 0 0 1px #c99d22}.beat.section-verse.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#2f7d62 48% 100%)}.beat.section-chorus.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#8f3f50 48% 100%)}.beat.section-prechorus.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#b86f2b 48% 100%)}.beat.section-intro.selected,.beat.section-outro.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#3f8fa8 48% 100%)}.beat.section-bridge.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#7656a0 48% 100%)}.beat.section-instrumental.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#3a434f 48% 100%)}.beat.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#273343 48% 100%);color:#fff;box-shadow:inset 0 0 0 1px #c99d22}.beat.section-verse.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#2f7d62 48% 100%)}.beat.section-chorus.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#8f3f50 48% 100%)}.beat.section-prechorus.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#b86f2b 48% 100%)}.beat.section-intro.loop-start-pending,.beat.section-outro.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#3f8fa8 48% 100%)}.beat.section-bridge.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#7656a0 48% 100%)}.beat.section-instrumental.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#3a434f 48% 100%)}.beat.loop-start-pending .beat-time{color:#fff}.beat.anchor{box-shadow:inset 0 4px 0 #e5b93f}.beat.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#273343 48% 100%)}.beat.section-verse.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#2f7d62 48% 100%)}.beat.section-chorus.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#8f3f50 48% 100%)}.beat.section-prechorus.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#b86f2b 48% 100%)}.beat.section-intro.selected.anchor,.beat.section-outro.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#3f8fa8 48% 100%)}.beat.section-bridge.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#7656a0 48% 100%)}.beat.section-instrumental.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#3a434f 48% 100%)}.beat.current{outline:3px solid #fff;outline-offset:-3px;z-index:2}.beat.current .beat-number{font-weight:950;text-shadow:0 1px 2px #000}.beat.selected.current{outline:3px solid #fff;outline-offset:-3px;z-index:2}.beat-number{display:block;padding-top:7px;pointer-events:none}.beat-time{display:block;font-size:9px;font-weight:500;color:#8fa0b4;margin-top:3px;pointer-events:none}.beat.selected .beat-time{color:#d9eaf8}.timeline-nav{display:flex;gap:8px;margin-top:8px}.timeline-nav button{flex:1;min-height:44px}.timeline-point-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.timeline-point-controls button{min-height:52px}.timeline-point-controls button.active{background:#245b82;border-color:#7dbcf0;box-shadow:0 0 0 2px rgba(125,188,240,.22) inset}.timeline-point-status{margin-top:7px;padding:8px 10px;border-radius:8px;background:#0f1726;color:#c7d2df;font-size:12px;text-align:center;min-height:34px;display:flex;align-items:center;justify-content:center}.timeline-view{color:var(--muted);font-size:12px;text-align:center;min-width:110px;display:flex;align-items:center;justify-content:center}.timeline-loop-control{margin-top:8px}.timeline-loop-control button{width:100%;min-height:48px}.timeline-help{margin-top:7px;color:var(--muted);font-size:12px}.hero{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.hero h1{font-size:clamp(22px,4vw,34px);margin:0}.hero p{margin:4px 0 0;color:var(--muted);overflow-wrap:anywhere}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.hero-actions button{flex:1 1 150px}.statusbox{background:#080d16;border:1px solid var(--border);border-radius:10px;padding:11px 13px;min-height:46px;margin-bottom:12px;color:#d7e0eb}.player{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}.time{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;font-weight:750;font-size:18px}.playergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.cards{display:block}.category{background:var(--panel);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}.category>summary{list-style:none;cursor:pointer;min-height:54px;padding:15px 16px;font-size:17px;font-weight:750;display:flex;align-items:center;justify-content:space-between;touch-action:manipulation}.category>summary::-webkit-details-marker{display:none}.category>summary::after{content:'▾';color:var(--muted);font-size:18px}.category:not([open])>summary::after{content:'▸'}.category>summary:active{background:var(--panel2)}.category-content{padding:0 14px 14px}.category[open]>summary{border-bottom:1px solid var(--border)}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.value{text-align:center;font-size:27px;font-weight:800;margin:0 0 8px;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:13px;text-align:center;margin:7px 0}.sep{height:1px;background:var(--border);margin:12px 0}.markergrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hidden-status{display:none}.statusbox{display:none}.timeline-head span{display:none}.timeline-point-status,.timeline-help{display:none}
+:root{color-scheme:dark;--bg:#0b0d10;--panel:#171b21;--panel2:#222831;--border:#3a424e;--text:#f4f6f8;--muted:#aeb7c4;--accent:#42a5ff;--good:#2f7d62;--danger:#c94f59}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{padding:12px}button,input,select{font:inherit}button{min-height:48px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);font-weight:650;cursor:pointer;touch-action:manipulation}button:active{transform:translateY(1px)}button.primary{background:#245b82;border-color:#4c93c2}button.good{background:#2f7d62;border-color:#2b9e70}button.danger{background:#8f3f50;border-color:#b84d58}select{width:100%;min-height:48px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text)}input[type=range]{width:100%;min-height:42px;accent-color:#fff;background:transparent;display:block;margin:0;padding:0;appearance:none;-webkit-appearance:none;border-radius:999px;overflow:visible}input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:transparent}input[type=range]::-moz-range-track{height:10px;border-radius:999px;background:transparent}input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:none;margin-top:-6px}input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:none}#midiGraphicalUI{max-width:1450px;margin:auto}#midiTimelineCard{background:transparent;border:0;border-radius:0;padding:0 0 10px;margin:0 0 10px;border-bottom:1px solid var(--border);user-select:none}.timeline-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}.timeline-head strong{font-size:16px}.timeline-head span{color:var(--muted);font-size:13px}.timeline{display:flex;width:100%;min-height:52px;overflow-x:hidden;overflow-y:hidden;border:1px solid var(--border);border-radius:10px;background:#080d16;touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}.timeline.dragging{cursor:grabbing}.timeline.empty{align-items:center;justify-content:center;color:var(--muted);padding:10px}.bar{position:relative;flex:1 1 0;min-width:24px;height:52px;border:0;border-right:1px solid #3a4758;border-radius:0;background:#20262e;color:#c7d2df;padding:0 3px;font-size:11px;font-weight:700;touch-action:none;cursor:pointer}.bar:last-child{border-right:0}.bar:nth-child(4n+1){background:#252c35}.bar:hover{background:#303a46}.bar.selected{background:#245b82;color:#fff}.bar.anchor{box-shadow:inset 0 4px 0 #7dbcf0}.bar.current{box-shadow:inset 0 -4px 0 #2f7d62}.bar.selected.current{background:#2f7d62}.bar-number{display:block;padding-top:5px;pointer-events:none}.bar-time{display:block;font-size:9px;font-weight:500;color:#8fa0b4;margin-top:3px;pointer-events:none}.bar.selected .bar-time{color:#d9eaf8}.beat{position:relative;flex:0 0 48px;min-width:48px;height:52px;border:0;border-right:1px solid #3a4758;border-radius:0;background:#20262e;color:#c7d2df;padding:0 3px;font-size:11px;font-weight:700;touch-action:manipulation;cursor:pointer;user-select:none;-webkit-user-select:none}.beat-barline{position:absolute;top:0;bottom:0;width:2px;background:#aeb8c5;z-index:4;pointer-events:none;box-shadow:1px 0 0 rgba(0,0,0,.35)}.beat:hover{background:#303a46}.beat.section-verse{background:#2f7d62;color:#fff}.beat.section-chorus{background:#8f3f50;color:#fff}.beat.section-prechorus{background:#b86f2b;color:#fff}.beat.section-intro,.beat.section-outro{background:#3f8fa8;color:#fff}.beat.section-bridge{background:#7656a0;color:#fff}.beat.section-instrumental{background:#3a434f;color:#fff}.beat.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#20262e 48% 100%);color:#fff;box-shadow:inset 0 0 0 1px #c99d22}.beat.section-verse.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#2f7d62 48% 100%)}.beat.section-chorus.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#8f3f50 48% 100%)}.beat.section-prechorus.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#b86f2b 48% 100%)}.beat.section-intro.selected,.beat.section-outro.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#3f8fa8 48% 100%)}.beat.section-bridge.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#7656a0 48% 100%)}.beat.section-instrumental.selected{background:linear-gradient(to bottom,#e5b93f 0 48%,#3a434f 48% 100%)}.beat.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#20262e 48% 100%);color:#fff;box-shadow:inset 0 0 0 1px #c99d22}.beat.section-verse.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#2f7d62 48% 100%)}.beat.section-chorus.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#8f3f50 48% 100%)}.beat.section-prechorus.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#b86f2b 48% 100%)}.beat.section-intro.loop-start-pending,.beat.section-outro.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#3f8fa8 48% 100%)}.beat.section-bridge.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#7656a0 48% 100%)}.beat.section-instrumental.loop-start-pending{background:linear-gradient(to bottom,#e5b93f 0 48%,#3a434f 48% 100%)}.beat.loop-start-pending .beat-time{color:#fff}.beat.anchor{box-shadow:inset 0 4px 0 #e5b93f}.beat.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#20262e 48% 100%)}.beat.section-verse.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#2f7d62 48% 100%)}.beat.section-chorus.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#8f3f50 48% 100%)}.beat.section-prechorus.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#b86f2b 48% 100%)}.beat.section-intro.selected.anchor,.beat.section-outro.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#3f8fa8 48% 100%)}.beat.section-bridge.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#7656a0 48% 100%)}.beat.section-instrumental.selected.anchor{background:linear-gradient(to bottom,#e5b93f 0 48%,#3a434f 48% 100%)}.beat.current{outline:3px solid #fff;outline-offset:-3px;z-index:2}.beat.current .beat-number{font-weight:950;text-shadow:0 1px 2px #000}.beat.selected.current{outline:3px solid #fff;outline-offset:-3px;z-index:2}.beat-number{display:block;padding-top:5px;pointer-events:none}.beat-time{display:block;font-size:9px;font-weight:500;color:#8fa0b4;margin-top:3px;pointer-events:none}.beat.selected .beat-time{color:#d9eaf8}.timeline-nav{display:flex;gap:8px;margin-top:8px}.timeline-nav button{flex:1;min-height:42px}.timeline-point-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.timeline-point-controls button{min-height:46px}.timeline-point-controls button.active{background:#245b82;border-color:#7dbcf0;box-shadow:0 0 0 2px rgba(94,184,255,.22) inset}.timeline-point-status{margin-top:7px;padding:8px 10px;border-radius:8px;background:#0f1726;color:#c7d2df;font-size:12px;text-align:center;min-height:34px;display:flex;align-items:center;justify-content:center}.timeline-view{color:var(--muted);font-size:12px;text-align:center;min-width:110px;display:flex;align-items:center;justify-content:center}.timeline-loop-control{margin-top:8px}.timeline-loop-control button{width:100%;min-height:44px}.timeline-help{margin-top:7px;color:var(--muted);font-size:12px}.hero{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.hero h1{font-size:clamp(22px,4vw,34px);margin:0}.hero p{margin:4px 0 0;color:var(--muted);overflow-wrap:anywhere}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.hero-actions button{flex:1 1 150px}.statusbox{background:#080d16;border:1px solid var(--border);border-radius:10px;padding:11px 13px;min-height:46px;margin-bottom:12px;color:#d7e0eb}.player{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}.time{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;font-weight:750;font-size:18px}.playergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.cards{display:block}.category{background:var(--panel);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}.category>summary{list-style:none;cursor:pointer;min-height:54px;padding:15px 16px;font-size:17px;font-weight:750;display:flex;align-items:center;justify-content:space-between;touch-action:manipulation}.category>summary::-webkit-details-marker{display:none}.category>summary::after{content:'▾';color:var(--muted);font-size:18px}.category:not([open])>summary::after{content:'▸'}.category>summary:active{background:var(--panel2)}.category-content{padding:0 14px 14px}.category[open]>summary{border-bottom:1px solid var(--border)}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.value{text-align:center;font-size:27px;font-weight:800;margin:0 0 8px;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:13px;text-align:center;margin:7px 0}.sep{height:1px;background:var(--border);margin:12px 0}.markergrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hidden-status{display:none}.statusbox{display:none}.timeline-head span{display:none}.timeline-point-status,.timeline-help{display:none}
 
-@media(max-width:700px){body{padding:7px}.hero{display:block}.hero-actions{margin-top:10px}.cards{grid-template-columns:1fr}.playergrid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.markergrid{grid-template-columns:repeat(2,minmax(0,1fr))}button,select{min-height:56px}}
+@media(max-width:700px){body{padding:7px}.hero{display:block}.hero-actions{margin-top:10px}.cards{grid-template-columns:1fr}.playergrid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.markergrid{grid-template-columns:repeat(2,minmax(0,1fr))}button,select{min-height:48px}}
 @media(max-width:390px){.grid2,.grid3,.grid4,.playergrid,.markergrid{grid-template-columns:1fr}}
 
-.timeline-selector-row{display:grid;grid-template-columns:58px minmax(0,1fr);gap:8px;align-items:stretch}.timeline-selector-wrap{min-width:0}.loop-icon-button,.square-icon-button{width:58px;height:58px;min-width:58px;min-height:58px;padding:0;display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;border-radius:10px}.loop-icon-button{background:var(--panel2);border-color:var(--border)}.loop-icon-button.loop-on{background:#6f5b19;border-color:#e5b93f;box-shadow:inset 0 0 0 2px #e5b93f}.section-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.section-list button{width:100%;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px} .section-list button.current-section{color:#fff}.section-list button.section-verse{background:#2f7d62;border-color:#58a98b}.section-list button.section-chorus{background:#8f3f50;border-color:#c86675}.section-list button.section-prechorus{background:#b86f2b;border-color:#d79a52}.section-list button.section-intro,.section-list button.section-outro{background:#3f8fa8;border-color:#79bfd0}.section-list button.section-bridge{background:#7656a0;border-color:#a98bc7}.section-list button.section-instrumental{background:#3a434f;border-color:#687789}.section-list button.current-section{box-shadow:inset 0 0 0 2px #fff}.section-list .section-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.section-list .section-time{font-size:12px;opacity:.75;font-variant-numeric:tabular-nums;flex:0 0 auto}.section-empty{color:var(--muted);font-size:13px;text-align:center;padding:8px}@media(max-width:600px){.section-list{grid-template-columns:1fr}}.main-controls{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:10px;margin-bottom:12px}.playback-controls{padding:6px 10px 8px}.seek-wrap{position:relative;width:100%;height:30px;min-height:30px}.main-controls>.seek-wrap{display:block;margin:0}.seek-track{position:absolute;left:0;right:0;top:10px;height:10px;border-radius:999px;background:#273343;z-index:0;overflow:hidden}.seek-loop-overlay{position:absolute;left:11px;top:10px;height:10px;width:0;background:linear-gradient(to bottom,#e5b93f 0 50%,transparent 50% 100%);border-radius:999px;z-index:1;pointer-events:none}.seek-wrap input[type=range]{position:relative;z-index:2;display:block;margin:0;height:30px;min-height:30px;background:transparent}.seek-wrap input[type=range]::-webkit-slider-runnable-track{background:transparent}.seek-wrap input[type=range]::-moz-range-track{background:transparent}.transport-row,.section-nav-row,.square-button-row{display:flex;gap:8px}.transport-row{justify-content:center;margin-bottom:10px;align-items:center}.square-icon-button{font-size:24px}.section-icon-button{width:58px;height:58px;min-width:58px;min-height:58px;padding:0;display:flex;align-items:center;justify-content:center;font-size:25px;border-radius:10px}.playback-time{display:flex;align-items:center;gap:6px;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;margin:0;white-space:nowrap}.playback-transport-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin:0}.playback-transport-row .playback-time:first-child{justify-content:flex-start}.playback-transport-row .playback-time:last-child{justify-content:flex-end}.bpm-reset{font-size:22px}.wide-control{flex:1;min-height:48px}.section-nav-row{margin-bottom:12px}.bpm-control-row,.transpose-control-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:0;border-top:0;margin-top:0}.bpm-control-row .control-label,.transpose-control-row .control-label{margin:0;text-align:left;flex:0 0 auto}.bpm-control-row .square-button-row,.transpose-control-row .square-button-row{justify-content:flex-end}.transpose-control-row{margin-top:0}.control-label{font-size:15px;font-weight:700;text-align:center;margin-bottom:8px}.control-label strong{font-variant-numeric:tabular-nums}.square-control{width:58px;height:58px;min-width:58px;min-height:58px;padding:0;display:flex;align-items:center;justify-content:center;font-size:17px}.square-button-row{justify-content:center;flex-wrap:wrap}.fullscreen-button{width:52px!important;min-width:52px!important;height:52px;min-height:52px!important;padding:0!important;font-size:27px!important;flex:0 0 52px!important}.hero-actions{align-items:flex-start}.hero-actions button{flex:0 0 auto}.hero-actions #uiMidi,.hero-actions #uiSf2{flex:0 1 auto}@media(max-width:600px){.timeline-selector-row{grid-template-columns:52px minmax(0,1fr)}.loop-icon-button,.square-icon-button,.section-icon-button{width:52px;height:52px;min-width:52px;min-height:52px}.square-control{width:52px;height:52px;min-width:52px;min-height:52px}}
+.timeline-selector-row{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;align-items:stretch}.timeline-selector-wrap{min-width:0}.loop-icon-button,.square-icon-button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;border-radius:10px}.loop-icon-button{background:var(--panel2);border-color:var(--border)}.loop-icon-button.loop-on{background:#8a6d00;border-color:#e5b93f;box-shadow:inset 0 0 0 2px #e5b93f}.section-list-scroll{max-height:280px;overflow-y:auto;overflow-x:hidden;margin:8px 0 10px;padding-right:2px}.section-list{display:grid;grid-template-columns:1fr;gap:8px}.section-list button{width:100%;min-height:46px;padding:7px 10px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px} .section-list button.current-section{color:#fff}.section-list button.section-verse{background:#2f7d62;border-color:#2b9e70}.section-list button.section-chorus{background:#8f3f50;border-color:#b84d58}.section-list button.section-prechorus{background:#b86f2b;border-color:#d89b2b}.section-list button.section-intro,.section-list button.section-outro{background:#3f8fa8;border-color:#67c7e8}.section-list button.section-bridge{background:#7656a0;border-color:#9b6fd0}.section-list button.section-instrumental{background:#3a434f;border-color:#59616b}.section-list button.current-section{box-shadow:inset 0 0 0 2px #fff}.section-list .section-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.section-list .section-time{font-size:12px;opacity:.75;font-variant-numeric:tabular-nums;flex:0 0 auto}.section-empty{color:var(--muted);font-size:13px;text-align:center;padding:8px}@media(max-width:600px){.section-list-scroll{max-height:260px}}.main-controls{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:10px;margin-bottom:12px}.section-marker-timeline-row{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;align-items:stretch}.section-marker-export-wrap{display:flex;align-items:stretch}.marker-export-button{width:48px;height:48px;min-width:48px;min-height:48px;margin:0;padding:0;display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;border-radius:10px}.playback-subpanel{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}.playback-subpanel .timeline-head{margin-bottom:8px}.loop-subpanel{padding-bottom:0}.section-marker-inline{margin-top:10px}.playback-controls{padding:6px 10px 8px}.seek-wrap{position:relative;width:100%;height:30px;min-height:30px}.main-controls>.seek-wrap{display:block;margin:0}.seek-track{position:absolute;left:0;right:0;top:10px;height:10px;border-radius:999px;background:#20262e;z-index:0;overflow:hidden} .seek-loop-overlay{position:absolute;left:11px;top:10px;height:10px;width:0;background:linear-gradient(to bottom,#e5b93f 0 50%,transparent 50% 100%);border-radius:999px;z-index:1;pointer-events:none}
+.seek-section-marker-layer{position:absolute;left:11px;right:11px;top:-20px;height:29px;z-index:3;pointer-events:none;overflow:visible}
+.seek-section-marker{position:absolute;top:20px;width:2px;height:9px;background:#ff4fa3;border-radius:2px;transform:translateX(-1px);box-shadow:none}.seek-section-marker-label{position:absolute;top:0;left:0;transform:translateX(3px);font-size:11px;line-height:16px;font-weight:600;white-space:nowrap;color:#ff4fa3;text-shadow:0 1px 2px rgba(0,0,0,.8)}
+.seek-section-marker:first-child{transform:translateX(0)}
+.seek-wrap input[type=range]{position:relative;z-index:4;display:block;margin:0;height:30px;min-height:30px;background:transparent}.seek-wrap input[type=range]::-webkit-slider-runnable-track{background:transparent}.seek-wrap input[type=range]::-moz-range-track{background:transparent}.transport-row,.section-nav-row,.square-button-row{display:flex;gap:8px}.transport-row{justify-content:center;margin-bottom:10px;align-items:center}.square-icon-button{font-size:24px}.section-icon-button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:25px;border-radius:10px}.playback-time{display:flex;align-items:center;gap:6px;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;margin:0;white-space:nowrap}.playback-transport-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin:0}.playback-transport-row .playback-time:first-child{justify-content:flex-start}.playback-transport-row .playback-time:last-child{justify-content:flex-end}.bpm-reset{font-size:22px}.wide-control{flex:1;min-height:48px}.section-nav-row{margin-bottom:12px}.bpm-control-row,.transpose-control-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:0;border-top:0;margin-top:0}.bpm-control-row .control-label,.transpose-control-row .control-label{margin:0;text-align:left;flex:0 0 auto}.bpm-control-row .square-button-row,.transpose-control-row .square-button-row{justify-content:flex-end}.transpose-control-row{margin-top:0}.control-label{font-size:15px;font-weight:700;text-align:center;margin-bottom:8px}.control-label strong{font-variant-numeric:tabular-nums}.square-control{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:17px}.square-button-row{justify-content:center;flex-wrap:wrap}.fullscreen-button{width:48px!important;min-width:48px!important;height:48px;min-height:48px!important;padding:0!important;font-size:27px!important;flex:0 0 48px!important}.hero-actions{align-items:flex-start}.hero-actions button{flex:0 0 auto}.hero-actions #uiMidi,.hero-actions #uiSf2{flex:0 1 auto}@media(max-width:600px){.timeline-selector-row{grid-template-columns:48px minmax(0,1fr)}.loop-icon-button,.square-icon-button,.section-icon-button{width:48px;height:48px;min-width:48px;min-height:48px}.square-control{width:48px;height:48px;min-width:48px;min-height:48px}}
+
+.loop-selection-info{margin-top:6px;color:var(--muted);font-size:12px;text-align:center;min-height:16px}.section-marker-card{position:relative}
+.marker-timeline-shell{position:relative;min-width:0;padding-top:0}
+.section-marker-editor{position:absolute;z-index:20;top:-2px;display:flex;gap:5px;align-items:center;background:var(--panel);padding:4px;border:1px solid var(--border);border-radius:9px;box-shadow:0 8px 22px rgba(0,0,0,.35);transform:translateY(-100%);white-space:nowrap}
+.section-marker-editor[hidden]{display:none}
+.section-marker-editor input{width:145px;min-width:0;height:40px;padding:7px 9px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text);outline:none}
+.section-marker-editor input:focus{border-color:#7dbcf0;box-shadow:0 0 0 2px rgba(94,184,255,.16)}
+.section-marker-editor button{width:40px;height:40px;min-width:40px;min-height:40px;padding:0;border-radius:7px;font-size:20px}
+
+.marker-beat{background:#20262e;color:#c7d2df}
+.marker-beat:nth-child(4n+1){background:#252c35}
+.marker-beat:hover{background:#303a46}
+.marker-beat.has-marker{box-shadow:inset 0 4px 0 #e5b93f}
+.marker-beat.has-marker::after{content:'◆';position:absolute;right:4px;top:3px;color:#e5b93f;font-size:10px;line-height:1}
+.marker-beat.has-marker .beat-number{padding-right:12px}
+@media(max-width:600px){.section-marker-timeline-row{grid-template-columns:48px minmax(0,1fr)}.marker-export-button{width:48px;height:48px;min-width:48px;min-height:48px}.section-marker-editor input{width:125px}.section-marker-editor button{width:42px;min-width:42px;height:42px;min-height:42px}}
 </style>
 
 </head>
@@ -23,10 +43,23 @@
     <div><h1>🎹 MIDI Karaoke App</h1><p id="uiFile">No MIDI loaded</p></div>
     <div class="hero-actions"><button id="uiMidi">Import MIDI</button><button id="uiSf2">Import SoundFont</button><button id="uiFull" class="fullscreen-button" aria-label="Fullscreen" title="Fullscreen">⛶</button></div>
   </div>
+
+
   <section class="main-controls playback-controls" id="playbackSectionCard">
+    <div id="midiTimelineCard" class="playback-subpanel loop-subpanel">
+      <div class="timeline-head"><strong>🔁 Loop Selector</strong><span id="uiTimelineInfo"></span></div>
+      <div class="timeline-selector-row">
+        <button id="loopToggle" class="loop-icon-button" aria-label="Toggle Loop / Repeat" title="Toggle Loop / Repeat">🔁</button>
+        <div class="timeline-selector-wrap">
+          <div id="midiTimeline" class="timeline empty">Load a MIDI file to select a loop.</div>
+          <div class="timeline-view" id="timelineView">All beats</div>
+        </div>
+      </div>
+          </div>
     <div class="seek-wrap">
       <div id="uiSeekTrack" class="seek-track" aria-hidden="true"></div>
       <div id="uiSeekLoopOverlay" class="seek-loop-overlay" aria-hidden="true"></div>
+      <div id="uiSeekSectionMarkers" class="seek-section-marker-layer" aria-hidden="true"></div>
       <input id="uiSeek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Playback position">
     </div>
     <div class="playback-transport-row">
@@ -39,19 +72,30 @@
       </div>
       <div class="playback-time"><span id="uiDur">0:00</span></div>
     </div>
-    <div class="section-list" id="sectionList"><div class="section-empty">Load a MIDI file to show its sections.</div></div>
-  </section>
-
-  <section id="midiTimelineCard">
-    <div class="timeline-head"><strong>🎼 Song Timeline / Loop Selection</strong><span id="uiTimelineInfo"></span></div>
-    <div class="timeline-selector-row">
-      <button id="loopToggle" class="loop-icon-button" aria-label="Toggle Loop / Repeat" title="Toggle Loop / Repeat">🔁</button>
-      <div class="timeline-selector-wrap">
-        <div id="midiTimeline" class="timeline empty">Load a MIDI file to show the song beats.</div>
-        <div class="timeline-view" id="timelineView">All beats</div>
+    <div class="section-marker-inline">  <div id="sectionMarkerCard" class="playback-subpanel section-marker-card">
+    <div class="timeline-head section-marker-head"><strong>🏷️ Section Marker</strong><span id="sectionMarkerInfo"></span></div>
+    <div class="section-marker-timeline-row">
+      <div class="section-marker-export-wrap">
+        <button id="exportMarkedMidi" class="primary marker-export-button" type="button" aria-label="Export MIDI with Section Markers" title="Export MIDI with Section Markers">💾</button>
+      </div>
+      <div class="marker-timeline-shell">
+      <div id="sectionMarkerEditor" class="section-marker-editor" hidden>
+        <input id="sectionMarkerName" type="text" autocomplete="off" placeholder="Section name…" aria-label="Section marker name">
+        <button id="sectionMarkerAdd" class="good" type="button" title="Add Section Marker">✓</button>
+        <button id="sectionMarkerCancel" type="button" title="Cancel">×</button>
+      </div>
+        <div id="sectionMarkerTimeline" class="timeline empty">Load a MIDI file to add Section Markers.</div>
+        <div class="timeline-view" id="sectionMarkerView">All beats</div>
       </div>
     </div>
+  </div>
+    </div>
+    <div class="section-list-scroll">
+      <div class="section-list" id="sectionList"><div class="section-empty">Load a MIDI file to show its sections.</div></div>
+    </div>
   </section>
+
+
 
   <section class="main-controls bpm-panel">
     <div class="bpm-control-row">
@@ -275,9 +319,24 @@ function formatTime(seconds, milliseconds) {
 let midiStatusMessage = '';
 
 function midiGetStructuralMarkers() {
-  return midiPlayback.rehearsalMarks.filter(function(mark) {
+  const source = midiPlayback.rehearsalMarks.filter(function(mark) {
     return mark.markerType === 'marker' || mark.markerType === 'cuePoint';
+  }).slice();
+
+  if (Array.isArray(midiPlayback.addedSectionMarkers)) {
+    midiPlayback.addedSectionMarkers.forEach(function(mark) {
+      if (!mark || typeof mark.tick !== 'number') return;
+      if (typeof mark.text !== 'string' || !mark.text.trim()) return;
+      source.push(mark);
+    });
+  }
+
+  source.sort(function(a, b) {
+    if (a.tick !== b.tick) return a.tick - b.tick;
+    return String(a.text || '').localeCompare(String(b.text || ''));
   });
+
+  return source;
 }
 
 function midiGetCurrentStructuralMarker() {
@@ -658,6 +717,30 @@ async function midiLoadStoredSong(record) {
     midiPlayback.loopEndSeconds > midiPlayback.loopStartSeconds
   );
 
+    midiPlayback.addedSectionMarkers = Array.isArray(song.addedSectionMarkers)
+
+      ? song.addedSectionMarkers.filter(function(mark) {
+
+          return mark && typeof mark.tick === 'number' && typeof mark.text === 'string' && mark.text.trim();
+
+        }).map(function(mark) {
+
+          return {
+
+            tick: mark.tick,
+
+            seconds: typeof mark.seconds === 'number' ? mark.seconds : 0,
+
+            text: mark.text.trim(),
+
+            markerType: 'marker'
+
+          };
+
+        })
+
+      : [];
+
   midiUpdateBpmReadout();
   sendCommand('midi-loaded', {
     name: midiName,
@@ -819,6 +902,278 @@ function midiBase64ToArrayBuffer(base64) {
   return bytes.buffer;
 }
 
+
+function midiEncodeVarLen(value) {
+  value = Math.max(0, Math.floor(Number(value) || 0));
+  let buffer = value & 0x7f;
+  const bytes = [];
+  while ((value >>= 7)) {
+    buffer <<= 8;
+    buffer |= ((value & 0x7f) | 0x80);
+  }
+  while (true) {
+    bytes.push(buffer & 0xff);
+    if (buffer & 0x80) buffer >>= 8;
+    else break;
+  }
+  return bytes;
+}
+
+function midiBuildMarkerEvent(mark) {
+  const textEncoder = typeof TextEncoder === 'function' ? new TextEncoder() : null;
+  const text = String(mark.text || '').trim();
+  let data;
+  if (textEncoder) {
+    data = Array.from(textEncoder.encode(text));
+  } else {
+    data = [];
+    for (let i = 0; i < text.length; i++) data.push(text.charCodeAt(i) & 0xff);
+  }
+  const event = [0xff, 0x06];
+  event.push.apply(event, midiEncodeVarLen(data.length));
+  event.push.apply(event, data);
+  return event;
+}
+
+function midiReadExportVarLen(bytes, offset) {
+  let value = 0;
+  let position = offset;
+  for (let i = 0; i < 4 && position < bytes.length; i++) {
+    const b = bytes[position++];
+    value = (value << 7) | (b & 0x7f);
+    if (!(b & 0x80)) return { value: value, next: position };
+  }
+  throw new Error('Invalid MIDI variable-length value.');
+}
+
+function midiTrackContainsMarkerEvents(trackChunk) {
+  const bytes = trackChunk;
+  let p = 8;
+  let runningStatus = null;
+  while (p < bytes.length) {
+    const delta = midiReadExportVarLen(bytes, p); p = delta.next;
+    if (p >= bytes.length) break;
+    let status = bytes[p];
+    if (status < 0x80) {
+      if (runningStatus == null) throw new Error('Invalid MIDI running status.');
+      status = runningStatus;
+    } else {
+      p++;
+      if (status >= 0x80 && status <= 0xef) runningStatus = status;
+      else if (status !== 0xf3 && status !== 0xf2 && status !== 0xf1) runningStatus = null;
+    }
+
+    if (status === 0xff) {
+      if (p >= bytes.length) break;
+      const type = bytes[p++];
+      const len = midiReadExportVarLen(bytes, p); p = len.next;
+      if (p + len.value > bytes.length) throw new Error('Invalid MIDI meta-event.');
+      if (type === 0x06) return true;
+      p += len.value;
+      if (type === 0x2f) break;
+      continue;
+    }
+    if (status === 0xf0 || status === 0xf7) {
+      const len = midiReadExportVarLen(bytes, p); p = len.next + len.value;
+      continue;
+    }
+    const command = status & 0xf0;
+    const dataLength = command === 0xc0 || command === 0xd0 ? 1 : 2;
+    if (status < 0xf0) p += dataLength;
+    else if (status === 0xf2) p += 2;
+    else if (status === 0xf1 || status === 0xf3) p += 1;
+  }
+  return false;
+}
+
+function midiMergeMarkersIntoTrack(trackChunk, markers) {
+  const source = trackChunk;
+  const bytes = [];
+  let p = 8;
+  let absoluteTick = 0;
+  let runningStatus = null;
+  const events = [];
+  let order = 0;
+  let endOfTrackTick = 0;
+
+  while (p < source.length) {
+    const deltaInfo = midiReadExportVarLen(source, p);
+    p = deltaInfo.next;
+    absoluteTick += deltaInfo.value;
+    if (p >= source.length) throw new Error('Invalid MIDI event.');
+
+    const eventStart = p;
+    let status = source[p];
+    let explicitStatus = status >= 0x80;
+    if (explicitStatus) {
+      p++;
+      if (status >= 0x80 && status <= 0xef) runningStatus = status;
+      else if (status !== 0xf1 && status !== 0xf2 && status !== 0xf3) runningStatus = null;
+    } else {
+      if (runningStatus == null) throw new Error('Invalid MIDI running status.');
+      status = runningStatus;
+    }
+
+    if (status === 0xff) {
+      if (p >= source.length) throw new Error('Invalid MIDI meta-event.');
+      const type = source[p++];
+      const lenInfo = midiReadExportVarLen(source, p);
+      p = lenInfo.next;
+      const dataEnd = p + lenInfo.value;
+      if (dataEnd > source.length) throw new Error('Invalid MIDI meta-event length.');
+      p = dataEnd;
+
+      // Do NOT keep End-of-Track in the event list. New marker events must
+      // be inserted before EOT, otherwise MIDI readers stop before reaching
+      // the newly inserted markers.
+      if (type === 0x2f) {
+        endOfTrackTick = absoluteTick;
+        break;
+      }
+
+      events.push({ tick: absoluteTick, raw: Array.from(source.slice(eventStart, p)), order: order++ });
+      continue;
+    }
+
+    if (status === 0xf0 || status === 0xf7) {
+      const lenInfo = midiReadExportVarLen(source, p);
+      p = lenInfo.next + lenInfo.value;
+      if (p > source.length) throw new Error('Invalid MIDI SysEx event.');
+      events.push({ tick: absoluteTick, raw: Array.from(source.slice(eventStart, p)), order: order++ });
+      continue;
+    }
+
+    const command = status & 0xf0;
+    const dataLength = command === 0xc0 || command === 0xd0 ? 1 : 2;
+    if (status < 0xf0) {
+      p += dataLength;
+    } else if (status === 0xf1 || status === 0xf3) {
+      p += 1;
+    } else if (status === 0xf2) {
+      p += 2;
+    } else {
+      p += 0;
+    }
+    if (p > source.length) throw new Error('Invalid MIDI event length.');
+
+    // Expand running-status events to an explicit status byte in the rebuilt track.
+    const raw = Array.from(source.slice(eventStart, p));
+    if (!explicitStatus) raw.unshift(status);
+    events.push({ tick: absoluteTick, raw: raw, order: order++ });
+  }
+
+  const markerEvents = markers.slice().sort(function(a, b) {
+    if (a.tick !== b.tick) return a.tick - b.tick;
+    return String(a.text || '').localeCompare(String(b.text || ''));
+  }).map(function(mark, index) {
+    return {
+      tick: Math.max(0, Math.floor(Number(mark.tick) || 0)),
+      raw: midiBuildMarkerEvent(mark),
+      order: -100000 + index
+    };
+  });
+
+  const merged = events.concat(markerEvents).sort(function(a, b) {
+    if (a.tick !== b.tick) return a.tick - b.tick;
+    return a.order - b.order;
+  });
+
+  let previousTick = 0;
+  merged.forEach(function(event) {
+    const delta = Math.max(0, event.tick - previousTick);
+    previousTick = event.tick;
+    bytes.push.apply(bytes, midiEncodeVarLen(delta));
+    bytes.push.apply(bytes, event.raw);
+  });
+
+  // Re-add End-of-Track AFTER all existing and newly added events.
+  // Keep the original EOT position unless a marker lies later in the track.
+  const lastEventTick = merged.length ? merged[merged.length - 1].tick : 0;
+  const finalTick = Math.max(endOfTrackTick, lastEventTick);
+  const eotDelta = Math.max(0, finalTick - previousTick);
+  bytes.push.apply(bytes, midiEncodeVarLen(eotDelta));
+  bytes.push(0xff, 0x2f, 0x00);
+
+  const chunk = new Uint8Array(8 + bytes.length);
+  chunk[0] = 0x4d; chunk[1] = 0x54; chunk[2] = 0x72; chunk[3] = 0x6b;
+  new DataView(chunk.buffer).setUint32(4, bytes.length, false);
+  chunk.set(bytes, 8);
+  return chunk;
+}
+
+function midiBuildExportBytesWithSectionMarkers() {
+  if (!midiPlayback.rawData || !midiPlayback.parsed) throw new Error('No MIDI loaded.');
+  const markers = Array.isArray(midiPlayback.addedSectionMarkers)
+    ? midiPlayback.addedSectionMarkers.filter(function(mark) {
+        return mark && typeof mark.tick === 'number' && String(mark.text || '').trim();
+      }) : [];
+  if (!markers.length) throw new Error('No new Section Markers to export.');
+
+  const source = new Uint8Array(midiPlayback.rawData);
+  if (source.length < 14 || source[0] !== 0x4d || source[1] !== 0x54 || source[2] !== 0x68 || source[3] !== 0x64) {
+    throw new Error('Invalid MIDI data.');
+  }
+  const view = new DataView(source.buffer, source.byteOffset, source.byteLength);
+  const headerLength = view.getUint32(4, false);
+  const originalFormat = view.getUint16(8, false);
+  const originalTrackCount = view.getUint16(10, false);
+  if (headerLength < 6 || 8 + headerLength > source.length) throw new Error('Invalid MIDI header.');
+
+  let offset = 8 + headerLength;
+  const trackChunks = [];
+  for (let i = 0; i < originalTrackCount; i++) {
+    if (offset + 8 > source.length || source[offset] !== 0x4d || source[offset+1] !== 0x54 || source[offset+2] !== 0x72 || source[offset+3] !== 0x6b) {
+      throw new Error('Invalid MIDI track chunk '+(i+1)+'.');
+    }
+    const length = view.getUint32(offset + 4, false);
+    const end = offset + 8 + length;
+    if (end > source.length) throw new Error('MIDI track '+(i+1)+' extends beyond the file.');
+    trackChunks.push(source.slice(offset, end));
+    offset = end;
+  }
+  if (!trackChunks.length) throw new Error('MIDI contains no tracks.');
+
+  let targetTrackIndex = 0;
+  for (let i = 0; i < trackChunks.length; i++) {
+    if (midiTrackContainsMarkerEvents(trackChunks[i])) { targetTrackIndex = i; break; }
+  }
+  trackChunks[targetTrackIndex] = midiMergeMarkersIntoTrack(trackChunks[targetTrackIndex], markers);
+
+  const header = source.slice(0, 8 + headerLength);
+  const outputLength = header.length + trackChunks.reduce(function(sum, track) { return sum + track.length; }, 0);
+  if (!Number.isFinite(outputLength) || outputLength < 14) throw new Error('Export produced an invalid MIDI size.');
+
+  const output = new Uint8Array(outputLength);
+  let writeOffset = 0;
+  output.set(header, writeOffset); writeOffset += header.length;
+  trackChunks.forEach(function(track) { output.set(track, writeOffset); writeOffset += track.length; });
+
+  if (writeOffset !== output.length || output[0] !== 0x4d || output[1] !== 0x54 || output[2] !== 0x68 || output[3] !== 0x64) {
+    throw new Error('Export produced invalid MIDI bytes.');
+  }
+  return output;
+}
+
+async function midiWriteExportedBytes(output, saveHandle, fileName) {
+  if (!(output instanceof Uint8Array) || output.byteLength < 14) throw new Error('No valid MIDI bytes were generated.');
+  if (saveHandle) {
+    const writable = await saveHandle.createWritable();
+    try {
+      await writable.write({type:'write', position:0, data:output});
+    } finally {
+      await writable.close();
+    }
+    setStatus('MIDI exported: '+(saveHandle.name || fileName)+' ('+output.byteLength+' bytes)');
+    return;
+  }
+  const blob = new Blob([output], {type:'audio/midi'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a'); link.href=url; link.download=fileName;
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+  setStatus('MIDI exported: '+fileName+' ('+output.byteLength+' bytes)');
+}
+
 async function midiSaveSong() {
   if (!midiPlayback.parsed || !midiPlayback.rawData) {
     setStatus('No MIDI loaded.');
@@ -838,6 +1193,11 @@ async function midiSaveSong() {
       loopStartSeconds: midiPlayback.loopStartSeconds,
       loopEndSeconds: midiPlayback.loopEndSeconds,
       looping: midiPlayback.looping,
+      addedSectionMarkers: Array.isArray(midiPlayback.addedSectionMarkers)
+        ? midiPlayback.addedSectionMarkers.map(function(mark) {
+            return { tick: mark.tick, seconds: mark.seconds, text: mark.text, markerType: 'marker' };
+          })
+        : [],
       midiDataBase64: midiArrayBufferToBase64(midiData)
     };
 
@@ -977,6 +1337,30 @@ function midiLoadSongPicker() {
         midiPlayback.loopEndSeconds !== null &&
         midiPlayback.loopEndSeconds > midiPlayback.loopStartSeconds
       );
+
+        midiPlayback.addedSectionMarkers = Array.isArray(song.addedSectionMarkers)
+
+          ? song.addedSectionMarkers.filter(function(mark) {
+
+              return mark && typeof mark.tick === 'number' && typeof mark.text === 'string' && mark.text.trim();
+
+            }).map(function(mark) {
+
+              return {
+
+                tick: mark.tick,
+
+                seconds: typeof mark.seconds === 'number' ? mark.seconds : 0,
+
+                text: mark.text.trim(),
+
+                markerType: 'marker'
+
+              };
+
+            })
+
+          : [];
 
       midiUpdateBpmReadout();
 
@@ -1239,6 +1623,24 @@ function midiReadVarLen(view, offset) {
                 type: 'tempo',
                 microsecondsPerQuarter: microsecondsPerQuarter
               });
+            } else if (metaType === 0x58 && length.value >= 4) {
+              const numerator = view.getUint8(pos);
+              const denominatorPower = view.getUint8(pos + 1);
+              const denominator = Math.pow(2, denominatorPower);
+              const clocksPerMetronomeClick = view.getUint8(pos + 2);
+              const thirtySecondNotesPerQuarter = view.getUint8(pos + 3);
+
+              if (numerator > 0 && denominator > 0) {
+                events.push({
+                  tick: tick,
+                  type: 'timeSignature',
+                  numerator: numerator,
+                  denominator: denominator,
+                  denominatorPower: denominatorPower,
+                  clocksPerMetronomeClick: clocksPerMetronomeClick,
+                  thirtySecondNotesPerQuarter: thirtySecondNotesPerQuarter
+                });
+              }
             } else if (
               metaType === 0x01 ||
               metaType === 0x06 ||
@@ -1283,11 +1685,29 @@ function midiReadVarLen(view, offset) {
         offset = trackEnd;
       }
 
+      const timeSignatures = [];
+      tracks.forEach(function(track) {
+        track.forEach(function(event) {
+          if (event && event.type === 'timeSignature') {
+            timeSignatures.push({
+              tick: event.tick,
+              numerator: event.numerator,
+              denominator: event.denominator,
+              denominatorPower: event.denominatorPower,
+              clocksPerMetronomeClick: event.clocksPerMetronomeClick,
+              thirtySecondNotesPerQuarter: event.thirtySecondNotesPerQuarter
+            });
+          }
+        });
+      });
+      timeSignatures.sort(function(a, b) { return a.tick - b.tick; });
+
       return {
         format: format,
         trackCount: trackCount,
         ticksPerQuarter: ticksPerQuarter,
-        tracks: tracks
+        tracks: tracks,
+        timeSignatures: timeSignatures
       };
     }
 
@@ -1522,6 +1942,7 @@ const midiPlayback = {
   bpmAdjustment: 0,
   durationSeconds: 0,
   rehearsalMarks: [],
+  addedSectionMarkers: [],
   transposeSemitones: 0,
   timedEvents: [],
   tempoEventSeconds: [],
@@ -1643,6 +2064,109 @@ function midiTickToSecondsFactory(parsed, tempoEvents) {
   };
 }
 
+function midiGetTimeSignatureEvents(parsed) {
+  if (!parsed || !parsed.ticksPerQuarter) return [];
+  const source = Array.isArray(parsed.timeSignatures) ? parsed.timeSignatures : [];
+  const result = source
+    .filter(function(sig) {
+      return sig && Number(sig.numerator) > 0 && Number(sig.denominator) > 0 && Number.isFinite(Number(sig.tick));
+    })
+    .map(function(sig) {
+      return {
+        tick: Math.max(0, Math.round(Number(sig.tick))),
+        numerator: Math.max(1, Math.round(Number(sig.numerator))),
+        denominator: Math.max(1, Math.round(Number(sig.denominator)))
+      };
+    })
+    .sort(function(a, b) { return a.tick - b.tick; });
+
+  // If a MIDI file has no time-signature event, retain the app's old 4/4
+  // behavior as a fallback. We do not try to infer a pickup from note data.
+  if (!result.length || result[0].tick > 0) {
+    result.unshift({tick: 0, numerator: 4, denominator: 4});
+  } else if (result[0].tick === 0) {
+    // Keep the first explicit event at tick 0.
+    result[0].tick = 0;
+  }
+
+  // If several events occur at the same tick, the last one wins.
+  const deduped = [];
+  result.forEach(function(sig) {
+    if (deduped.length && deduped[deduped.length - 1].tick === sig.tick) {
+      deduped[deduped.length - 1] = sig;
+    } else {
+      deduped.push(sig);
+    }
+  });
+  return deduped;
+}
+
+function midiGetBarlineTicks(maxTick) {
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) return [];
+  const tpq = midiPlayback.parsed.ticksPerQuarter;
+  maxTick = Math.max(0, Number(maxTick) || 0);
+
+  const signatures = midiGetTimeSignatureEvents(midiPlayback.parsed);
+  const barlines = [];
+
+  for (let i = 0; i < signatures.length; i++) {
+    const sig = signatures[i];
+    const startTick = Math.max(0, sig.tick);
+    if (startTick > maxTick + 0.000001) break;
+
+    const nextSignatureTick = i + 1 < signatures.length
+      ? Math.max(startTick, signatures[i + 1].tick)
+      : Infinity;
+    const segmentEnd = Math.min(maxTick, nextSignatureTick);
+    const barTicks = tpq * sig.numerator * 4 / sig.denominator;
+    if (!(barTicks > 0)) continue;
+
+    // The beginning of the song and every time-signature change are barlines.
+    // We deliberately do not infer pickup measures from note positions.
+    if (!barlines.length || Math.abs(barlines[barlines.length - 1] - startTick) > 0.000001) {
+      barlines.push(startTick);
+    }
+
+    let next = startTick + barTicks;
+    while (next <= segmentEnd + 0.000001 && next <= maxTick + 0.000001) {
+      if (!barlines.length || Math.abs(barlines[barlines.length - 1] - next) > 0.000001) {
+        barlines.push(next);
+      }
+      next += barTicks;
+    }
+  }
+
+  return Array.from(new Set(barlines.map(function(t) { return Math.round(t * 1000) / 1000; })))
+    .filter(function(t) { return t >= 0 && t <= maxTick + 0.000001; })
+    .sort(function(a, b) { return a - b; });
+}
+
+function midiAppendBarlineToBeat(beatElement, beatStartTick, beatEndTick) {
+  if (!beatElement) return;
+  const barlines = midiGetBarlineTicks(beatEndTick);
+  const relevant = barlines.filter(function(tick) {
+    return tick >= beatStartTick - 0.000001 && tick <= beatEndTick + 0.000001;
+  });
+  relevant.forEach(function(tick) {
+    const span = Math.max(0.000001, beatEndTick - beatStartTick);
+    const pct = Math.max(0, Math.min(100, ((tick - beatStartTick) / span) * 100));
+    const line = document.createElement('span');
+    line.className = 'beat-barline';
+    line.style.left = 'calc(' + pct + '% - 1px)';
+    line.setAttribute('aria-hidden', 'true');
+    beatElement.appendChild(line);
+  });
+}
+
+function midiGetTimeSignatureSummary() {
+  const signatures = midiGetTimeSignatureEvents(midiPlayback.parsed);
+  return signatures.map(function(sig) {
+    return sig.numerator + '/' + sig.denominator;
+  }).filter(function(value, index, array) {
+    return index === 0 || value !== array[index - 1];
+  }).join(', ');
+}
+
 function midiLoadParsed(parsed, name, rawData) {
   midiStopPlayback();
 
@@ -1710,6 +2234,7 @@ function midiLoadParsed(parsed, name, rawData) {
       : 0;
 
   midiPlayback.rehearsalMarks = [];
+  midiPlayback.addedSectionMarkers = [];
 
   if (parsed && Array.isArray(parsed.tracks)) {
     parsed.tracks.forEach(function(track) {
@@ -2174,39 +2699,20 @@ function midiTogglePlayback() {
   });
 }
 
+function midiGetBarNumberForTick(tick) {
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) return 1;
+  const barlines = midiGetBarlineTicks(Math.max(0, Number(tick) || 0));
+  let count = 0;
+  for (let i = 0; i < barlines.length; i++) {
+    if (barlines[i] <= tick + 0.000001) count++;
+    else break;
+  }
+  return Math.max(1, count);
+}
+
 function midiGetBarNumberForSeconds(seconds) {
-  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) {
-    return 1;
-  }
-
-  const tempoEvents = midiPlayback.tempoEventSeconds || [];
-  const ticksPerQuarter = midiPlayback.parsed.ticksPerQuarter;
-
-  if (!tempoEvents.length) return 1;
-
-  seconds = Math.max(0, Math.min(seconds, midiPlayback.durationSeconds));
-
-  let segmentIndex = 0;
-  while (
-    segmentIndex + 1 < tempoEvents.length &&
-    tempoEvents[segmentIndex + 1].sourceSeconds <= seconds
-  ) {
-    segmentIndex++;
-  }
-
-  const segment = tempoEvents[segmentIndex];
-  const ticksPerSecond =
-    (segment.bpm / 60) * ticksPerQuarter;
-
-  const tick = Math.max(
-    0,
-    segment.tick +
-      (seconds - segment.sourceSeconds) * ticksPerSecond
-  );
-
-  // The MIDI Karaoke App currently uses a quarter-note beat grid,
-  // so one bar is four beats (standard 4/4 time).
-  return Math.floor(tick / (ticksPerQuarter * 4)) + 1;
+  if (!midiPlayback.parsed || !midiPlayback.parsed.ticksPerQuarter) return 1;
+  return midiGetBarNumberForTick(Math.max(0, Math.round(midiGetTickForSeconds(seconds))));
 }
 
 function midiMoveLoopStartByBeats(deltaBeats) {
@@ -2244,12 +2750,28 @@ function midiGetBarBeatLabelForSeconds(seconds) {
     return 'Bar ? | Beat ?';
   }
 
-  const ticksPerQuarter = midiPlayback.parsed.ticksPerQuarter;
+  const tpq = midiPlayback.parsed.ticksPerQuarter;
   const tick = Math.max(0, Math.round(midiGetTickForSeconds(seconds)));
-  const beatIndex = Math.floor(tick / ticksPerQuarter);
+  const signatures = midiGetTimeSignatureEvents(midiPlayback.parsed);
+  let active = signatures[0] || {tick:0,numerator:4,denominator:4};
+  for (let i = 0; i < signatures.length; i++) {
+    if (signatures[i].tick <= tick) active = signatures[i];
+    else break;
+  }
 
-  return 'Bar ' + Math.floor(beatIndex / 4 + 1) +
-    ' | Beat ' + (beatIndex % 4 + 1);
+  const barlines = midiGetBarlineTicks(tick);
+  let barStart = 0;
+  let barNumber = 1;
+  for (let i = 0; i < barlines.length; i++) {
+    if (barlines[i] <= tick + 0.000001) {
+      barStart = barlines[i];
+      barNumber = i + 1;
+    } else break;
+  }
+  const beatTicks = tpq * 4 / active.denominator;
+  const beatNumber = beatTicks > 0 ? Math.floor((tick - barStart) / beatTicks) + 1 : 1;
+
+  return 'Bar ' + barNumber + ' | Beat ' + Math.max(1, beatNumber);
 }
 
 function midiMoveLoopRangeByBars(deltaBars) {
@@ -2856,6 +3378,10 @@ function midiJumpToNextMarker() {
    ========================================================= */
 
 window.addEventListener('keydown', function(e) {
+  // While entering a Section Marker name, all app shortcuts are disabled.
+  // The marker input has its own Enter/Escape handling below.
+  if (window.midiMarkerNameEditing) return;
+
   if (e.key === 'F11') {
     // Let the browser's native F11 fullscreen handling work.
     return;
@@ -3188,27 +3714,62 @@ function sectionColorForText(text){
   if(/\bintro\b|\boutro\b/.test(n))return '#3f8fa8';
   if(/\bbridge\b/.test(n))return '#7656a0';
   if(/\binstrumental\b/.test(n))return '#3a434f';
-  return '#273343';
+  return null;
+}
+function sectionMarkerGuideColor(text){
+  return sectionColorForText(text) || '#ff4fa3';
 }
 function updateSeekTrack(){
   const el=$('uiSeekTrack');
   if(!el)return;
   const dur=Number(midiPlayback&&midiPlayback.durationSeconds)||0;
-  if(!dur){el.style.background='#273343';const overlay=$('uiSeekLoopOverlay');if(overlay)overlay.style.display='none';return;}
-  const sections=typeof midiGetDisplayedSectionMarks==='function'?midiGetDisplayedSectionMarks():[];
+  const markerLayer=$('uiSeekSectionMarkers');
+  if(!dur){
+    el.style.background='#20262e';
+    const overlay=$('uiSeekLoopOverlay');
+    if(overlay)overlay.style.display='none';
+    if(markerLayer){markerLayer.innerHTML='';markerLayer.style.display='none';}
+    return;
+  }
+
+  // Use exactly the same structural section markers that drive the
+  // Section buttons. Each section owns the continuous interval from its
+  // marker up to (but not including) the next marker.
+  const rawSections=typeof midiGetDisplayedSectionMarks==='function'
+    ? midiGetDisplayedSectionMarks() : [];
+  const sections=rawSections.slice().sort(function(a,b){
+    return (Number(a.seconds)||0)-(Number(b.seconds)||0);
+  });
+
   const stops=[];
   let pos=0;
   for(let i=0;i<sections.length;i++){
     const start=Math.max(0,Math.min(dur,Number(sections[i].seconds)||0));
-    const end=i+1<sections.length?Math.max(start,Math.min(dur,Number(sections[i+1].seconds)||dur)):dur;
+    const end=i+1<sections.length
+      ? Math.max(start,Math.min(dur,Number(sections[i+1].seconds)||dur))
+      : dur;
     if(end<=start)continue;
-    if(start>pos)stops.push('#273343 '+(pos/dur*100)+'% '+(start/dur*100)+'%');
-    stops.push(sectionColorForText(sections[i].text)+' '+(start/dur*100)+'% '+(end/dur*100)+'%');
-    pos=end;
+
+    // Only leave the area before the first actual section marker gray.
+    // Once a section begins, its color continues all the way to the next
+    // section marker, preventing artificial gray gaps inside sections.
+    if(start>pos && pos===0){
+      stops.push('#20262e '+(pos/dur*100)+'% '+(start/dur*100)+'%');
+    }
+    const color=sectionColorForText(sections[i].text) || '#20262e';
+    const segmentStart=Math.max(pos,start);
+    stops.push(color+' '+(segmentStart/dur*100)+'% '+(end/dur*100)+'%');
+    pos=Math.max(pos,end);
   }
-  if(pos<dur)stops.push('#273343 '+(pos/dur*100)+'% 100%');
-  if(!stops.length)stops.push('#273343 0% 100%');
+
+  if(!stops.length){
+    stops.push('#20262e 0% 100%');
+  }else if(pos<dur){
+    stops.push('#20262e '+(pos/dur*100)+'% 100%');
+  }
   el.style.background='linear-gradient(to right,'+stops.join(',')+')';
+
+  // Yellow Loop Range remains on the top half of the playback slider.
   const overlay=$('uiSeekLoopOverlay');
   if(overlay){
     const ls=Number(midiPlayback&&midiPlayback.loopStartSeconds);
@@ -3226,6 +3787,37 @@ function updateSeekTrack(){
       overlay.style.left='11px';
       overlay.style.width='0';
     }
+  }
+
+  // Existing MIDI Section Markers are shown as short pink vertical ticks
+  // on the top edge of the slider. They deliberately sit above the yellow
+  // Loop Range so both guides remain visible at the same time.
+  if(markerLayer){
+    markerLayer.innerHTML='';
+    const structural=typeof midiGetStructuralMarkers==='function'
+      ? midiGetStructuralMarkers() : [];
+    const seen=Object.create(null);
+    structural.forEach(function(mark){
+      const seconds=Number(mark&&mark.seconds);
+      if(!Number.isFinite(seconds)||seconds<0||seconds>dur)return;
+      const key=Math.round(seconds*1000);
+      if(seen[key])return;
+      seen[key]=true;
+      const markerColor=sectionMarkerGuideColor(mark.text);
+      const tick=document.createElement('span');
+      tick.className='seek-section-marker';
+      tick.style.left=(seconds/dur*100)+'%';
+      tick.style.background=markerColor;
+      tick.title=String(mark.text||'Section Marker');
+
+      const label=document.createElement('span');
+      label.className='seek-section-marker-label';
+      label.textContent=String(mark.text||'Section Marker');
+      label.style.color=markerColor;
+      tick.appendChild(label);
+      markerLayer.appendChild(tick);
+    });
+    markerLayer.style.display=structural.length?'block':'none';
   }
 }
 let seeking=false;let seekWasPlaying=false;function refresh(){if(typeof midiPlayback==='undefined')return;const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0,dur=Number(midiPlayback.durationSeconds)||0,bpm=Number(midiPlayback.bpm)||0,tr=Number(midiPlayback.transposeSemitones)||0;$('uiNow').textContent=fmt(now);$('uiDur').textContent=fmt(dur);$('uiSeek').max=String(dur);updateSeekTrack();if(!seeking)$('uiSeek').value=String(Math.min(now,dur));$('uiFile').textContent=midiPlayback.fileName||'No MIDI loaded';if($('uiBpm'))$('uiBpm').textContent=bpm?Math.round(bpm):'—';if($('uiTranspose'))$('uiTranspose').textContent=(tr>0?'+':'')+tr+' semitone'+(Math.abs(tr)===1?'':'s');if($('loopToggle'))$('loopToggle').classList.toggle('loop-on',!!midiPlayback.looping);refreshMarkers()}
@@ -3247,8 +3839,7 @@ function beatTime(n){if(typeof midiGetSecondsForTick!=='function'||!midiPlayback
 function resetTapStep(){tapStep='start';if(pointStatus)pointStatus.textContent='Tap a beat for Loop Start. The next tap will set Loop End.';}
 function sectionClassForTime(seconds){
   if(typeof midiGetDisplayedSectionMarks!=='function')return '';
-  const sections=midiGetDisplayedSectionMarks();
-  let current=null;
+  const sections=midiGetDisplayedSectionMarks();let current=null;
   for(let i=0;i<sections.length;i++){if(Number(sections[i].seconds)<=seconds+0.000001)current=sections[i];else break;}
   if(!current)return '';
   const normalized=String(current.text||'').toLowerCase().replace(/[^a-z]+/g,' ');
@@ -3261,17 +3852,190 @@ function sectionClassForTime(seconds){
   if(/\binstrumental\b/.test(normalized))return 'section-instrumental';
   return '';
 }
-function render(){const n=countBeats();if(n===lastBeatCount&&beats.length)return;lastBeatCount=n;beats=[];timeline.innerHTML='';if(!n){timeline.classList.add('empty');timeline.textContent='Load a MIDI file to show the song beats.';info.textContent='Load a MIDI song';resetTapStep();return;}timeline.classList.remove('empty');info.textContent=n+' beats · 1 beat per cell';const frag=document.createDocumentFragment();for(let i=0;i<n;i++){const b=document.createElement('button');b.type='button';b.className='beat '+sectionClassForTime(beatTime(i));b.dataset.beat=i;b.innerHTML='<span class="beat-number">'+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';b.addEventListener('click',()=>chooseBeat(i));frag.appendChild(b);beats.push(b);}timeline.appendChild(frag);update();}
-function chooseBeat(i){if(tapStep==='start'){const start=beatTime(i);midiPlayback.loopStartSeconds=start;midiPlayback.loopEndSeconds=null;midiPlayback.looping=false;tapStep='end';if(pointStatus)pointStatus.textContent='Loop Start Beat '+(i+1)+' set ('+fmt(start)+'). Tap another beat for Loop End.';const loop=document.getElementById('loopToggle');if(loop){loop.textContent='🔁';loop.classList.remove('loop-on');}update();return;}const start=midiPlayback.loopStartSeconds;if(start===null){tapStep='start';chooseBeat(i);return;}const end=beatTime(Math.min(i+1,beats.length));tapStep='start';if(end<=start){if(pointStatus)pointStatus.textContent='Loop End must be after Loop Start. Next tap will set a new Loop Start.';update();return;}midiPlayback.loopEndSeconds=end;midiPlayback.looping=true;const loop=document.getElementById('loopToggle');if(loop){loop.textContent='🔁';loop.classList.add('loop-on');}if(pointStatus)pointStatus.textContent='Loop set: Beats '+(Math.max(0,Math.floor(midiGetTickForSeconds(start)/(midiPlayback.parsed.ticksPerQuarter||480)))+1)+'–'+(i+1)+' ('+fmt(start)+' – '+fmt(end)+'). Next tap will set a new Loop Start.';const status=document.getElementById('uiStatus');if(status)status.textContent='Loop selected and ON. Playback started from Loop Start.';try{if(typeof midiStartPlayback==='function')midiStartPlayback(start);}catch(_){}update();}
-function update(){if(!beats.length||typeof midiPlayback==='undefined')return;const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0;const curTick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(now):0;const tpq=midiPlayback.parsed&&midiPlayback.parsed.ticksPerQuarter||480;const cur=Math.max(0,Math.min(beats.length-1,Math.floor(curTick/tpq)));let lo=null,hi=null;if(midiPlayback.loopStartSeconds!=null&&midiPlayback.loopEndSeconds!=null){const st=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiPlayback.loopStartSeconds):0;const et=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(Math.max(0,midiPlayback.loopEndSeconds-0.0001)):0;lo=Math.max(0,Math.min(beats.length-1,Math.floor(st/tpq)));hi=Math.max(lo,Math.min(beats.length-1,Math.floor(et/tpq)));}else if(midiPlayback.loopStartSeconds!=null){const st=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiPlayback.loopStartSeconds):0;lo=Math.max(0,Math.min(beats.length-1,Math.floor(st/tpq)));}beats.forEach((b,i)=>{b.classList.toggle('current',i===cur);b.classList.toggle('selected',lo!==null&&hi!==null&&i>=lo&&i<=hi);b.classList.toggle('anchor',lo!==null&&i===lo);b.classList.toggle('loop-start-pending',lo!==null&&hi===null&&i===lo);});}
+function render(){
+  const n=countBeats();
+  if(n===lastBeatCount&&beats.length)return;
+  lastBeatCount=n;beats=[];timeline.innerHTML='';
+  if(!n){timeline.classList.add('empty');timeline.textContent='Load a MIDI file to show the song beats.';info.textContent='Load a MIDI song';resetTapStep();return;}
+  timeline.classList.remove('empty');info.textContent=n+' beats · 1 beat per cell · '+midiGetTimeSignatureSummary();
+  const frag=document.createDocumentFragment();
+  for(let i=0;i<n;i++){
+    const b=document.createElement('button');b.type='button';b.className='beat '+sectionClassForTime(beatTime(i));b.dataset.beat=i;
+    b.innerHTML='<span class="beat-number">'+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
+    const tpq=midiPlayback.parsed.ticksPerQuarter;
+    midiAppendBarlineToBeat(b,i*tpq,(i+1)*tpq);
+    frag.appendChild(b);beats.push(b);
+  }
+  timeline.appendChild(frag);update();
+}
+function chooseBeat(i){
+  if(tapStep==='start'){
+    const start=beatTime(i);midiPlayback.loopStartSeconds=start;midiPlayback.loopEndSeconds=null;midiPlayback.looping=false;tapStep='end';
+    if(pointStatus)pointStatus.textContent='Loop Start Beat '+(i+1)+' set ('+fmt(start)+'). Tap another beat for Loop End.';
+    const loop=document.getElementById('loopToggle');if(loop){loop.textContent='🔁';loop.classList.remove('loop-on');}update();return;
+  }
+  const start=midiPlayback.loopStartSeconds;
+  if(start===null){tapStep='start';chooseBeat(i);return;}
+  const end=beatTime(Math.min(i+1,beats.length));tapStep='start';
+  if(end<=start){if(pointStatus)pointStatus.textContent='Loop End must be after Loop Start. Next tap will set a new Loop Start.';update();return;}
+  midiPlayback.loopEndSeconds=end;midiPlayback.looping=true;
+  const loop=document.getElementById('loopToggle');if(loop){loop.textContent='🔁';loop.classList.add('loop-on');}
+  if(pointStatus)pointStatus.textContent='Loop set: Beats '+(Math.max(0,Math.floor(midiGetTickForSeconds(start)/(midiPlayback.parsed.ticksPerQuarter||480)))+1)+'–'+(i+1)+' ('+fmt(start)+' – '+fmt(end)+'). Next tap will set a new Loop Start.';
+  const status=document.getElementById('uiStatus');if(status)status.textContent='Loop selected and ON. Playback started from Loop Start.';
+  try{if(typeof midiStartPlayback==='function')midiStartPlayback(start);}catch(_){}update();
+}
+function update(){
+  if(!beats.length||typeof midiPlayback==='undefined')return;
+  const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0;const curTick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(now):0;const tpq=midiPlayback.parsed&&midiPlayback.parsed.ticksPerQuarter||480;
+  const cur=Math.max(0,Math.min(beats.length-1,Math.floor(curTick/tpq)));let lo=null,hi=null;
+  if(midiPlayback.loopStartSeconds!=null&&midiPlayback.loopEndSeconds!=null){const st=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiPlayback.loopStartSeconds):0;const et=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(Math.max(0,midiPlayback.loopEndSeconds-0.0001)):0;lo=Math.max(0,Math.min(beats.length-1,Math.floor(st/tpq)));hi=Math.max(lo,Math.min(beats.length-1,Math.floor(et/tpq)));}
+  else if(midiPlayback.loopStartSeconds!=null){const st=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiPlayback.loopStartSeconds):0;lo=Math.max(0,Math.min(beats.length-1,Math.floor(st/tpq)));}
+  beats.forEach((b,i)=>{b.classList.toggle('current',i===cur);b.classList.toggle('selected',lo!==null&&hi!==null&&i>=lo&&i<=hi);b.classList.toggle('anchor',lo!==null&&i===lo);b.classList.toggle('loop-start-pending',lo!==null&&hi===null&&i===lo);});
+}
 function updateTimelineView(){const view=document.getElementById('timelineView');if(!view||!beats.length){if(view)view.textContent='All beats';return;}const first=Math.max(0,Math.floor(timeline.scrollLeft/48));const visible=Math.max(1,Math.ceil(timeline.clientWidth/48));const last=Math.min(beats.length,first+visible);view.textContent='Beats '+(first+1)+'–'+last+' / '+beats.length;}
 let dragState=null;
 timeline.addEventListener('pointerdown',e=>{if(!beats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.beat');dragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:timeline.scrollLeft,moved:false,beatTarget:beatTarget};timeline.setPointerCapture?.(e.pointerId);});
 timeline.addEventListener('pointermove',e=>{if(!dragState||e.pointerId!==dragState.pointerId)return;const dx=e.clientX-dragState.startX;if(Math.abs(dx)>6)dragState.moved=true;if(dragState.moved){timeline.scrollLeft=dragState.startScrollLeft-dx;timeline.classList.add('dragging');updateTimelineView();e.preventDefault();}});
 function finishTimelineDrag(e){if(!dragState||e.pointerId!==dragState.pointerId)return;const state=dragState;dragState=null;timeline.classList.remove('dragging');if(state.moved){e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i))chooseBeat(i);e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);}}
-timeline.addEventListener('pointerup',finishTimelineDrag);timeline.addEventListener('pointercancel',finishTimelineDrag);timeline.addEventListener('click',e=>{if(timeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete timeline.dataset.suppressClick; }},{capture:true});
-timeline.addEventListener('scroll',updateTimelineView,{passive:true});setInterval(()=>{render();update();updateTimelineView();},200);
+timeline.addEventListener('pointerup',finishTimelineDrag);timeline.addEventListener('pointercancel',finishTimelineDrag);timeline.addEventListener('click',e=>{if(timeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete timeline.dataset.suppressClick;}},{capture:true});
+timeline.addEventListener('scroll',updateTimelineView,{passive:true});
+
+const markerTimeline=document.getElementById('sectionMarkerTimeline');
+const markerEditor=document.getElementById('sectionMarkerEditor');
+const markerName=document.getElementById('sectionMarkerName');
+const markerAdd=document.getElementById('sectionMarkerAdd');
+const markerCancel=document.getElementById('sectionMarkerCancel');
+const markerView=document.getElementById('sectionMarkerView');
+const markerInfo=document.getElementById('sectionMarkerInfo');
+let markerBeats=[];let markerLastBeatCount=0;let markerDragState=null;let pendingMarkerBeat=null;window.midiMarkerNameEditing=false;
+function markerCount(){return countBeats();}
+function markerAtBeat(i){
+  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return null;
+  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
+  const tick=i*tpq;
+
+  // Show MIDI markers/cue points and markers created in this app
+  // with exactly the same yellow marker styling.
+  const structural=typeof midiGetStructuralMarkers==='function'
+    ? midiGetStructuralMarkers()
+    : [];
+
+  for(const mark of structural){
+    if(Math.round(Number(mark.tick))===tick)return mark;
+  }
+
+  return null;
+}
+function positionMarkerEditor(i){
+  if(!markerEditor||!markerTimeline)return;
+  const left=(i*48)-markerTimeline.scrollLeft;
+  const clamped=Math.max(4,Math.min(markerTimeline.clientWidth-180,left-65));
+  markerEditor.style.left=clamped+'px';
+}
+function openMarkerEditor(i){
+  if(!midiPlayback.parsed)return;
+  pendingMarkerBeat=i;window.midiMarkerNameEditing=true;positionMarkerEditor(i);markerEditor.hidden=false;
+  const existing=markerAtBeat(i);markerName.value=existing?existing.text:'';
+  markerName.focus();markerName.select();
+}
+function closeMarkerEditor(){pendingMarkerBeat=null;window.midiMarkerNameEditing=false;if(markerEditor)markerEditor.hidden=true;if(markerName)markerName.value='';}
+function addSectionMarker(){
+  if(pendingMarkerBeat===null||pendingMarkerBeat===undefined)return;
+  const text=String(markerName.value||'').trim();
+  if(!text){markerName.focus();return;}
+  const tpq=midiPlayback.parsed&&midiPlayback.parsed.ticksPerQuarter||480;
+  const tick=pendingMarkerBeat*tpq;
+  const seconds=beatTime(pendingMarkerBeat);
+  if(!Array.isArray(midiPlayback.addedSectionMarkers))midiPlayback.addedSectionMarkers=[];
+  const existing=markerAtBeat(pendingMarkerBeat);
+  if(existing){existing.text=text;existing.seconds=seconds;existing.tick=tick;}
+  else midiPlayback.addedSectionMarkers.push({tick:tick,seconds:seconds,text:text,markerType:'marker'});
+  midiPlayback.addedSectionMarkers.sort((a,b)=>a.tick-b.tick);
+  closeMarkerEditor();renderMarkers();
+  if(typeof setStatus==='function')setStatus('Section Marker added: '+text+' (Beat '+(pendingMarkerBeat+1)+').');
+}
+function renderMarkers(){
+  const n=markerCount();
+  if(n!==markerLastBeatCount||markerBeats.length===0){
+    markerLastBeatCount=n;markerBeats=[];markerTimeline.innerHTML='';
+    if(!n){markerTimeline.classList.add('empty');markerTimeline.textContent='Load a MIDI file to add Section Markers.';markerInfo.textContent='';closeMarkerEditor();return;}
+    markerTimeline.classList.remove('empty');
+    const frag=document.createDocumentFragment();
+    for(let i=0;i<n;i++){
+      const b=document.createElement('button');b.type='button';b.className='beat marker-beat '+sectionClassForTime(beatTime(i));b.dataset.beat=i;
+      b.innerHTML='<span class="beat-number">'+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
+      const tpq=midiPlayback.parsed.ticksPerQuarter;
+      midiAppendBarlineToBeat(b,i*tpq,(i+1)*tpq);
+      frag.appendChild(b);markerBeats.push(b);
+    }
+    markerTimeline.appendChild(frag);
+  }
+  markerInfo.textContent=n?n+' beats · '+midiGetTimeSignatureSummary()+' · Tap/click a beat to name a Section Marker':'';
+  const existing=Array.isArray(midiPlayback.addedSectionMarkers)?midiPlayback.addedSectionMarkers:[];
+  const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0;
+  const curTick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(now):0;
+  const tpq=midiPlayback.parsed&&midiPlayback.parsed.ticksPerQuarter||480;
+  const currentBeat=Math.max(0,Math.min(markerBeats.length-1,Math.floor(curTick/tpq)));
+  markerBeats.forEach((b,i)=>{
+    const mark=markerAtBeat(i);
+    b.classList.toggle('has-marker',!!mark);
+    b.classList.toggle('current',i===currentBeat);
+    if(mark){b.title=mark.text;b.setAttribute('aria-label','Beat '+(i+1)+', Section Marker: '+mark.text);}
+    else {b.removeAttribute('title');b.setAttribute('aria-label','Beat '+(i+1)+', add Section Marker');}
+  });
+  updateMarkerView();
+}
+function updateMarkerView(){
+  if(!markerView||!markerBeats.length){if(markerView)markerView.textContent='All beats';return;}
+  const first=Math.max(0,Math.floor(markerTimeline.scrollLeft/48));const visible=Math.max(1,Math.ceil(markerTimeline.clientWidth/48));const last=Math.min(markerBeats.length,first+visible);markerView.textContent='Beats '+(first+1)+'–'+last+' / '+markerBeats.length;
+  if(!markerEditor.hidden&&pendingMarkerBeat!==null)positionMarkerEditor(pendingMarkerBeat);
+}
+markerTimeline.addEventListener('pointerdown',e=>{if(!markerBeats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.marker-beat');markerDragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:markerTimeline.scrollLeft,moved:false,beatTarget:beatTarget};markerTimeline.setPointerCapture?.(e.pointerId);});
+markerTimeline.addEventListener('pointermove',e=>{if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const dx=e.clientX-markerDragState.startX;if(Math.abs(dx)>6)markerDragState.moved=true;if(markerDragState.moved){markerTimeline.scrollLeft=markerDragState.startScrollLeft-dx;markerTimeline.classList.add('dragging');updateMarkerView();e.preventDefault();}});
+function finishMarkerDrag(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const state=markerDragState;markerDragState=null;markerTimeline.classList.remove('dragging');if(state.moved){e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(()=>{delete markerTimeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i))openMarkerEditor(i);e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(()=>{delete markerTimeline.dataset.suppressClick;},120);}}
+markerTimeline.addEventListener('pointerup',finishMarkerDrag);markerTimeline.addEventListener('pointercancel',finishMarkerDrag);markerTimeline.addEventListener('click',e=>{if(markerTimeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete markerTimeline.dataset.suppressClick;}},{capture:true});markerTimeline.addEventListener('scroll',updateMarkerView,{passive:true});
+markerAdd.addEventListener('click',addSectionMarker);markerCancel.addEventListener('click',closeMarkerEditor);markerName.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addSectionMarker();}else if(e.key==='Escape'){e.preventDefault();closeMarkerEditor();}});
+window.addEventListener('resize',()=>{if(!markerEditor.hidden&&pendingMarkerBeat!==null)positionMarkerEditor(pendingMarkerBeat);});
+
+const exportButton=document.getElementById('exportMarkedMidi');
+if(exportButton)exportButton.addEventListener('click',async()=>{
+  if(!midiPlayback.rawData||!midiPlayback.parsed){setStatus('No MIDI loaded.');return;}
+  const markers=Array.isArray(midiPlayback.addedSectionMarkers)?midiPlayback.addedSectionMarkers.filter(function(mark){return mark&&typeof mark.tick==='number'&&String(mark.text||'').trim();}):[];
+  if(!markers.length){setStatus('No new Section Markers to export.');return;}
+  const baseName=(midiPlayback.fileName||'Untitled MIDI').replace(/\.[^.]+$/,'')||'Untitled MIDI';
+  const fileName=baseName+'_with_section_markers.mid';
+
+  // Build and validate the complete MIDI synchronously from the button click.
+  // This happens before the Save As dialog, so an invalid export can never
+  // leave behind a newly-created 0-byte file.
+  let output;
+  try {
+    output=midiBuildExportBytesWithSectionMarkers();
+    setStatus('MIDI ready to save ('+output.byteLength+' bytes).');
+  } catch(error) {
+    console.error('[midi] Could not build MIDI export:',error);
+    setStatus('MIDI export error: '+(error.message||error));
+    return;
+  }
+
+  if(typeof window.showSaveFilePicker==='function'){
+    try{
+      const handle=await window.showSaveFilePicker({suggestedName:fileName,types:[{description:'MIDI file',accept:{'audio/midi':['.mid','.midi']}}]});
+      await midiWriteExportedBytes(output,handle,fileName);
+    }catch(error){
+      if(error&&error.name==='AbortError'){setStatus('MIDI export cancelled.');return;}
+      console.error('[midi] Save picker/write failed:',error);
+      setStatus('MIDI export error: '+(error.message||error));
+    }
+  }else{
+    try { await midiWriteExportedBytes(output,null,fileName); }
+    catch(error){ setStatus('MIDI export error: '+(error.message||error)); }
+  }
+});
+setInterval(()=>{render();update();updateTimelineView();renderMarkers();},200);
+renderMarkers();
 })();
 </script>
+
 </body>
 </html>
