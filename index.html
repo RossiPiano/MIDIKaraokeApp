@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MIDI Karaoke App — Graphical UI v63</title>
+<title>MIDI Karaoke App — Graphical UI v82</title>
 
 <style>
 :root{color-scheme:dark;--bg:#0b0d10;--panel:#171b21;--panel2:#222831;--border:#3a424e;--text:#f4f6f8;--muted:#aeb7c4;--accent:#42a5ff;--good:#2f7d62;--danger:#c94f59}
@@ -149,6 +149,35 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .marker-beat{color:#fff}
 .marker-beat:hover{filter:brightness(1.12)}
 @media(max-width:600px){.section-marker-timeline-row{grid-template-columns:48px minmax(0,1fr)}.marker-export-button{width:48px;height:48px;min-width:48px;min-height:48px}.section-marker-editor{max-width:92vw}.section-marker-editor-row input{width:calc(92vw - 155px);min-width:90px}.section-marker-editor-row button{width:42px;min-width:42px;height:42px;min-height:42px}}
+.chord-display-panel{margin-bottom:12px}
+.chord-display-details{margin-bottom:10px;background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.chord-display-details>summary{list-style:none;cursor:pointer;min-height:54px;padding:15px 16px;font-size:17px;font-weight:750;display:flex;align-items:center;justify-content:space-between}
+.chord-display-details>summary::-webkit-details-marker{display:none}
+.chord-display-heading{font-size:17px;font-weight:750}
+.chord-display-viewport{height:216px;overflow:hidden;background:#080d16;border:1px solid var(--border);border-radius:10px;padding:4px 8px;box-sizing:border-box}
+.chord-display-track{will-change:transform;transform:translateY(0)}
+.chord-display-row{height:52px;min-height:52px;box-sizing:border-box;padding:4px 6px;display:block;overflow:hidden;border-radius:7px;color:#d7e0eb;font-size:clamp(13px,2.4vw,18px);font-weight:750;line-height:1.25;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.chord-display-row:not(.current){border-radius:0}.chord-beat-grid{display:grid;grid-template-columns:repeat(var(--chord-grid-columns,4),minmax(0,1fr));width:100%;height:100%;min-width:0}.chord-beat-cell{min-width:0;display:flex;align-items:center;padding:2px 4px;box-sizing:border-box;overflow:hidden;white-space:nowrap;text-overflow:clip;border-right:1px solid rgba(255,255,255,.08)}.chord-beat-cell:last-child{border-right:0}.chord-grid-manual{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px 8px;color:var(--muted);font-size:12px}.chord-grid-manual label{display:flex;align-items:center;gap:6px}.chord-grid-manual select{height:34px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}
+.chord-display-row.section-verse{background:rgba(47,125,98,.28)}.chord-display-row.section-chorus{background:rgba(143,63,80,.28)}.chord-display-row.section-prechorus{background:rgba(184,111,43,.28)}.chord-display-row.section-intro,.chord-display-row.section-outro{background:rgba(63,143,168,.28)}.chord-display-row.section-bridge{background:rgba(118,86,160,.28)}.chord-display-row.section-instrumental{background:rgba(58,67,79,.28)}.chord-display-row.section-pink{background:rgba(255,79,163,.28)}.chord-display-row.current{background:#245b82;color:#fff;box-shadow:inset 0 0 0 2px #7dbcf0}.chord-display-row.current.section-verse{background:#2f7d62;box-shadow:inset 0 0 0 2px #2b9e70}.chord-display-row.current.section-chorus{background:#8f3f50;box-shadow:inset 0 0 0 2px #b84d58}.chord-display-row.current.section-prechorus{background:#b86f2b;box-shadow:inset 0 0 0 2px #d89b2b}.chord-display-row.current.section-intro,.chord-display-row.current.section-outro{background:#3f8fa8;box-shadow:inset 0 0 0 2px #67c7e8}.chord-display-row.current.section-bridge{background:#7656a0;box-shadow:inset 0 0 0 2px #9b6fd0}.chord-display-row.current.section-instrumental{background:#3a434f;box-shadow:inset 0 0 0 2px #59616b}.chord-display-row.current.section-pink{background:#ff4fa3;box-shadow:inset 0 0 0 2px #ff8bc4}
+.chord-display-row.empty{color:#5f6b78}
+.chord-editor-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;margin-top:10px;overflow:hidden}
+.chord-editor-card>summary{list-style:none;cursor:pointer;min-height:54px;padding:15px 16px;font-size:17px;font-weight:750;display:flex;align-items:center;justify-content:space-between}
+.chord-editor-card>summary::-webkit-details-marker{display:none}
+.chord-editor-body{padding:0 10px 10px}
+.chord-editor-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.chord-editor-tools button{min-height:42px}
+#chordProgressionEditor{width:100%;min-height:150px;resize:vertical;padding:10px;border:1px solid var(--border);border-radius:10px;background:#080d16;color:var(--text);font:600 16px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;outline:none}
+#chordProgressionEditor:focus{border-color:#7dbcf0;box-shadow:0 0 0 2px rgba(94,184,255,.16)}
+.chord-editor-status{margin-top:7px;color:var(--muted);font-size:12px;min-height:16px}
+.chord-output-details{margin-top:8px;background:#080d16;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.chord-output-details>summary{cursor:pointer;list-style:none;min-height:38px;padding:9px 10px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:700}
+.chord-output-details>summary::-webkit-details-marker{display:none}
+.chord-midi-analysis{max-height:220px;overflow:auto;padding:7px;border-top:1px solid var(--border);font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#aebdce}
+.chord-midi-analysis-row{padding:2px 4px;white-space:nowrap}
+.chord-midi-analysis-row strong{color:#e5edf7}
+.chord-midi-analysis-empty,.chord-detect-output{color:#667487;padding:8px}
+.chord-detect-output{border-top:1px solid var(--border);font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+@media(max-width:600px){.chord-display-row{font-size:clamp(12px,4vw,15px);padding-left:3px;padding-right:3px}.chord-beat-cell{padding-left:2px;padding-right:2px}.chord-editor-tools button{flex:1 1 150px}}
+
 </style>
 
 </head>
@@ -160,6 +189,58 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     <div class="hero-actions"><button id="uiMidi">Import MIDI</button><button id="uiSf2">Import SoundFont</button><button id="uiFull" class="fullscreen-button" aria-label="Fullscreen" title="Fullscreen">⛶</button></div>
   </div>
 
+
+
+  <section class="chord-display-panel main-controls" id="chordDisplayPanel">
+    <details class="chord-editor-card" id="chordEditorCard">
+      <summary><span>🎼 Chord Progression Editor</span><span>▾</span></summary>
+      <div class="chord-editor-body">
+        <div class="chord-grid-manual" id="chordGridManual" hidden>
+          <label for="chordGridTimeSignature">Chord grid time signature:</label>
+          <select id="chordGridTimeSignature" aria-label="Chord grid time signature">
+            <option value="4/4">4/4</option>
+            <option value="2/4">2/4</option>
+            <option value="3/4">3/4</option>
+            <option value="5/4">5/4</option>
+            <option value="6/8">6/8</option>
+            <option value="7/8">7/8</option>
+            <option value="9/8">9/8</option>
+            <option value="12/8">12/8</option>
+          </select>
+        </div>
+        <div class="chord-editor-tools">
+          <button id="chordAnalyzeMidi" type="button">🎹 Analyze MIDI Beats</button>
+          <button id="chordDetectMidi" type="button">🎼 Detect MIDI Chords</button>
+          <button id="chordClear" type="button">🗑️ Clear</button>
+        </div>
+        <textarea id="chordProgressionEditor" spellcheck="false" placeholder="Type chord progressions here...
+
+C _ _ _ | G _ _ _ | Am _ _ _ | F _ _ _ |
+Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
+        <div class="chord-editor-status" id="chordEditorStatus">Each chord occupies one beat column. | separates bars; the MIDI time signature determines the number of columns.</div>
+        <details class="chord-output-details" id="chordAnalyzeOutput">
+          <summary>🎹 Analyze MIDI Beats Output <span>▾</span></summary>
+          <div class="chord-midi-analysis" id="chordMidiAnalysis"><div class="chord-midi-analysis-empty">Load a MIDI file and press “Analyze MIDI Beats” to inspect the notes sounding on each beat.</div></div>
+        </details>
+        <details class="chord-output-details" id="chordDetectOutput">
+          <summary>🎼 Detect MIDI Chords Output <span>▾</span></summary>
+          <div class="chord-detect-output" id="chordDetectOutputText">No MIDI chord metadata has been detected yet.</div>
+        </details>
+      </div>
+    </details>
+
+    <details class="chord-display-details" id="chordDisplayDetails" open>
+      <summary><span class="chord-display-heading">🎼 Chord Progression</span><span>▾</span></summary>
+      <div class="chord-display-viewport" id="chordDisplayViewport" aria-live="polite">
+        <div class="chord-display-track" id="chordDisplayTrack">
+          <div class="chord-display-row empty">No chord progression entered.</div>
+          <div class="chord-display-row empty">&nbsp;</div>
+          <div class="chord-display-row empty">&nbsp;</div>
+          <div class="chord-display-row empty">&nbsp;</div>
+        </div>
+      </div>
+    </details>
+  </section>
 
   <section class="main-controls playback-controls" id="playbackSectionCard">
     <div id="midiTimelineCard" class="playback-subpanel loop-subpanel">
@@ -602,6 +683,8 @@ const MIDI_DB_VERSION = 2;
 const MIDI_STORE = 'midi';
 const MIDI_SONG_STORE = 'songs';
 const MIDI_ACTIVE_KEY = 'karaokeBandMidiControllerActiveMIDI';
+const MIDI_ACTIVE_SONG_KEY = 'karaokeBandMidiControllerActiveSong';
+let chordDisplayJumpOnNextUpdate = false;
 let midiDbPromise = null;
 
 /* The minimal controller has no visible BPM readout element.
@@ -749,12 +832,10 @@ async function midiRefreshSavedSongList() {
 }
 
 async function midiRememberSong(song, fileName) {
-  await midiSongDbPut({
-    id: 'song-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10),
-    name: fileName || song.midiFile || 'Untitled MIDI.midi-song.json',
-    song: song,
-    savedAt: new Date().toISOString()
-  });
+  const record = {id:'song-'+Date.now()+'-'+Math.random().toString(36).slice(2,10),name:fileName||song.midiFile||'Untitled MIDI.midi-song.json',song:song,savedAt:new Date().toISOString()};
+  await midiSongDbPut(record);
+  localStorage.setItem(MIDI_ACTIVE_SONG_KEY, record.id);
+  return record;
 }
 
 function midiSavedSongListText() {
@@ -817,7 +898,16 @@ async function midiLoadStoredSong(record) {
 
   await midiDbPut(midiRecord);
   localStorage.setItem(MIDI_ACTIVE_KEY, midiRecord.id);
-  midiLoadParsed(parsed, midiName, buffer);
+  if(record&&record.id)localStorage.setItem(MIDI_ACTIVE_SONG_KEY,String(record.id));
+  chordDisplayJumpOnNextUpdate=false;
+  midiLoadParsed(parsed,midiName,buffer);
+
+  const savedChordEditor = document.getElementById('chordProgressionEditor');
+  if (savedChordEditor) {
+    savedChordEditor.value = typeof song.chordProgression === 'string' ? song.chordProgression : '';
+    try { localStorage.setItem('midiChordProgression:' + String(midiPlayback.fileName || '').trim().toLowerCase(), savedChordEditor.value || ''); } catch (e) {}
+  }
+  updateChordDisplay();
 
   if (Number.isFinite(song.bpm)) midiPlayback.bpm = Math.max(5, song.bpm);
   if (Number.isFinite(song.transpose)) midiPlayback.transposeSemitones = song.transpose;
@@ -997,6 +1087,19 @@ async function midiRestoreActive() {
       (error.message || error)
     );
   }
+}
+
+async function midiRestoreLastSession(){
+  const activeSongId=localStorage.getItem(MIDI_ACTIVE_SONG_KEY);
+  if(activeSongId){
+    try{
+      const songs=await midiSongDbGetAll();
+      const record=songs.find(function(item){return String(item.id)===String(activeSongId);});
+      if(record){await midiLoadStoredSong(record);return;}
+      localStorage.removeItem(MIDI_ACTIVE_SONG_KEY);
+    }catch(error){console.error('[midi] Could not restore active Song:',error);}
+  }
+  await midiRestoreActive();
 }
 
 /* =========================================================
@@ -1401,6 +1504,7 @@ async function midiSaveSong() {
       loopStartSeconds: midiPlayback.loopStartSeconds,
       loopEndSeconds: midiPlayback.loopEndSeconds,
       looping: midiPlayback.looping,
+      chordProgression: (document.getElementById('chordProgressionEditor') || {}).value || '',
       addedSectionMarkers: Array.isArray(midiPlayback.addedSectionMarkers)
         ? midiPlayback.addedSectionMarkers.map(function(mark) {
             return { tick: mark.tick, seconds: mark.seconds, text: mark.text, markerType: 'marker' };
@@ -1515,8 +1619,11 @@ function midiLoadSongPicker() {
 
       await midiDbPut(record);
       localStorage.setItem(MIDI_ACTIVE_KEY, record.id);
-
-      midiLoadParsed(parsed, midiName, buffer);
+      const songRecord={id:'song-'+Date.now()+'-'+Math.random().toString(36).slice(2,10),name:file.name||(midiName.replace(/\.[^.]+$/,'')+'.midi-song.json'),song:song,savedAt:new Date().toISOString()};
+      await midiSongDbPut(songRecord);
+      localStorage.setItem(MIDI_ACTIVE_SONG_KEY,songRecord.id);
+      chordDisplayJumpOnNextUpdate=false;
+      midiLoadParsed(parsed,midiName,buffer);
 
       if (Number.isFinite(song.bpm)) {
         midiPlayback.bpm = Math.max(5, song.bpm);
@@ -1624,8 +1731,12 @@ function midiOpenFilePicker() {
 
       return midiDbPut(record).then(function() {
         localStorage.setItem(MIDI_ACTIVE_KEY, record.id);
-
-        midiLoadParsed(parsed, record.name, buffer);
+        localStorage.removeItem(MIDI_ACTIVE_SONG_KEY);
+        chordDisplayJumpOnNextUpdate=false;
+        midiLoadParsed(parsed,record.name,buffer);
+        const importedChordEditor = document.getElementById('chordProgressionEditor');
+        if (importedChordEditor) importedChordEditor.value = '';
+        updateChordDisplay();
 
         midiUpdateBpmReadout();
 
@@ -2599,6 +2710,7 @@ function midiLoadParsed(parsed, name, rawData) {
 
   midiPlayback.rehearsalMarks = [];
   midiPlayback.addedSectionMarkers = [];
+  midiPlayback.chordBeatAnalysis = [];
   midiPlayback.deletedSectionMarkers = [];
 
   if (parsed && Array.isArray(parsed.tracks)) {
@@ -2631,6 +2743,13 @@ function midiLoadParsed(parsed, name, rawData) {
     return a.text.localeCompare(b.text);
   });
 
+  const rememberedChordEditor = document.getElementById('chordProgressionEditor');
+  if (rememberedChordEditor) {
+    try {
+      const remembered = localStorage.getItem('midiChordProgression:' + String(midiPlayback.fileName || '').trim().toLowerCase());
+      if (remembered !== null) rememberedChordEditor.value = remembered;
+    } catch (e) {}
+  }
   setStatus('MIDI loaded: ' + midiPlayback.fileName);
 }
 
@@ -2752,6 +2871,8 @@ async function midiStartPlayback(startAtSourceSeconds) {
 
   midiPlayback.activeNotes = [];
   midiPlayback.playing = true;
+  midiPlayback.chordDisplayKeepEnd = false;
+  chordDisplayJumpOnNextUpdate = true;
   midiPlayback.pausedTimeSeconds = resumeFrom;
   midiMetronomeResetSync();
   midiMetronomeStartTimer();
@@ -3004,6 +3125,7 @@ function midiStopPlayback() {
 
   midiPlayback.activeNotes = [];
   midiPlayback.pausedTimeSeconds = 0;
+  midiPlayback.chordDisplayKeepEnd = true;
 
   sendCommand('midi-stopped', {
     time: 0
@@ -3746,10 +3868,12 @@ function midiJumpToNextMarker() {
    KEYBOARD
    ========================================================= */
 
+window.midiChordEditorEditing = false;
+
 window.addEventListener('keydown', function(e) {
-  // While entering a Section Marker name, all app shortcuts are disabled.
-  // The marker input has its own Enter/Escape handling below.
-  if (window.midiMarkerNameEditing) return;
+  // While entering a Section Marker name or Chord Editor text, all app shortcuts are disabled.
+  // Those controls have their own normal text-editing behavior.
+  if (window.midiMarkerNameEditing || window.midiChordEditorEditing) return;
 
   if (e.key === 'F11') {
     // Let the browser's native F11 fullscreen handling work.
@@ -4017,7 +4141,7 @@ setInterval(function() {
   }
 }, 50);
 
-midiRestoreActive();
+midiRestoreLastSession().catch(function(error){console.error('[midi] Startup restore error:',error);setStatus('Ready.');});
 
 setStatus('Ready.');
 
@@ -4074,7 +4198,7 @@ function refreshMarkers(){
     list.appendChild(b);
   });
 }
-async function refreshSongs(){if(typeof midiSongDbGetAll!=='function')return;try{const list=await midiSongDbGetAll();$('uiSongs').innerHTML='';if(!list.length){$('uiSongs').add(new Option('(No saved songs yet)',''));return}list.sort((a,b)=>String(b.savedAt||'').localeCompare(String(a.savedAt||'')));list.forEach(r=>$('uiSongs').add(new Option(r.name||'Untitled Song',String(r.id))))}catch(e){show('Could not read saved songs.')}}
+async function refreshSongs(){if(typeof midiSongDbGetAll!=='function')return;try{const list=await midiSongDbGetAll();$('uiSongs').innerHTML='';if(!list.length){$('uiSongs').add(new Option('(No saved songs yet)',''));return}list.sort((a,b)=>String(b.savedAt||'').localeCompare(String(a.savedAt||'')));list.forEach(r=>$('uiSongs').add(new Option(r.name||'Untitled Song',String(r.id))));const activeSongId=localStorage.getItem('karaokeBandMidiControllerActiveSong');if(activeSongId)$('uiSongs').value=String(activeSongId)}catch(e){show('Could not read saved songs.')}}
 function sectionColorForText(text){
   const n=String(text||'').toLowerCase().replace(/[^a-z]+/g,' ');
   if(/\bpre\s*chorus\b|\bprechorus\b/.test(n))return '#b86f2b';
@@ -4194,7 +4318,7 @@ function updateSeekTrack(){
   }
 }
 let seeking=false;let seekWasPlaying=false;function refresh(){if(typeof midiPlayback==='undefined')return;const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0,dur=Number(midiPlayback.durationSeconds)||0,bpm=Number(midiPlayback.bpm)||0,tr=Number(midiPlayback.transposeSemitones)||0;$('uiNow').textContent=fmt(now);$('uiDur').textContent=fmt(dur);$('uiSeek').max=String(dur);updateSeekTrack();if(!seeking)$('uiSeek').value=String(Math.min(now,dur));$('uiFile').textContent=midiPlayback.fileName||'No MIDI loaded';if($('uiBpm'))$('uiBpm').textContent=bpm?Math.round(bpm):'—';if($('uiTranspose'))$('uiTranspose').textContent=(tr>0?'+':'')+tr+' semitone'+(Math.abs(tr)===1?'':'s');if($('loopToggle'))$('loopToggle').classList.toggle('loop-on',!!midiPlayback.looping);refreshMarkers()}
-$('uiMidi').onclick=()=>call('midiOpenFilePicker');$('uiSf2').onclick=()=>call('sf2OpenFilePicker');$('uiFull').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();$('uiPlay').onclick=()=>call('midiStartOrPausePlayback');$('uiStop').onclick=()=>call('midiStopPlayback');$('uiSave').onclick=()=>call('midiSaveSong');$('uiJson').onclick=()=>call('midiLoadSongPicker');$('uiLoad').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll();const r=list.find(x=>String(x.id)===id);if(r)await midiLoadStoredSong(r);refresh()};$('uiDelete').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll(),r=list.find(x=>String(x.id)===id);if(r&&confirm('Delete saved song “'+(r.name||'Untitled Song')+'”?')){await midiSongDbDelete(r.id);refreshSongs()}};
+$('uiMidi').onclick=()=>call('midiOpenFilePicker');$('uiSf2').onclick=()=>call('sf2OpenFilePicker');$('uiFull').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();$('uiPlay').onclick=()=>call('midiStartOrPausePlayback');$('uiStop').onclick=()=>call('midiStopPlayback');$('uiSave').onclick=()=>call('midiSaveSong');$('uiJson').onclick=()=>call('midiLoadSongPicker');$('uiSongs').addEventListener('change',()=>{const id=$('uiSongs').value;if(id)localStorage.setItem('karaokeBandMidiControllerActiveSong',id)});$('uiLoad').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;localStorage.setItem('karaokeBandMidiControllerActiveSong',id);const list=await midiSongDbGetAll();const r=list.find(x=>String(x.id)===id);if(r)await midiLoadStoredSong(r);refresh()};$('uiDelete').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll(),r=list.find(x=>String(x.id)===id);if(r&&confirm('Delete saved song “'+(r.name||'Untitled Song')+'”?')){await midiSongDbDelete(r.id);refreshSongs()}};
 $('uiSeek').addEventListener('pointerdown',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;seeking=true;seekWasPlaying=!!midiPlayback.playing;if(seekWasPlaying)call('midiStopPlayback')});$('uiSeek').addEventListener('input',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;$('uiNow').textContent=fmt(t)});$('uiSeek').addEventListener('pointerup',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});$('uiSeek').addEventListener('change',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});[['bpmM5',-5],['bpmM1',-1],['bpmP1',1],['bpmP5',5]].forEach(([id,d])=>$(id).onclick=()=>call('midiChangeBpm',d));$('bpmOrig').onclick=()=>call('midiRestoreOriginalBpm');$('trDown').onclick=()=>call('midiTranspose',-1);$('trUp').onclick=()=>call('midiTranspose',1);$('trReset').onclick=()=>{if(typeof midiPlayback!=='undefined')call('midiTranspose',-(Number(midiPlayback.transposeSemitones)||0));};$('loopToggle').onclick=()=>call('midiToggleLoop');$('prev').onclick=()=>call('midiJumpToPreviousMarker');$('next').onclick=()=>call('midiJumpToNextMarker');$('tsPL').onclick=()=>call('midiRecordTimestamp','P+L');$('tsL').onclick=()=>call('midiRecordTimestamp','L');$('tsRemove').onclick=()=>call('midiRemoveTimestamp');
 setInterval(refresh,200);refreshSongs();refresh();
 })();
@@ -4598,6 +4722,454 @@ if(exportButton)exportButton.addEventListener('click',async()=>{
     catch(error){ setStatus('MIDI export error: '+(error.message||error)); }
   }
 });
+function chordSymbolTokens(text){
+  const source=String(text||'').replace(/[|,;]/g,' ');
+  const tokenRe=/(?:^|\s)([A-Ga-g](?:#|b)?(?:maj(?:7|9|11|13)?|min(?:7|9|11|13)?|m(?:7|9|11|13)?|dim(?:7)?|aug|sus(?:2|4)?|add(?:2|4|9|11|13)|6|7|9|11|13)?(?:\/[A-Ga-g](?:#|b)?)?)(?=\s|$)/g;
+  const result=[];let match;
+  while((match=tokenRe.exec(source))!==null)result.push(match[1]);
+  return result;
+}
+function chordParseEditorText(text){
+  const lines=String(text||'').split(/\r?\n/);
+  const parsedLines=[];const bars=[];let globalBarIndex=0;
+  lines.forEach(function(line,lineIndex){
+    if(!line.trim())return;
+    const parts=line.split('|');
+    let lineBars=[];
+    parts.forEach(function(part){
+      if(!part.trim())return;
+      const bar={text:part.trim(),lineIndex:lineIndex,barIndex:globalBarIndex++};
+      lineBars.push(bar);bars.push(bar);
+    });
+    if(lineBars.length)parsedLines.push({lineIndex:lineIndex,text:line.trim(),bars:lineBars});
+  });
+  return {lines:parsedLines,bars:bars};
+}
+function chordGetManualTimeSignature(){
+  const select=document.getElementById('chordGridTimeSignature');
+  const value=select?String(select.value||'4/4'):'4/4';
+  const parts=value.split('/');
+  return {numerator:Math.max(1,Number(parts[0])||4),denominator:Math.max(1,Number(parts[1])||4)};
+}
+function chordHasExplicitTimeSignatures(){
+  return !!(midiPlayback.parsed&&Array.isArray(midiPlayback.parsed.timeSignatures)&&midiPlayback.parsed.timeSignatures.some(function(sig){
+    return sig&&Number(sig.numerator)>0&&Number(sig.denominator)>0&&Number.isFinite(Number(sig.tick));
+  }));
+}
+function chordGetTimeSignatureAtBar(barIndex){
+  if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return chordGetManualTimeSignature();
+  const explicit=Array.isArray(midiPlayback.parsed.timeSignatures)?midiPlayback.parsed.timeSignatures.filter(function(sig){
+    return sig&&Number(sig.numerator)>0&&Number(sig.denominator)>0&&Number.isFinite(Number(sig.tick));
+  }).sort(function(a,b){return Number(a.tick)-Number(b.tick);}):[];
+  if(!explicit.length)return chordGetManualTimeSignature();
+  const maxTick=Math.max(1,(Math.max(0,barIndex)+2)*midiPlayback.parsed.ticksPerQuarter*64);
+  const barlines=midiGetBarlineTicks(maxTick);
+  const barTick=barlines[Math.min(Math.max(0,barIndex),Math.max(0,barlines.length-1))]||0;
+  let active=explicit[0];
+  for(let i=0;i<explicit.length;i++){
+    if(Number(explicit[i].tick)<=barTick+0.000001)active=explicit[i];
+    else break;
+  }
+  return {numerator:Math.max(1,Math.round(Number(active.numerator))),denominator:Math.max(1,Math.round(Number(active.denominator)))};
+}
+function chordUpdateGridTimeSignatureControl(){
+  const wrap=document.getElementById('chordGridManual');
+  const select=document.getElementById('chordGridTimeSignature');
+  if(!wrap||!select)return;
+  const explicit=chordHasExplicitTimeSignatures();
+  wrap.hidden=explicit;
+  if(!explicit){
+    try{
+      const saved=localStorage.getItem('midiChordGridTimeSignature');
+      if(saved&&Array.from(select.options).some(function(option){return option.value===saved;}))select.value=saved;
+    }catch(e){}
+  }
+}
+function chordRenderBarGrid(bar,barIndex){
+  const sig=chordGetTimeSignatureAtBar(barIndex);
+  const columns=Math.max(1,Math.round(sig.numerator));
+  const tokens=String(bar&&bar.text||'').trim().split(/\s+/).filter(Boolean);
+  const grid=document.createElement('div');
+  grid.className='chord-beat-grid';
+  grid.style.setProperty('--chord-grid-columns',String(columns));
+  grid.dataset.timeSignature=String(sig.numerator)+'/'+String(sig.denominator);
+  for(let i=0;i<columns;i++){
+    const cell=document.createElement('div');
+    cell.className='chord-beat-cell';
+    cell.textContent=tokens[i]||'_';
+    grid.appendChild(cell);
+  }
+  return grid;
+}
+function chordRenderLineRow(line){
+  const row=document.createElement('div');
+  row.className='chord-display-row';
+  row.dataset.line=line.lineIndex;
+  const bars=line.bars||[];
+  bars.forEach(function(bar,index){
+    const wrapper=document.createElement('div');
+    wrapper.className='chord-bar-wrapper';
+    wrapper.style.width='100%';
+    wrapper.style.height='100%';
+    wrapper.style.display='block';
+    wrapper.appendChild(chordRenderBarGrid(bar,bar.barIndex));
+    row.appendChild(wrapper);
+    if(index<bars.length-1){
+      const spacer=document.createElement('div');
+      spacer.style.height='3px';
+      row.appendChild(spacer);
+    }
+  });
+  return row;
+}
+
+function chordBarIndexForCurrentPlayback(){
+  if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return 0;
+  const tick=Math.max(0,Math.round(midiGetTickForSeconds(midiGetCurrentTime())));
+  const barlines=midiGetBarlineTicks(tick);
+  let barNumber=1;
+  for(let i=0;i<barlines.length;i++){
+    if(barlines[i]<=tick+0.000001)barNumber=i+1;else break;
+  }
+  return Math.max(0,barNumber-1);
+}
+let chordDisplayLastText = null;
+let chordDisplayVisualPosition = 0;
+let chordDisplayTargetPosition = 0;
+let chordDisplayAnimationFrame = 0;
+function chordGetSmoothDisplayPosition(parsed){
+  if(!parsed.lines.length)return 0;
+  if(!midiPlayback.parsed||!parsed.bars.length)return 0;
+  const displayTime=(midiPlayback.chordDisplayKeepEnd && !midiPlayback.playing)
+    ? Number(midiPlayback.durationSeconds)||0
+    : midiGetCurrentTime();
+  const tick=Math.max(0,midiGetTickForSeconds(displayTime));
+  const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+  let barIndex=0;
+  for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
+  barIndex=Math.max(0,Math.min(barIndex,parsed.bars.length-1));
+  const currentBar=parsed.bars[barIndex];
+  const lineIndex=Math.max(0,parsed.lines.findIndex(function(line){return line.lineIndex===currentBar.lineIndex;}));
+  const line=parsed.lines[lineIndex];
+  const firstBarIndex=parsed.bars.findIndex(function(bar){return bar.lineIndex===line.lineIndex;});
+  const lineBarCount=line&&line.bars?line.bars.length:1;
+  const barStart=barlines[Math.min(barIndex,barlines.length-1)];
+  const barEnd=barlines[Math.min(barIndex+1,barlines.length-1)];
+  let barFraction=0;
+  if(typeof barStart==='number'&&typeof barEnd==='number'&&barEnd>barStart){
+    barFraction=Math.max(0,Math.min(0.9999,(tick-barStart)/(barEnd-barStart)));
+  }
+  const withinLine=Math.max(0,Math.min(0.9999,(barIndex-firstBarIndex+barFraction)/Math.max(1,lineBarCount)));
+  const position=lineIndex+withinLine;
+  return Math.max(0,Math.min(position,Math.max(0,parsed.lines.length-1)));
+}
+function chordSectionClassForSeconds(seconds){
+  if(typeof midiGetStructuralMarkers!=='function')return '';
+  const sections=midiGetStructuralMarkers().slice().sort(function(a,b){
+    return (Number(a.seconds)||0)-(Number(b.seconds)||0);
+  });
+  let current=null;
+  for(let i=0;i<sections.length;i++){
+    if(Number(sections[i].seconds)<=Number(seconds)+0.000001)current=sections[i];
+    else break;
+  }
+  if(!current)return '';
+  const n=String(current.text||'').toLowerCase().replace(/[^a-z]+/g,' ');
+  if(/\bpre\s*chorus\b|\bprechorus\b/.test(n))return 'section-prechorus';
+  if(/\bchorus\b/.test(n))return 'section-chorus';
+  if(/\bverse\b/.test(n))return 'section-verse';
+  if(/\bintro\b/.test(n))return 'section-intro';
+  if(/\boutro\b/.test(n))return 'section-outro';
+  if(/\bbridge\b/.test(n))return 'section-bridge';
+  if(/\binstrumental\b/.test(n))return 'section-instrumental';
+  return 'section-pink';
+}
+function chordProgressionStorageKey(){
+  const name=String(midiPlayback&&midiPlayback.fileName||'').trim();
+  return name?'midiChordProgression:'+name.toLowerCase():'midiChordProgression:unspecified';
+}
+function chordRememberProgression(){
+  const editor=document.getElementById('chordProgressionEditor');
+  if(!editor)return;
+  try{localStorage.setItem(chordProgressionStorageKey(),editor.value||'');}catch(e){}
+}
+function chordRestoreRememberedProgression(){
+  const editor=document.getElementById('chordProgressionEditor');
+  if(!editor)return false;
+  try{
+    const key=chordProgressionStorageKey();
+    const saved=localStorage.getItem(key);
+    if(saved!==null){editor.value=saved;return true;}
+  }catch(e){}
+  return false;
+}
+function updateChordDisplay(){
+  const editor=document.getElementById('chordProgressionEditor');
+  const track=document.getElementById('chordDisplayTrack');
+  if(!editor||!track)return;
+  chordUpdateGridTimeSignatureControl();
+  const parsed=chordParseEditorText(editor.value);
+  if(!parsed.lines.length){
+    track.innerHTML='<div class="chord-display-row empty">No chord progression entered.</div><div class="chord-display-row empty">&nbsp;</div><div class="chord-display-row empty">&nbsp;</div><div class="chord-display-row empty">&nbsp;</div>';
+    chordDisplayLastText=editor.value;
+    chordDisplayTargetPosition=0;
+    chordDisplayVisualPosition=0;
+    track.style.transform='translateY(0px)';
+    return;
+  }
+  const editorText=editor.value;
+  if(chordDisplayLastText!==editorText){
+    track.innerHTML='<div class="chord-display-row empty chord-display-spacer">&nbsp;</div><div class="chord-display-row empty chord-display-spacer">&nbsp;</div>';
+    parsed.lines.forEach(function(line,index){
+      track.appendChild(chordRenderLineRow(line));
+    });
+    track.insertAdjacentHTML('beforeend','<div class="chord-display-row empty chord-display-spacer">&nbsp;</div><div class="chord-display-row empty chord-display-spacer">&nbsp;</div>');
+    chordDisplayLastText=editorText;
+  }
+  let currentIndex=0;
+  if(midiPlayback.parsed&&parsed.bars.length){
+    const tick=Math.max(0,midiGetTickForSeconds(midiGetCurrentTime()));
+    const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+    let barIndex=0;
+    for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
+    barIndex=Math.min(barIndex,parsed.bars.length-1);
+    currentIndex=Math.max(0,parsed.lines.findIndex(function(line){return line.lineIndex===parsed.bars[barIndex].lineIndex;}));
+  }
+  const rows=track.querySelectorAll('.chord-display-row');
+  const currentRowIndex=currentIndex+2;
+  let currentSectionClass='';
+  if(midiPlayback.parsed&&parsed.bars.length){
+    const tick=Math.max(0,midiGetTickForSeconds(midiGetCurrentTime()));
+    const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+    let barIndex=0;
+    for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
+    barIndex=Math.min(barIndex,parsed.bars.length-1);
+    const currentBar=parsed.bars[barIndex];
+    const barTick=barlines[Math.min(barIndex,barlines.length-1)];
+    const barSeconds=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(barTick):midiGetCurrentTime();
+    currentSectionClass=chordSectionClassForSeconds(barSeconds);
+  }
+  const sectionClasses=['section-verse','section-chorus','section-prechorus','section-intro','section-outro','section-bridge','section-instrumental','section-pink'];
+  rows.forEach(function(row,index){
+    row.classList.toggle('current',index===currentRowIndex);
+    sectionClasses.forEach(function(name){row.classList.remove(name);});
+    if(index===currentRowIndex&&currentSectionClass)row.classList.add(currentSectionClass);
+    if(index>=2&&index<parsed.lines.length+2&&midiPlayback.parsed&&parsed.lines[index-2].bars&&parsed.lines[index-2].bars.length){
+      const lineBarIndex=Number(parsed.lines[index-2].bars[0].barIndex)||0;
+      const lineTickBase=midiPlayback.parsed.ticksPerQuarter||480;
+      const lineBarlines=midiGetBarlineTicks(Math.max((lineBarIndex+2)*lineTickBase*16,lineTickBase*16));
+      const lineBarTick=lineBarlines[Math.min(lineBarIndex,lineBarlines.length-1)]||0;
+      const lineBarSeconds=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(lineBarTick):0;
+      const lineSectionClass=chordSectionClassForSeconds(lineBarSeconds);
+      if(lineSectionClass)row.classList.add(lineSectionClass);
+    }
+  });
+  chordDisplayTargetPosition=chordGetSmoothDisplayPosition(parsed);
+  if(chordDisplayJumpOnNextUpdate){chordDisplayVisualPosition=chordDisplayTargetPosition;chordDisplayJumpOnNextUpdate=false;}
+}
+function animateChordDisplay(){
+  const track=document.getElementById('chordDisplayTrack');
+  if(track){
+    // Only advance the teleprompter while MIDI playback is running.
+    // The animation frame may continue to exist while paused/stopped, but
+    // it must not move the display independently of MIDI playback.
+    if(midiPlayback&&midiPlayback.playing){
+      const distance=chordDisplayTargetPosition-chordDisplayVisualPosition;
+      const absoluteDistance=Math.abs(distance);
+      if(absoluteDistance>0.00005){
+        const maxStep=0.055;
+        const step=Math.min(absoluteDistance,maxStep);
+        chordDisplayVisualPosition+=Math.sign(distance)*step;
+      }else{
+        chordDisplayVisualPosition=chordDisplayTargetPosition;
+      }
+    }
+    track.style.transform='translate3d(0,'+(-chordDisplayVisualPosition*52)+'px,0)';
+  }
+  chordDisplayAnimationFrame=requestAnimationFrame(animateChordDisplay);
+}
+
+function midiExtractExplicitChordProgression(){
+  if(!midiPlayback.parsed||!Array.isArray(midiPlayback.parsed.tracks))return '';
+  const byBar={};let candidateCount=0;
+  midiPlayback.parsed.tracks.forEach(function(track){
+    if(!Array.isArray(track))return;
+    track.forEach(function(event){
+      if(!event||event.type!=='marker'||event.markerType!=='text'||typeof event.text!=='string')return;
+      const text=event.text.trim();if(!text)return;
+      const tokens=chordSymbolTokens(text);
+      if(!tokens.length&&!text.includes('|'))return;
+      candidateCount+=tokens.length;
+      const barlines=midiGetBarlineTicks(Math.max(0,event.tick));
+      let bar=1;
+      for(let i=0;i<barlines.length;i++){if(barlines[i]<=event.tick+0.000001)bar=i+1;else break;}
+      const pieces=text.split('|').map(function(x){return x.trim();}).filter(Boolean);
+      if(pieces.length>1){pieces.forEach(function(piece,offset){if(chordSymbolTokens(piece).length)byBar[bar+offset]=piece;});}
+      else if(tokens.length){byBar[bar]=tokens.join(' ');}
+    });
+  });
+  if(candidateCount<2)return '';
+  const maxBar=Object.keys(byBar).reduce(function(max,key){return Math.max(max,Number(key)||0);},0);
+  if(maxBar<2)return '';
+  const output=[];
+  for(let start=1;start<=maxBar;start+=4){
+    const parts=[];
+    for(let b=start;b<start+4;b++)parts.push((byBar[b]||'_ _ _ _')+' |');
+    output.push(parts.join(' '));
+  }
+  return output.join('\n');
+}
+
+const midiChordNames=['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
+function midiPitchClassName(pc){return midiChordNames[((pc%12)+12)%12];}
+function midiUniquePitchClasses(notes){
+  const set=new Set();
+  notes.forEach(function(note){if(typeof note==='number')set.add(((note%12)+12)%12);});
+  return Array.from(set).sort(function(a,b){return a-b;});
+}
+function midiChordPitchSet(root,intervals){return intervals.map(function(i){return (root+i)%12;}).sort(function(a,b){return a-b;});}
+function midiSamePitchSet(a,b){return a.length===b.length&&a.every(function(v,i){return v===b[i];});}
+function midiRecognizeChord(pitchClasses,bassPc){
+  if(!pitchClasses.length)return null;
+  const templates=[
+    {suffix:'maj9',ints:[0,4,7,11,2],priority:1},
+    {suffix:'9',ints:[0,4,7,10,2],priority:2},
+    {suffix:'m9',ints:[0,3,7,10,2],priority:2},
+    {suffix:'maj7',ints:[0,4,7,11],priority:3},
+    {suffix:'m7',ints:[0,3,7,10],priority:3},
+    {suffix:'7',ints:[0,4,7,10],priority:3},
+    {suffix:'m7b5',ints:[0,3,6,10],priority:4},
+    {suffix:'dim7',ints:[0,3,6,9],priority:4},
+    {suffix:'6',ints:[0,4,7,9],priority:5},
+    {suffix:'m6',ints:[0,3,7,9],priority:5},
+    {suffix:'add9',ints:[0,4,7,2],priority:6},
+    {suffix:'m(add9)',ints:[0,3,7,2],priority:6},
+    {suffix:'sus4',ints:[0,5,7],priority:7},
+    {suffix:'sus2',ints:[0,2,7],priority:7},
+    {suffix:'aug',ints:[0,4,8],priority:8},
+    {suffix:'dim',ints:[0,3,6],priority:8},
+    {suffix:'',ints:[0,4,7],priority:9},
+    {suffix:'m',ints:[0,3,7],priority:9},
+    {suffix:'5',ints:[0,7],priority:10}
+  ];
+  let best=null;
+  for(let root=0;root<12;root++){
+    for(let t=0;t<templates.length;t++){
+      const template=templates[t];
+      const target=midiChordPitchSet(root,template.ints);
+      if(!midiSamePitchSet(pitchClasses,target))continue;
+      const inversion=bassPc!==null&&bassPc!==root;
+      const score=template.priority+(inversion?0.25:0);
+      if(!best||score<best.score)best={root:root,suffix:template.suffix,score:score,bassPc:bassPc,inversion:inversion};
+    }
+  }
+  if(!best)return null;
+  const rootName=midiPitchClassName(best.root);
+  if(best.inversion)return rootName+best.suffix+'/'+midiPitchClassName(best.bassPc);
+  return rootName+best.suffix;
+}
+function midiBuildBeatNoteAnalysis(){
+  if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return [];
+  const tpq=midiPlayback.parsed.ticksPerQuarter;
+  const intervals=[];
+  const active=new Map();
+  midiPlayback.parsed.tracks.forEach(function(track){
+    if(!Array.isArray(track))return;
+    track.forEach(function(event){
+      if(!event||typeof event.tick!=='number'||typeof event.note!=='number')return;
+      const key=String(event.channel||0)+':'+event.note;
+      if(event.type==='noteOn'&&event.velocity>0){
+        const previous=active.get(key);
+        if(previous)intervals.push({start:previous.tick,end:event.tick,note:event.note,channel:event.channel||0,velocity:previous.velocity});
+        active.set(key,{tick:event.tick,velocity:event.velocity});
+      }else if(event.type==='noteOff'){
+        const previous=active.get(key);
+        if(previous){intervals.push({start:previous.tick,end:Math.max(previous.tick+1,event.tick),note:event.note,channel:event.channel||0,velocity:previous.velocity});active.delete(key);}
+      }
+    });
+  });
+  const durationTick=Math.max(1,Math.round((midiPlayback.durationSeconds||0)*tpq*2));
+  active.forEach(function(value,key){
+    const note=Number(key.split(':')[1]);
+    const channel=Number(key.split(':')[0]);
+    intervals.push({start:value.tick,end:durationTick,note:note,channel:channel,velocity:value.velocity});
+  });
+  const maxTick=Math.max(0,Math.max.apply(null,intervals.map(function(x){return x.end;}).concat([0])));
+  const beatCount=Math.max(1,Math.ceil(maxTick/tpq));
+  const results=[];
+  for(let beat=0;beat<beatCount;beat++){
+    const startTick=beat*tpq;
+    const endTick=startTick+tpq;
+    const notes=intervals.filter(function(n){return n.start<endTick&&n.end>startTick;});
+    const pitchClasses=midiUniquePitchClasses(notes.map(function(n){return n.note;}));
+    let bass=null;
+    notes.forEach(function(n){
+      if(n.start<endTick&&n.end>startTick&&(bass===null||n.note<bass))bass=n.note;
+    });
+    const bassPc=bass===null?null:bass%12;
+    results.push({beatIndex:beat,bar:Math.floor(beat/4)+1,beatInBar:(beat%4)+1,pitchClasses:pitchClasses,notes:notes.map(function(n){return n.note;}).sort(function(a,b){return a-b;}),bassPc:bassPc,chord:midiRecognizeChord(pitchClasses,bassPc)});
+  }
+  return results;
+}
+function midiRenderBeatNoteAnalysis(results){
+  const panel=document.getElementById('chordMidiAnalysis');
+  if(!panel)return;
+  if(!results.length){panel.innerHTML='<div class="chord-midi-analysis-empty">No MIDI notes were found.</div>';return;}
+  panel.innerHTML='';
+  results.forEach(function(row){
+    const div=document.createElement('div');div.className='chord-midi-analysis-row';
+    const notes=row.pitchClasses.map(midiPitchClassName).join(' ');
+    const chord=row.chord||'?';
+    div.innerHTML='<strong>Bar '+row.bar+' Beat '+row.beatInBar+'</strong>  '+(notes||'—')+'  →  '+chord;
+    panel.appendChild(div);
+  });
+}
+function midiAnalyzeChordBeats(){
+  const status=document.getElementById('chordEditorStatus');
+  const results=midiBuildBeatNoteAnalysis();
+  midiPlayback.chordBeatAnalysis=results;
+  midiRenderBeatNoteAnalysis(results);
+  const output=document.getElementById('chordAnalyzeOutput');
+  if(output)output.open=true;
+  if(status)status.textContent=results.length?'Analyzed '+results.length+' MIDI beats. Notes are grouped by quarter-note beat; chord names are preliminary theory matches.':'No MIDI notes were found to analyze.';
+  return results;
+}
+(function initChordEditor(){
+  const editor=document.getElementById('chordProgressionEditor');
+  const analyze=document.getElementById('chordAnalyzeMidi');
+  const detect=document.getElementById('chordDetectMidi');
+  const clear=document.getElementById('chordClear');
+  const status=document.getElementById('chordEditorStatus');
+  const gridTimeSignature=document.getElementById('chordGridTimeSignature');
+  if(!editor)return;
+  window.midiChordEditorEditing=false;
+  editor.addEventListener('focus',function(){window.midiChordEditorEditing=true;});
+  editor.addEventListener('blur',function(){window.midiChordEditorEditing=false;});
+  editor.addEventListener('input',function(){chordRememberProgression();updateChordDisplay();});
+  if(gridTimeSignature)gridTimeSignature.addEventListener('change',function(){try{localStorage.setItem('midiChordGridTimeSignature',gridTimeSignature.value);}catch(e){}updateChordDisplay();});
+  if(analyze)analyze.addEventListener('click',function(){midiAnalyzeChordBeats();});
+  if(clear)clear.addEventListener('click',function(){editor.value='';chordRememberProgression();updateChordDisplay();const analyzeOutput=document.getElementById('chordAnalyzeOutput');const detectOutput=document.getElementById('chordDetectOutput');if(analyzeOutput)analyzeOutput.open=false;if(detectOutput)detectOutput.open=false;if(status)status.textContent='Chord progression cleared.';});
+  if(detect)detect.addEventListener('click',function(){
+    const detected=midiExtractExplicitChordProgression();
+    const output=document.getElementById('chordDetectOutput');
+    const outputText=document.getElementById('chordDetectOutputText');
+    if(output)output.open=true;
+    if(detected){
+      editor.value=detected;
+      chordRememberProgression();
+      updateChordDisplay();
+      if(outputText)outputText.textContent='Chord names found in MIDI text metadata and copied into the Chord Editor.\n\n'+detected;
+      if(status)status.textContent='Chord names found in MIDI text metadata.';
+    }else{
+      if(outputText)outputText.textContent='No explicit chord-name metadata was found. MIDI notes alone do not contain guaranteed chord names.';
+      if(status)status.textContent='No explicit chord-name metadata was found. MIDI notes alone do not contain guaranteed chord names.';
+    }
+  });
+  updateChordDisplay();
+  if(!chordDisplayAnimationFrame)chordDisplayAnimationFrame=requestAnimationFrame(animateChordDisplay);
+  setInterval(updateChordDisplay,50);
+})();
+
 setInterval(()=>{render();update();updateTimelineView();renderMarkers();},200);
 renderMarkers();
 })();
