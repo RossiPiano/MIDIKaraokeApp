@@ -155,26 +155,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .chord-display-details>summary::-webkit-details-marker{display:none}
 .chord-display-heading{font-size:17px;font-weight:750}
 .chord-display-viewport{height:216px;overflow:hidden;background:#080d16;border:1px solid var(--border);border-radius:10px;padding:4px 8px;box-sizing:border-box}
-.chord-focus-view{position:fixed;inset:0;z-index:9999;background:#080d16;color:var(--text);overflow:hidden;display:flex;flex-direction:column;padding:10px;box-sizing:border-box}
-.chord-focus-view[hidden]{display:none}
-.chord-focus-top{display:flex;flex-direction:column;gap:8px;flex:0 0 auto;max-height:46%;overflow:auto}
-.chord-focus-playback{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px;box-sizing:border-box}
-.chord-focus-playback .seek-wrap{margin:0!important}
-.chord-focus-playback .playback-transport-row{margin-top:2px}
-.chord-focus-loop{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px;margin:0!important}
-.chord-focus-bpm,.chord-focus-transpose{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px;margin:0!important}
-.chord-focus-settings{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
-.chord-focus-chord{min-height:0;flex:1 1 auto;display:flex;flex-direction:column;margin-top:8px}
-.chord-focus-chord .chord-display-details{margin:0;min-height:0;flex:1 1 auto;display:flex;flex-direction:column}
-.chord-focus-chord .chord-display-details>summary{flex:0 0 auto}
-.chord-focus-chord .chord-display-viewport{height:auto;min-height:0;flex:1 1 auto}
-.chord-focus-chord .chord-display-view-switch{flex:0 0 auto}
-.chord-focus-chord .chord-display-details[open]{min-height:0}
-.chord-focus-exit{width:48px;height:40px;min-width:48px;min-height:40px;padding:0 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
-.chord-focus-view .chord-display-details>summary{cursor:default}
-.chord-focus-view .chord-display-details>summary .chord-focus-exit{cursor:pointer}
-body.chord-focus-active{overflow:hidden}
-@media(max-width:700px){.chord-focus-view{padding:7px}.chord-focus-settings{grid-template-columns:1fr}.chord-focus-top{max-height:58%}}
+
+.chord-display-details.chord-display-expanded{margin-bottom:10px}
+.chord-display-details.chord-display-expanded .chord-display-viewport{height:calc(100vh - 170px);min-height:360px}
+.chord-display-expand-button{width:48px;height:40px;min-width:48px;min-height:40px;padding:0;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700}
+.chord-display-viewport.chord-drag-ready{cursor:grab;touch-action:none}
+.chord-display-viewport.chord-dragging{cursor:grabbing;user-select:none}
+@media(max-width:700px){.chord-display-details.chord-display-expanded .chord-display-viewport{height:calc(100vh - 145px);min-height:300px}}
 .chord-display-track{will-change:transform;transform:translateY(0)}
 .chord-display-row{height:52px;min-height:52px;box-sizing:border-box;padding:4px 6px;display:block;overflow:hidden;border-radius:7px;color:#d7e0eb;font-size:clamp(13px,2.4vw,18px);font-weight:750;line-height:1.25;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.chord-display-row:not(.current){border-radius:0}.chord-beat-grid{display:grid;grid-template-columns:repeat(var(--chord-grid-columns,4),minmax(0,1fr));width:100%;height:100%;min-width:0}.chord-beat-cell{min-width:0;display:flex;align-items:center;padding:2px 4px;box-sizing:border-box;overflow:hidden;white-space:nowrap;text-overflow:clip;border-right:1px solid rgba(255,255,255,.08)}.chord-beat-cell:last-child{border-right:0}.chord-grid-manual{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px 8px;color:var(--muted);font-size:12px}.chord-grid-manual label{display:flex;align-items:center;gap:6px}.chord-grid-manual select{height:34px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}
 .chord-display-row.section-verse{background:rgba(47,125,98,.28)}.chord-display-row.section-chorus{background:rgba(143,63,80,.28)}.chord-display-row.section-prechorus{background:rgba(184,111,43,.28)}.chord-display-row.section-intro,.chord-display-row.section-outro{background:rgba(63,143,168,.28)}.chord-display-row.section-bridge{background:rgba(118,86,160,.28)}.chord-display-row.section-instrumental{background:rgba(58,67,79,.28)}.chord-display-row.section-pink{background:rgba(255,79,163,.28)}.chord-display-row.current{background:#245b82;color:#fff;box-shadow:inset 0 0 0 2px #7dbcf0}.chord-display-row.current.section-verse{background:#2f7d62;box-shadow:inset 0 0 0 2px #2b9e70}.chord-display-row.current.section-chorus{background:#8f3f50;box-shadow:inset 0 0 0 2px #b84d58}.chord-display-row.current.section-prechorus{background:#b86f2b;box-shadow:inset 0 0 0 2px #d89b2b}.chord-display-row.current.section-intro,.chord-display-row.current.section-outro{background:#3f8fa8;box-shadow:inset 0 0 0 2px #67c7e8}.chord-display-row.current.section-bridge{background:#7656a0;box-shadow:inset 0 0 0 2px #9b6fd0}.chord-display-row.current.section-instrumental{background:#3a434f;box-shadow:inset 0 0 0 2px #59616b}.chord-display-row.current.section-pink{background:#ff4fa3;box-shadow:inset 0 0 0 2px #ff8bc4}
@@ -252,7 +239,7 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
     </details>
 
     <details class="chord-display-details" id="chordDisplayDetails" open>
-      <summary><span class="chord-display-heading">🎼 Chord Progression</span><span class="chord-display-summary-actions"><button id="chordFocusToggle" class="chord-focus-exit" type="button" aria-label="Open Chord Progression full screen view" title="Chord Progression full screen view">⛶</button><span>▾</span></span></summary>
+      <summary><span class="chord-display-heading">🎼 Chord Progression</span><span class="chord-display-summary-actions"><button id="chordFocusToggle" class="chord-display-expand-button" type="button" aria-label="Extend Chord Progression height" title="Extend Chord Progression height">↕</button><span>▾</span></span></summary>
       <div class="chord-display-view-switch"><button id="chordViewSwitch" class="chord-view-switch" type="button" aria-pressed="false">↔ Horizontal scrolling</button></div>
       <div class="chord-display-viewport" id="chordDisplayViewport" aria-live="polite">
         <div class="chord-display-track" id="chordDisplayTrack">
@@ -340,17 +327,6 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
     </div>
   </section>
 
-  <div id="chordFocusView" class="chord-focus-view" hidden aria-label="Chord Progression performance view">
-  <div id="chordFocusTop" class="chord-focus-top">
-    <div id="chordFocusPlayback" class="chord-focus-playback"></div>
-    <div id="chordFocusLoop" class="chord-focus-loop"></div>
-    <div class="chord-focus-settings">
-      <div id="chordFocusBpm" class="chord-focus-bpm"></div>
-      <div id="chordFocusTranspose" class="chord-focus-transpose"></div>
-    </div>
-  </div>
-  <div id="chordFocusChord" class="chord-focus-chord"></div>
-</div>
 
 <div id="uiStatus" class="statusbox">Ready.</div>
   <div class="cards">
@@ -5032,9 +5008,6 @@ function chordProgressionStorageKey(){
 }
 function chordRememberProgression(){
   const editor=document.getElementById('chordProgressionEditor');
-  const chordFocusToggle=document.getElementById('chordFocusToggle');
-  if(chordFocusToggle)chordFocusToggle.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();chordToggleFocusView();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&chordFocusActive&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement&&document.activeElement.tagName)){e.preventDefault();chordExitFocusView();}});
   if(!editor)return;
   try{localStorage.setItem(chordProgressionStorageKey(),editor.value||'');}catch(e){}
 }
@@ -5369,67 +5342,104 @@ function chordSetVerticalDisplay(){
   chordHorizontalTargetOffset=0;
   chordHorizontalVisualOffset=0;
 }
-function chordFocusMove(nodeId,hostId,records){
-  const node=document.getElementById(nodeId);
-  const host=document.getElementById(hostId);
-  if(!node||!host)return;
-  const placeholder=document.createComment('chord-focus-placeholder-'+nodeId);
-  node.parentNode.insertBefore(placeholder,node);
-  host.appendChild(node);
-  records.push({node:node,placeholder:placeholder});
+let chordDisplayExpanded=false;
+let chordDragState=null;
+let chordDragPreviewSeconds=null;
+function chordToggleExpanded(){
+  const details=document.getElementById('chordDisplayDetails');
+  const button=document.getElementById('chordFocusToggle');
+  if(!details||!button)return;
+  chordDisplayExpanded=!chordDisplayExpanded;
+  details.classList.toggle('chord-display-expanded',chordDisplayExpanded);
+  button.textContent=chordDisplayExpanded?'↕':'↕';
+  button.setAttribute('aria-label',chordDisplayExpanded?'Reduce Chord Progression height':'Extend Chord Progression height');
+  button.title=chordDisplayExpanded?'Reduce Chord Progression height':'Extend Chord Progression height';
 }
-function chordFocusRestore(records){
-  for(let i=records.length-1;i>=0;i--){
-    const record=records[i];
-    if(record.placeholder&&record.placeholder.parentNode)record.placeholder.parentNode.insertBefore(record.node,record.placeholder);
-    if(record.placeholder)record.placeholder.remove();
+function chordDragDurationFromDelta(deltaPixels,axis){
+  if(!midiPlayback||!midiPlayback.parsed)return 0;
+  const viewport=document.getElementById('chordDisplayViewport');
+  const track=document.getElementById('chordDisplayTrack');
+  if(!viewport||!track)return 0;
+  const travel=axis==='horizontal'?Math.max(1,track.scrollWidth-viewport.clientWidth):Math.max(1,track.scrollHeight-viewport.clientHeight);
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  if(!duration)return 0;
+  return deltaPixels*(duration/travel);
+}
+function chordSeekFromDrag(targetSeconds){
+  if(!midiPlayback||!midiPlayback.parsed)return;
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  const target=Math.max(0,Math.min(duration,targetSeconds));
+  const wasPlaying=!!midiPlayback.playing;
+  midiPlayback.pausedTimeSeconds=target;
+  if(wasPlaying){
+    Promise.resolve(midiStartPlayback(target)).catch(function(error){console.error('[chord] Drag seek error:',error);});
+  }else{
+    updateChordDisplay();
   }
-  records.length=0;
 }
-let chordFocusActive=false;
-let chordFocusRecords=[];
-function chordEnterFocusView(){
-  if(chordFocusActive)return;
-  chordSetVerticalDisplay();
-  const focus=document.getElementById('chordFocusView');
-  const chordHost=document.getElementById('chordFocusChord');
-  if(!focus||!chordHost)return;
-  chordFocusRecords=[];
-  chordFocusMove('chordDisplayDetails','chordFocusChord',chordFocusRecords);
-  chordFocusMove('seekWrap','chordFocusPlayback',chordFocusRecords);
-  chordFocusMove('playbackTransportRow','chordFocusPlayback',chordFocusRecords);
-  chordFocusMove('midiTimelineCard','chordFocusLoop',chordFocusRecords);
-  chordFocusMove('bpmPanel','chordFocusBpm',chordFocusRecords);
-  chordFocusMove('transposePanel','chordFocusTranspose',chordFocusRecords);
-  focus.hidden=false;
-  chordFocusActive=true;
-  document.body.classList.add('chord-focus-active');
-  const toggle=document.getElementById('chordFocusToggle');
-  if(toggle){
-    toggle.textContent='✕ Exit';
-    toggle.setAttribute('aria-label','Exit Chord Progression full screen view');
-    toggle.title='Exit Chord Progression full screen view';
+function chordBeginDrag(e){
+  const viewport=document.getElementById('chordDisplayViewport');
+  if(!viewport||!midiPlayback||!midiPlayback.parsed)return;
+  if(e.pointerType==='mouse'&&e.button!==0)return;
+  chordDragState={pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,startTime:midiGetCurrentTime(),moved:false,wasPlaying:!!midiPlayback.playing,previewStarted:false};
+  chordDragPreviewSeconds=chordDragState.startTime;
+  viewport.classList.add('chord-dragging');
+  try{viewport.setPointerCapture(e.pointerId);}catch(err){}
+  e.preventDefault();
+}
+function chordMoveDrag(e){
+  if(!chordDragState||e.pointerId!==chordDragState.pointerId)return;
+  const viewport=document.getElementById('chordDisplayViewport');
+  const dx=e.clientX-chordDragState.startX;
+  const dy=e.clientY-chordDragState.startY;
+  if(Math.abs(dx)>=6||Math.abs(dy)>=6)chordDragState.moved=true;
+  if(chordDragState.moved){
+    if(chordDragState.wasPlaying&&!chordDragState.previewStarted){
+      chordDragState.startTime=midiGetCurrentTime();
+      chordDragState.previewStarted=true;
+      midiStopPlayback();
+    }
+    const delta=chordDisplayHorizontal?(-dx):(-dy);
+    const deltaSeconds=chordDragDurationFromDelta(delta,chordDisplayHorizontal?'horizontal':'vertical');
+    const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+    chordDragPreviewSeconds=Math.max(0,Math.min(duration,chordDragState.startTime+deltaSeconds));
+    midiPlayback.pausedTimeSeconds=chordDragPreviewSeconds;
+    updateChordDisplay();
   }
-  updateChordDisplay();
+  e.preventDefault();
 }
-function chordExitFocusView(){
-  if(!chordFocusActive)return;
-  const focus=document.getElementById('chordFocusView');
-  chordFocusRestore(chordFocusRecords);
-  if(focus)focus.hidden=true;
-  chordFocusActive=false;
-  document.body.classList.remove('chord-focus-active');
-  const toggle=document.getElementById('chordFocusToggle');
-  if(toggle){
-    toggle.textContent='⛶';
-    toggle.setAttribute('aria-label','Open Chord Progression full screen view');
-    toggle.title='Chord Progression full screen view';
+function chordEndDrag(e){
+  if(!chordDragState||e.pointerId!==chordDragState.pointerId)return;
+  const viewport=document.getElementById('chordDisplayViewport');
+  const state=chordDragState;
+  chordDragState=null;
+  if(viewport)viewport.classList.remove('chord-dragging');
+  const delta=chordDisplayHorizontal?(state.startX-e.clientX):(state.startY-e.clientY);
+  if(Math.abs(delta)<6&&!state.moved){
+    chordDragPreviewSeconds=null;
+    if(typeof midiStartOrPausePlayback==='function')midiStartOrPausePlayback();
+    e.preventDefault();
+    return;
   }
-  updateChordDisplay();
+  if(Math.abs(delta)<6){chordDragPreviewSeconds=null;return;}
+  const target=Number.isFinite(chordDragPreviewSeconds)?chordDragPreviewSeconds:(state.startTime+chordDragDurationFromDelta(delta,chordDisplayHorizontal?'horizontal':'vertical'));
+  chordDragPreviewSeconds=null;
+  if(state.wasPlaying){
+    chordSeekFromDrag(target);
+  }else{
+    midiPlayback.pausedTimeSeconds=target;
+    updateChordDisplay();
+  }
+  e.preventDefault();
 }
-function chordToggleFocusView(){
-  if(chordFocusActive)chordExitFocusView();
-  else chordEnterFocusView();
+function chordInitDragControls(){
+  const viewport=document.getElementById('chordDisplayViewport');
+  if(!viewport)return;
+  viewport.classList.add('chord-drag-ready');
+  viewport.addEventListener('pointerdown',chordBeginDrag);
+  viewport.addEventListener('pointermove',chordMoveDrag);
+  viewport.addEventListener('pointerup',chordEndDrag);
+  viewport.addEventListener('pointercancel',chordEndDrag);
 }
 (function initChordEditor(){
   const editor=document.getElementById('chordProgressionEditor');
@@ -5457,6 +5467,9 @@ function chordToggleFocusView(){
     }
     updateChordDisplay();
   });
+  const chordFocusToggle=document.getElementById('chordFocusToggle');
+  if(chordFocusToggle)chordFocusToggle.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();chordToggleExpanded();});
+  chordInitDragControls();
   if(!editor)return;
   window.midiChordEditorEditing=false;
   editor.addEventListener('focus',function(){window.midiChordEditorEditing=true;});
