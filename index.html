@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MIDI Karaoke App — Graphical UI v107</title>
-
+<title>MIDI Karaoke App — Graphical UI v108</title>
 <style>
 :root{color-scheme:dark;--bg:#0b0d10;--panel:#171b21;--panel2:#222831;--border:#3a424e;--text:#f4f6f8;--muted:#aeb7c4;--accent:#42a5ff;--good:#2f7d62;--danger:#c94f59}
 *{box-sizing:border-box}
@@ -18,8 +17,8 @@ button.good{background:#2f7d62;border-color:#2b9e70}
 button.danger{background:#8f3f50;border-color:#b84d58}
 select{width:100%;min-height:48px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text)}
 input[type=range]{width:100%;min-height:42px;accent-color:#fff;background:transparent;display:block;margin:0;padding:0;appearance:none;-webkit-appearance:none;border-radius:999px;overflow:visible}
-input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:transparent}
-input[type=range]::-moz-range-track{height:10px;border-radius:999px;background:transparent}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:rgba(255,255,255,0.18)}
+input[type=range]::-moz-range-track{height:10px;border-radius:999px;background:rgba(255,255,255,0.18)}
 input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:none;margin-top:-6px}
 input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:none}
 #midiGraphicalUI{max-width:1450px;margin:auto}
@@ -130,7 +129,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 @media(max-width:700px){body{padding:7px}.hero{display:block}.hero-actions{margin-top:10px}.cards{grid-template-columns:1fr}.playergrid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.markergrid{grid-template-columns:repeat(2,minmax(0,1fr))}button,select{min-height:48px}}
 @media(max-width:390px){.grid2,.grid3,.grid4,.playergrid,.markergrid{grid-template-columns:1fr}}
 
-.timeline-selector-row{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;align-items:stretch}.timeline-selector-wrap{min-width:0}.loop-icon-button,.square-icon-button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;border-radius:10px}.loop-icon-button{background:var(--panel2);border-color:var(--border)}.loop-icon-button.loop-on{background:#8a6d00;border-color:#e5b93f;box-shadow:inset 0 0 0 2px #e5b93f}.section-list-scroll{max-height:280px;overflow-y:auto;overflow-x:hidden;margin:8px 0 10px;padding-right:2px}.section-list{display:grid;grid-template-columns:1fr;gap:8px}.section-list button{width:100%;min-height:46px;padding:7px 10px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px} .section-list button.current-section{color:#fff}.section-list button.section-verse{background:#2f7d62;border-color:#2b9e70}.section-list button.section-chorus{background:#8f3f50;border-color:#b84d58}.section-list button.section-prechorus{background:#b86f2b;border-color:#d89b2b}.section-list button.section-intro,.section-list button.section-outro{background:#3f8fa8;border-color:#67c7e8}.section-list button.section-bridge{background:#7656a0;border-color:#9b6fd0}.section-list button.section-instrumental{background:#3a434f;border-color:#59616b}.section-list button.current-section{box-shadow:inset 0 0 0 2px #fff}.section-list .section-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.section-list .section-time{font-size:12px;opacity:.75;font-variant-numeric:tabular-nums;flex:0 0 auto}.section-empty{color:var(--muted);font-size:13px;text-align:center;padding:8px}@media(max-width:600px){.section-list-scroll{max-height:260px}}.main-controls{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:10px;margin-bottom:12px}.section-marker-timeline-row{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;align-items:stretch}.section-marker-export-wrap{display:flex;align-items:stretch}.marker-export-button{width:48px;height:48px;min-width:48px;min-height:48px;margin:0;padding:0;display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;border-radius:10px}.playback-subpanel{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}.playback-subpanel .timeline-head{margin-bottom:8px}.loop-subpanel{padding-bottom:0}.section-marker-inline{margin-top:10px}.playback-controls{padding:6px 10px 8px}.seek-wrap{position:relative;width:100%;height:30px;min-height:30px}.main-controls>.seek-wrap{display:block;margin:28px 0 0}.seek-track{position:absolute;left:0;right:0;top:10px;height:10px;border-radius:999px;background:#20262e;z-index:0;overflow:hidden} .seek-loop-overlay{position:absolute;left:11px;top:10px;height:10px;width:0;background:linear-gradient(to bottom,#e5b93f 0 50%,transparent 50% 100%);border-radius:999px;z-index:1;pointer-events:none}
+loop-icon-button,.square-icon-button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;border-radius:10px}.loop-icon-button{background:var(--panel2);border-color:var(--border)}.loop-set-button{background:#8f3f50;border-color:#b84d58}.loop-set-button.active{background:#c94f59;border-color:#ff9aa0;box-shadow:inset 0 0 0 2px #ff9aa0}.loop-icon-button.loop-on{background:#8a6d00;border-color:#e5b93f;box-shadow:inset 0 0 0 2px #e5b93f}.section-list-scroll{max-height:280px;overflow-y:auto;overflow-x:hidden;margin:8px 0 10px;padding-right:2px}.section-list{display:grid;grid-template-columns:1fr;gap:8px}.section-list button{width:100%;min-height:46px;padding:7px 10px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px} .section-list button.current-section{color:#fff}.section-list button.section-verse{background:#2f7d62;border-color:#2b9e70}.section-list button.section-chorus{background:#8f3f50;border-color:#b84d58}.section-list button.section-prechorus{background:#b86f2b;border-color:#d89b2b}.section-list button.section-intro,.section-list button.section-outro{background:#3f8fa8;border-color:#67c7e8}.section-list button.section-bridge{background:#7656a0;border-color:#9b6fd0}.section-list button.section-instrumental{background:#3a434f;border-color:#59616b}.section-list button.current-section{box-shadow:inset 0 0 0 2px #fff}.section-list .section-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.section-list .section-time{font-size:12px;opacity:.75;font-variant-numeric:tabular-nums;flex:0 0 auto}.section-empty{color:var(--muted);font-size:13px;text-align:center;padding:8px}@media(max-width:600px){.section-list-scroll{max-height:260px}}.main-controls{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:10px;margin-bottom:12px}.section-marker-timeline-row{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;align-items:stretch}.section-marker-export-wrap{display:flex;align-items:stretch}.marker-export-button{width:48px;height:48px;min-width:48px;min-height:48px;margin:0;padding:0;display:flex;align-items:center;justify-content:center;font-size:27px;line-height:1;border-radius:10px}.playback-subpanel{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}.playback-subpanel .timeline-head{margin-bottom:8px}.loop-subpanel{padding-bottom:0}.section-marker-inline{margin-top:10px}.playback-controls{padding:6px 10px 8px}.seek-wrap{position:relative;width:100%;height:30px;min-height:30px}.main-controls>.seek-wrap{display:block;margin:28px 0 0}.seek-track{position:absolute;left:0;right:0;top:10px;height:10px;border-radius:999px;background:#20262e;z-index:0;overflow:hidden} .seek-loop-overlay{position:absolute;left:11px;top:10px;height:10px;width:0;background:linear-gradient(to bottom,#e5b93f 0 50%,transparent 50% 100%);border-radius:999px;z-index:1;pointer-events:none}
 .seek-section-marker-layer{position:absolute;left:11px;right:11px;top:-20px;height:29px;z-index:3;pointer-events:none;overflow:visible}
 .seek-section-marker-label{position:absolute;top:13px;left:0;transform:translateX(3px);font-size:11px;line-height:16px;font-weight:600;white-space:nowrap;color:#ff4fa3;text-shadow:0 1px 2px rgba(0,0,0,.8)}
 .seek-wrap input[type=range]{position:relative;z-index:4;display:block;margin:0;height:30px;min-height:30px;background:transparent}.seek-wrap input[type=range]::-webkit-slider-runnable-track{background:transparent}.seek-wrap input[type=range]::-moz-range-track{background:transparent}.transport-row,.section-nav-row,.square-button-row{display:flex;gap:8px}.transport-row{justify-content:center;margin-bottom:10px;align-items:center}.square-icon-button{font-size:24px}.section-icon-button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:25px;border-radius:10px}.playback-time{display:flex;align-items:center;gap:6px;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;margin:0;white-space:nowrap}.playback-transport-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin:0}.playback-transport-row .playback-time:first-child{justify-content:flex-start}.playback-transport-row .playback-time:last-child{justify-content:flex-end}.bpm-reset{font-size:22px}.wide-control{flex:1;min-height:48px}.section-nav-row{margin-bottom:12px}.bpm-control-row,.transpose-control-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:0;border-top:0;margin-top:0}.bpm-control-row .control-label,.transpose-control-row .control-label{margin:0;text-align:left;flex:0 0 auto}.bpm-control-row .square-button-row,.transpose-control-row .square-button-row{justify-content:flex-end}.metronome-button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:25px;border-radius:10px}.metronome-button.metronome-on{background:#8a6d00;border-color:#e5b93f;box-shadow:inset 0 0 0 2px #e5b93f}.transpose-control-row{margin-top:0}.control-label{font-size:15px;font-weight:700;text-align:center;margin-bottom:8px}.control-label strong{font-variant-numeric:tabular-nums}.square-control{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:center;font-size:17px}.square-button-row{justify-content:center;flex-wrap:wrap}.fullscreen-button{width:48px!important;min-width:48px!important;height:48px;min-height:48px!important;padding:0!important;font-size:27px!important;line-height:1!important;display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 48px!important;position:relative;top:-1px}.volume-control{font-size:24px!important;font-weight:700}.hero-actions{align-items:center}.hero-actions button{flex:0 0 auto}.hero-actions #uiMidi,.hero-actions #uiSf2{flex:0 1 auto}@media(max-width:600px){.timeline-selector-row{grid-template-columns:48px minmax(0,1fr)}.loop-icon-button,.square-icon-button,.section-icon-button{width:48px;height:48px;min-width:48px;min-height:48px}.square-control{width:48px;height:48px;min-width:48px;min-height:48px}}
@@ -163,10 +162,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .chord-display-viewport.chord-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 @media(max-width:700px){.chord-display-details.chord-display-expanded .chord-display-viewport{height:calc(100vh - 145px);min-height:300px}}
 .chord-display-track{will-change:transform;transform:translateY(0)}
-.chord-display-row{height:52px;min-height:52px;box-sizing:border-box;padding:4px 6px;display:block;overflow:hidden;border-radius:7px;color:#d7e0eb;font-size:clamp(13px,2.4vw,18px);font-weight:750;line-height:1.25;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.chord-display-row:not(.current){border-radius:0}.chord-beat-grid{display:grid;grid-template-columns:repeat(var(--chord-grid-columns,4),minmax(0,1fr));width:100%;height:100%;min-width:0}.chord-beat-cell{min-width:0;display:flex;align-items:center;padding:2px 4px;box-sizing:border-box;overflow:hidden;white-space:nowrap;text-overflow:clip;border-right:1px solid rgba(255,255,255,.08)}.chord-beat-cell:last-child{border-right:0}.chord-grid-manual{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px 8px;color:var(--muted);font-size:12px}.chord-grid-manual label{display:flex;align-items:center;gap:6px}.chord-grid-manual select{height:34px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}
+.chord-display-row{height:52px;min-height:52px;box-sizing:border-box;padding:4px 6px;display:block;overflow:hidden;border-radius:7px;color:#d7e0eb;font-size:clamp(13px,2.4vw,18px);font-weight:750;line-height:1.25;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.chord-display-row:not(.current){border-radius:0}.chord-beat-grid{display:grid;grid-template-columns:repeat(var(--chord-grid-columns,4),minmax(0,1fr));width:100%;height:100%;min-width:0}.chord-beat-cell{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px;box-sizing:border-box;overflow:hidden;white-space:nowrap;text-overflow:clip;border-right:1px solid rgba(255,255,255,.08);caret-color:#fff;outline:none}.chord-beat-cell.beat-editing{outline:2px solid #7dbcf0;outline-offset:-2px;background:rgba(125,188,240,.12);color:#fff;cursor:text}.chord-beat-cell:last-child{border-right:0}.chord-grid-manual{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px 8px;color:var(--muted);font-size:12px}.chord-grid-manual label{display:flex;align-items:center;gap:6px}.chord-grid-manual select{height:34px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}
 .chord-display-row.section-verse{background:rgba(47,125,98,.28)}.chord-display-row.section-chorus{background:rgba(143,63,80,.28)}.chord-display-row.section-prechorus{background:rgba(184,111,43,.28)}.chord-display-row.section-intro,.chord-display-row.section-outro{background:rgba(63,143,168,.28)}.chord-display-row.section-bridge{background:rgba(118,86,160,.28)}.chord-display-row.section-instrumental{background:rgba(58,67,79,.28)}.chord-display-row.section-pink{background:rgba(255,79,163,.28)}.chord-display-row.current{background:#245b82;color:#fff;box-shadow:inset 0 0 0 2px #7dbcf0}.chord-display-row.current.section-verse{background:#2f7d62;box-shadow:inset 0 0 0 2px #2b9e70}.chord-display-row.current.section-chorus{background:#8f3f50;box-shadow:inset 0 0 0 2px #b84d58}.chord-display-row.current.section-prechorus{background:#b86f2b;box-shadow:inset 0 0 0 2px #d89b2b}.chord-display-row.current.section-intro,.chord-display-row.current.section-outro{background:#3f8fa8;box-shadow:inset 0 0 0 2px #67c7e8}.chord-display-row.current.section-bridge{background:#7656a0;box-shadow:inset 0 0 0 2px #9b6fd0}.chord-display-row.current.section-instrumental{background:#3a434f;box-shadow:inset 0 0 0 2px #59616b}.chord-display-row.current.section-pink{background:#ff4fa3;box-shadow:inset 0 0 0 2px #ff8bc4}
 .chord-display-row.empty{color:#5f6b78}
-.chord-display-view-switch{display:flex;justify-content:center;margin:0 0 8px}.chord-view-switch{min-height:38px;height:38px;padding:5px 14px;font-size:14px;border-radius:9px}.chord-display-horizontal{height:104px;padding:4px 0}.chord-display-horizontal .chord-display-track{display:flex;align-items:stretch;width:max-content;min-width:100%;height:100%;gap:8px;padding:0}.chord-display-horizontal .chord-horizontal-bar{width:220px;min-width:220px;height:96px;min-height:96px;box-sizing:border-box;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.035);color:#697481;opacity:.48;display:flex;align-items:stretch;transition:background .12s ease,box-shadow .12s ease,color .12s ease,opacity .12s ease}.chord-display-horizontal .chord-horizontal-bar.current{opacity:1;color:#fff;background:#245b82;box-shadow:inset 0 0 0 2px #7dbcf0}.chord-display-horizontal .chord-horizontal-bar.section-verse.current{background:#2f7d62;box-shadow:inset 0 0 0 2px #2b9e70}.chord-display-horizontal .chord-horizontal-bar.section-chorus.current{background:#8f3f50;box-shadow:inset 0 0 0 2px #b84d58}.chord-display-horizontal .chord-horizontal-bar.section-prechorus.current{background:#b86f2b;box-shadow:inset 0 0 0 2px #d89b2b}.chord-display-horizontal .chord-horizontal-bar.section-intro.current,.chord-display-horizontal .chord-horizontal-bar.section-outro.current{background:#3f8fa8;box-shadow:inset 0 0 0 2px #67c7e8}.chord-display-horizontal .chord-horizontal-bar.section-bridge.current{background:#7656a0;box-shadow:inset 0 0 0 2px #9b6fd0}.chord-display-horizontal .chord-horizontal-bar.section-instrumental.current{background:#3a434f;box-shadow:inset 0 0 0 2px #59616b}.chord-display-horizontal .chord-horizontal-bar.section-pink.current{background:#ff4fa3;box-shadow:inset 0 0 0 2px #ff8bc4}.chord-display-horizontal .chord-horizontal-bar .chord-beat-grid{font-size:clamp(13px,2.4vw,18px)}.chord-display-horizontal .chord-horizontal-bar .chord-beat-cell{justify-content:center;padding:2px 5px;border-right:1px solid rgba(255,255,255,.12)}.chord-display-horizontal .chord-horizontal-bar .chord-beat-cell:last-child{border-right:0}.chord-display-horizontal .chord-horizontal-bar.current .chord-beat-cell{border-right-color:rgba(255,255,255,.2)}
+.chord-display-view-switch{display:flex;justify-content:center;margin:0 0 8px}.chord-view-switch{min-height:38px;height:38px;padding:5px 14px;font-size:14px;border-radius:9px}.chord-display-horizontal{height:104px;padding:4px 0}.chord-display-horizontal .chord-display-track{display:flex;align-items:stretch;width:max-content;min-width:100%;height:100%;gap:8px;padding:0}.chord-display-horizontal .chord-horizontal-bar{width:220px;min-width:220px;height:96px;min-height:96px;box-sizing:border-box;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.035);color:#697481;opacity:.48;display:flex;align-items:stretch;transition:background .12s ease,box-shadow .12s ease,color .12s ease,opacity .12s ease}.chord-beat-cell.loop-point-range{background:#e5b93f!important;color:#111!important;box-shadow:inset 0 0 0 2px #c99d22}.chord-beat-cell.loop-point-start,.chord-beat-cell.loop-point-end{background:#e5b93f!important;color:#111!important;box-shadow:inset 0 0 0 2px #fff}#uiPlay,#uiStop,#loopToggle{background:var(--panel2);border-color:var(--border)}#loopToggle.loop-on{background:var(--panel2);border-color:var(--border);box-shadow:none}.chord-display-horizontal .chord-horizontal-bar.current{opacity:1;color:#fff;background:#245b82;box-shadow:inset 0 0 0 2px #7dbcf0}.chord-display-horizontal .chord-horizontal-bar.section-verse.current{background:#2f7d62;box-shadow:inset 0 0 0 2px #2b9e70}.chord-display-horizontal .chord-horizontal-bar.section-chorus.current{background:#8f3f50;box-shadow:inset 0 0 0 2px #b84d58}.chord-display-horizontal .chord-horizontal-bar.section-prechorus.current{background:#b86f2b;box-shadow:inset 0 0 0 2px #d89b2b}.chord-display-horizontal .chord-horizontal-bar.section-intro.current,.chord-display-horizontal .chord-horizontal-bar.section-outro.current{background:#3f8fa8;box-shadow:inset 0 0 0 2px #67c7e8}.chord-display-horizontal .chord-horizontal-bar.section-bridge.current{background:#7656a0;box-shadow:inset 0 0 0 2px #9b6fd0}.chord-display-horizontal .chord-horizontal-bar.section-instrumental.current{background:#3a434f;box-shadow:inset 0 0 0 2px #59616b}.chord-display-horizontal .chord-horizontal-bar.section-pink.current{background:#ff4fa3;box-shadow:inset 0 0 0 2px #ff8bc4}.chord-display-horizontal .chord-horizontal-bar .chord-beat-grid{font-size:clamp(13px,2.4vw,18px)}.chord-display-horizontal .chord-horizontal-bar .chord-beat-cell{justify-content:center;padding:2px 5px;border-right:1px solid rgba(255,255,255,.12)}.chord-display-horizontal .chord-horizontal-bar .chord-beat-cell:last-child{border-right:0}.chord-display-horizontal .chord-horizontal-bar.current .chord-beat-cell{border-right-color:rgba(255,255,255,.2)}
 @media(max-width:600px){.chord-display-horizontal{height:88px}.chord-display-horizontal .chord-horizontal-bar{width:150px;min-width:150px;height:80px;min-height:80px;padding:5px}.chord-display-horizontal .chord-horizontal-bar .chord-beat-grid{font-size:clamp(12px,4vw,15px)}.chord-display-horizontal .chord-horizontal-bar .chord-beat-cell{padding-left:2px;padding-right:2px}}
 .chord-editor-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;margin-top:10px;overflow:hidden}
 .chord-editor-card>summary{list-style:none;cursor:pointer;min-height:54px;padding:15px 16px;font-size:17px;font-weight:750;display:flex;align-items:center;justify-content:space-between}
@@ -175,6 +174,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .chord-editor-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .chord-editor-tools button{min-height:42px}
 #chordProgressionEditor{width:100%;min-height:150px;resize:vertical;padding:10px;border:1px solid var(--border);border-radius:10px;background:#080d16;color:var(--text);font:600 16px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;outline:none}
+.chord-scroll-calibration{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0;padding:10px;border:1px solid var(--border);border-radius:10px;background:#0b111b}
+.chord-scroll-calibration-title{width:100%;font-weight:700}
+.chord-scroll-control{display:inline-flex;align-items:center;gap:5px}
+.chord-scroll-control button{min-width:34px;height:34px}
+.chord-scroll-value{min-width:48px;text-align:center;font:700 15px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.chord-scroll-info{font-size:12px;opacity:.8}
+
 #chordProgressionEditor:focus{border-color:#7dbcf0;box-shadow:0 0 0 2px rgba(94,184,255,.16)}
 .chord-editor-status{margin-top:7px;color:var(--muted);font-size:12px;min-height:16px}
 .chord-output-details{margin-top:8px;background:#080d16;border:1px solid var(--border);border-radius:8px;overflow:hidden}
@@ -187,8 +193,14 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .chord-detect-output{border-top:1px solid var(--border);font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
 @media(max-width:600px){.chord-display-row{font-size:clamp(12px,4vw,15px);padding-left:3px;padding-right:3px}.chord-beat-cell{padding-left:2px;padding-right:2px}.chord-editor-tools button{flex:1 1 150px}}
 
+/* === NEW: 16th-note auto-scroll nudge panel === */
+.nudge-panel{display:flex;gap:8px;align-items:center;justify-content:center;margin:10px 0 4px;flex-wrap:nowrap}
+.nudge-panel button{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;font-size:22px;border-radius:10px}
+.nudge-panel .nudge-label{color:var(--muted);font-size:13px;margin:0 4px}
+.nudge-panel .nudge-value{font-variant-numeric:tabular-nums;font-weight:700;color:#fff;min-width:78px;text-align:center}
+.nudge-panel .nudge-note-select{width:auto;min-width:74px;height:48px;min-height:48px;padding:0 8px;font-size:14px;font-weight:700;border-radius:10px;background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+#nudgeAutoSync{width:auto;min-width:64px;padding:0 12px;font-size:14px}
 </style>
-
 </head>
 
 <body>
@@ -197,8 +209,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     <div><h1>🎹 MIDI Karaoke App</h1><p id="uiFile">No MIDI loaded</p></div>
     <div class="hero-actions"><button id="uiMidi">Import MIDI</button><button id="uiSf2">Import SoundFont</button><button id="masterVolDown" class="square-control volume-control" type="button" aria-label="Master volume down">−</button><button id="masterVolUp" class="square-control volume-control" type="button" aria-label="Master volume up">+</button><button id="uiFull" class="fullscreen-button" aria-label="Fullscreen" title="Fullscreen">⛶</button></div>
   </div>
-
-
 
   <section class="chord-display-panel main-controls" id="chordDisplayPanel">
     <details class="chord-editor-card" id="chordEditorCard">
@@ -216,6 +226,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
             <option value="9/8">9/8</option>
             <option value="12/8">12/8</option>
           </select>
+        </div>
+        <div class="chord-scroll-calibration" id="chordScrollCalibration">
+          <div class="chord-scroll-calibration-title">🎯 Exact MIDI Scroll Calibration</div>
+          <div class="chord-scroll-control"><span>Starting Beat</span><button id="chordStartBeatDown" type="button" aria-label="Starting Beat minus">−</button><span class="chord-scroll-value" id="chordStartBeatValue">1</span><button id="chordStartBeatUp" type="button" aria-label="Starting Beat plus">+</button></div>
+          <div class="chord-scroll-control"><span>Ending Beat</span><button id="chordEndBeatDown" type="button" aria-label="Ending Beat minus">−</button><span class="chord-scroll-value" id="chordEndBeatValue">132</span><button id="chordEndBeatUp" type="button" aria-label="Ending Beat plus">+</button></div>
+          <button id="chordGenerateTemplate" type="button">↻ Generate MIDI Bar Template</button>
+          <span class="chord-scroll-info" id="chordScrollInfo">Load a MIDI file to calculate its bar count.</span>
         </div>
         <div class="chord-editor-tools">
           <button id="chordAnalyzeMidi" type="button">🎹 Analyze MIDI Beats</button>
@@ -249,20 +266,34 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
           <div class="chord-display-row empty">&nbsp;</div>
         </div>
       </div>
+      <!-- NEW: manual nudge controls with note-value selector & auto-sync -->
+      <div class="nudge-panel">
+        <button id="nudgeMinus16th" title="Shift auto-scroll back by one step (visual only)">−</button>
+        <select id="nudgeNoteValue" class="nudge-note-select" aria-label="Nudge note value" title="Note value for nudge steps">
+          <option value="4">1/4</option>
+          <option value="8">1/8</option>
+          <option value="16" selected>1/16</option>
+          <option value="32">1/32</option>
+          <option value="64">1/64</option>
+        </select>
+        <span class="nudge-value" id="nudgeOffsetValue">0 × 1/16</span>
+        <button id="nudgePlus16th" title="Shift auto-scroll forward by one step (visual only)">+</button>
+        <button id="nudgeAutoSync" class="good" title="Auto-detect best sync offset from MIDI note attacks">Auto</button>
+      </div>
+      <div class="nudge-panel" style="margin-top:2px">
+        <span class="nudge-label" style="text-align:right;flex:0 0 190px">Grid Latency Compensation</span>
+        <input id="latencyCompSlider" type="range" min="-100" max="100" step="1" value="0" style="flex:1 1 auto;min-width:200px" aria-label="Grid latency compensation in pixels">
+        <span class="nudge-value" id="latencyCompValue" style="flex:0 0 60px;text-align:left">0 px</span>
+      </div>
+      <div class="nudge-panel" style="margin-top:2px">
+        <span class="nudge-label" style="text-align:right;flex:0 0 190px">Highlight Latency Compensation</span>
+        <input id="highlightLatSlider" type="range" min="-500" max="500" step="5" value="0" style="flex:1 1 auto;min-width:200px" aria-label="Highlight latency compensation in milliseconds">
+        <span class="nudge-value" id="highlightLatValue" style="flex:0 0 60px;text-align:left">0 ms</span>
+      </div>
     </details>
   </section>
 
   <section class="main-controls playback-controls" id="playbackSectionCard">
-    <div id="midiTimelineCard" class="playback-subpanel loop-subpanel">
-      <div class="timeline-head"><strong>🔁 Loop Selector</strong><span id="uiTimelineInfo"></span><button id="loopCenterLock" class="timeline-lock-button locked" type="button" aria-label="Lock Loop Selector center" title="Lock white frame to center">🔒</button></div>
-      <div class="timeline-selector-row">
-        <button id="loopToggle" class="loop-icon-button" aria-label="Toggle Loop / Repeat" title="Toggle Loop / Repeat">🔁</button>
-        <div class="timeline-selector-wrap">
-          <div id="midiTimeline" class="timeline empty">Load a MIDI file to select a loop.</div>
-          <div class="timeline-view" id="timelineView">All beats</div>
-        </div>
-      </div>
-          </div>
     <div class="seek-wrap" id="seekWrap">
       <div id="uiSeekTrack" class="seek-track" aria-hidden="true"></div>
       <div id="uiSeekLoopOverlay" class="seek-loop-overlay" aria-hidden="true"></div>
@@ -272,6 +303,8 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
     <div class="playback-transport-row" id="playbackTransportRow">
       <div class="playback-time"><span id="uiNow">0:00</span></div>
       <div class="transport-row">
+        <button id="loopSetMode" class="loop-set-button square-icon-button" aria-label="Set Loop Points" title="Set Loop Points on Chord Progression">🔁</button>
+        <button id="loopToggle" class="loop-icon-button square-icon-button" aria-label="Toggle Loop / Repeat" title="Toggle Loop / Repeat">🔁</button>
         <button id="uiPlay" class="primary square-icon-button" aria-label="Play / Pause" title="Play / Pause">⏯️</button>
         <button id="uiStop" class="danger square-icon-button" aria-label="Stop" title="Stop">⏹️</button>
         <button id="prev" class="section-icon-button" aria-label="Previous Section / Marker" title="Previous Section / Marker">⬅️</button>
@@ -297,8 +330,6 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
       <div class="section-list" id="sectionList"><div class="section-empty">Load a MIDI file to show its sections.</div></div>
     </div>
   </section>
-
-
 
   <section class="main-controls bpm-panel" id="bpmPanel">
     <div class="bpm-control-row">
@@ -327,7 +358,6 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
     </div>
   </section>
 
-
 <div id="uiStatus" class="statusbox">Ready.</div>
   <div class="cards">
     <details class="category">
@@ -346,54 +376,11 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
 'use strict';
 
 /*
-  MIDI-ONLY CONTROLLER — VERSION 1204
+  MIDI-ONLY CONTROLLER — VERSION 108
 
-  Intentionally minimal:
-  - no CSS
-  - no buttons
-  - no panels
-  - keyboard controlled
-  - plain text only
-  - standalone HTML
-
-  Current shortcuts:
-    Home           MIDI Play / Pause
-    Delete         Remove the current line's timestamp
-    ,              MIDI Stop
-
-    Up Arrow       Transpose MIDI +1 semitone
-    Down Arrow     Transpose MIDI -1 semitone
-
-    Right Arrow    MIDI BPM +5
-    Left Arrow     MIDI BPM -5
-    Shift+Right    MIDI BPM +1
-    Shift+Left     MIDI BPM -1
-    0              MIDI original BPM
-
-    1              Jump to 'Verse 1' rehearsal mark
-    2              Jump to 'Chorus 1' rehearsal mark
-
-    F1             Show shortcut information
-
-    F3             Import MIDI file...
-    F4             Import SoundFont...
-
-    F5             Save Song As...
-    F9             Open Saved Songs...
-
-    F11            Full Screen
-
-    P              Record a 'song Part' + 'first line in that Part' timestamps
-    L              Record a 'Line timestamp
-    Delete         Remove the current line's timestamp
-
-  Communication:
-    BroadcastChannel
-    localStorage event
-    window.opener.postMessage()
-
-  The main Karaoke Band app will later be modified to receive these
-  commands. This version can already run the MIDI engine independently.
+  Added: manual 16th-note auto-scroll offset controls.
+  The offset is visual-only and does not alter playback timing.
+  It is applied when the chord display updates its scroll position.
 */
 
 const statusEl = document.getElementById('status');
@@ -408,7 +395,6 @@ const shortcuts = {
   'Left Arrow': 'MIDI BPM -5',
   'Shift+Right Arrow': 'MIDI BPM +1',
   'Shift+Left Arrow': 'MIDI BPM -1',
-  '0': 'MIDI original BPM',
   'F1': 'Show shortcut information',
   'F3': 'Import MIDI file...',
   'F4': 'Import SoundFont...',
@@ -429,14 +415,6 @@ const shortcuts = {
   'Enter': 'Jump to Current Section Start',
   '`': 'Jump to Song Beginning and Start Playback',
   'Space': 'Stop / Start at Current Section Start',
-  '1': 'Jump to 1st MIDI Marker',
-  '2': 'Jump to 2nd MIDI Marker',
-  '3': 'Jump to 3rd MIDI Marker',
-  '4': 'Jump to 4th MIDI Marker',
-  '5': 'Jump to 5th MIDI Marker',
-  '6': 'Jump to 6th MIDI Marker',
-  '7': 'Jump to 7th MIDI Marker',
-  '8': 'Jump to 8th MIDI Marker',
   '9': 'Jump to 9th MIDI Marker'
 };
 
@@ -455,9 +433,6 @@ function shortcutText() {
     'Left Arrow    ' + shortcuts['Left Arrow'],
     'Shift+Right Arrow    ' + shortcuts['Shift+Right Arrow'],
     'Shift+Left Arrow     ' + shortcuts['Shift+Left Arrow'],
-    '0             ' + shortcuts['0'],
-    '1             ' + shortcuts['1'],
-    '2             ' + shortcuts['2'],
     '',
     '[             ' + shortcuts['['],
     ']             ' + shortcuts[']'],
@@ -470,15 +445,6 @@ function shortcutText() {
     'End           ' + shortcuts.End,
     'Space         ' + shortcuts.Space,
     '`             ' + shortcuts['`'],
-    '1             ' + shortcuts['1'],
-    '2             ' + shortcuts['2'],
-    '3             ' + shortcuts['3'],
-    '4             ' + shortcuts['4'],
-    '5             ' + shortcuts['5'],
-    '6             ' + shortcuts['6'],
-    '7             ' + shortcuts['7'],
-    '8             ' + shortcuts['8'],
-    '9             ' + shortcuts['9'],
     '',
     'Alternative Shortcuts',
     'W             Same as Up Arrow',
@@ -557,9 +523,6 @@ function midiGetStructuralMarkers() {
     return String(a.text || '').localeCompare(String(b.text || ''));
   });
 
-  // Keep every marker from the MIDI file intact. Multiple markers at the
-  // same beat are allowed when opening an existing MIDI; the one-marker-per-
-  // beat rule is enforced only when the user tries to add a new marker.
   return source;
 }
 
@@ -698,6 +661,15 @@ const MIDI_SONG_STORE = 'songs';
 const MIDI_ACTIVE_KEY = 'karaokeBandMidiControllerActiveMIDI';
 const MIDI_ACTIVE_SONG_KEY = 'karaokeBandMidiControllerActiveSong';
 let chordDisplayJumpOnNextUpdate = false;
+let chordAutoTemplatePending = false;
+window.chordScrollNudgeSteps = 0;
+window.chordScrollNudgeNoteValue = 16;
+window.chordLatencyCompPx = 0;
+window.chordHighlightCompMs = 0;
+window.chordScrollNudgeSixteenths = 0;
+window.chordScrollAutoSyncInProgress = false;
+let chordScrollStartBeat = 1;
+let chordScrollEndBeat = 132;
 let midiDbPromise = null;
 
 /* The minimal controller has no visible BPM readout element.
@@ -915,9 +887,17 @@ async function midiLoadStoredSong(record) {
   chordDisplayJumpOnNextUpdate=false;
   midiLoadParsed(parsed,midiName,buffer);
 
+  if (Number.isFinite(song.chordScrollNudgeSteps)) window.chordScrollNudgeSteps = song.chordScrollNudgeSteps;
+  if (Number.isFinite(song.chordScrollNudgeNoteValue)) window.chordScrollNudgeNoteValue = song.chordScrollNudgeNoteValue;
+  if (Number.isFinite(song.chordLatencyCompPx)) window.chordLatencyCompPx = song.chordLatencyCompPx;
+  if (Number.isFinite(song.chordHighlightCompMs)) window.chordHighlightCompMs = song.chordHighlightCompMs;
+  if (typeof window.chordRefreshNudgeUI === 'function') window.chordRefreshNudgeUI();
+  if (typeof chordApplyNudgeVisual === 'function') chordApplyNudgeVisual();
+
   const savedChordEditor = document.getElementById('chordProgressionEditor');
   if (savedChordEditor) {
     savedChordEditor.value = typeof song.chordProgression === 'string' ? song.chordProgression : '';
+    chordAutoTemplatePending = !String(savedChordEditor.value || '').trim();
     try { localStorage.setItem('midiChordProgression:' + String(midiPlayback.fileName || '').trim().toLowerCase(), savedChordEditor.value || ''); } catch (e) {}
   }
   updateChordDisplay();
@@ -1117,9 +1097,6 @@ async function midiRestoreLastSession(){
 
 /* =========================================================
    SONG FILES
-   A Song JSON is a self-contained bundle: it contains the MIDI
-   data plus the current BPM and transpose settings. This makes
-   Load Song a true one-file operation in the browser.
    ========================================================= */
 
 function midiArrayBufferToBase64(buffer) {
@@ -1342,9 +1319,6 @@ function midiMergeMarkersIntoTrack(trackChunk, markers) {
       if (dataEnd > source.length) throw new Error('Invalid MIDI meta-event length.');
       p = dataEnd;
 
-      // Do NOT keep End-of-Track in the event list. New marker events must
-      // be inserted before EOT, otherwise MIDI readers stop before reaching
-      // the newly inserted markers.
       if (type === 0x2f) {
         endOfTrackTick = absoluteTick;
         break;
@@ -1375,7 +1349,6 @@ function midiMergeMarkersIntoTrack(trackChunk, markers) {
     }
     if (p > source.length) throw new Error('Invalid MIDI event length.');
 
-    // Expand running-status events to an explicit status byte in the rebuilt track.
     const raw = Array.from(source.slice(eventStart, p));
     if (!explicitStatus) raw.unshift(status);
     events.push({ tick: absoluteTick, raw: raw, order: order++ });
@@ -1405,8 +1378,6 @@ function midiMergeMarkersIntoTrack(trackChunk, markers) {
     bytes.push.apply(bytes, event.raw);
   });
 
-  // Re-add End-of-Track AFTER all existing and newly added events.
-  // Keep the original EOT position unless a marker lies later in the track.
   const lastEventTick = merged.length ? merged[merged.length - 1].tick : 0;
   const finalTick = Math.max(endOfTrackTick, lastEventTick);
   const eotDelta = Math.max(0, finalTick - previousTick);
@@ -1504,6 +1475,55 @@ async function midiSaveSong() {
     return;
   }
 
+  if (typeof window.showSaveFilePicker !== 'function') {
+    try {
+      const midiData = midiPlayback.rawData;
+      const midiName = midiPlayback.fileName || 'Untitled MIDI';
+      const song = {
+        type: 'midi-song',
+        version: 1,
+        midiFile: midiName,
+        bpm: midiPlayback.bpm,
+        transpose: midiPlayback.transposeSemitones,
+        loopStartSeconds: midiPlayback.loopStartSeconds,
+        loopEndSeconds: midiPlayback.loopEndSeconds,
+        looping: midiPlayback.looping,
+        chordProgression: (document.getElementById('chordProgressionEditor') || {}).value || '',
+        chordScrollNudgeSteps: Number(window.chordScrollNudgeSteps) || 0,
+        chordScrollNudgeNoteValue: Number(window.chordScrollNudgeNoteValue) || 16,
+        chordLatencyCompPx: Number(window.chordLatencyCompPx) || 0,
+        chordHighlightCompMs: Number(window.chordHighlightCompMs) || 0,
+        addedSectionMarkers: Array.isArray(midiPlayback.addedSectionMarkers)
+          ? midiPlayback.addedSectionMarkers.map(function(mark) {
+              return { tick: mark.tick, seconds: mark.seconds, text: mark.text, markerType: 'marker' };
+            })
+          : [],
+        deletedSectionMarkers: Array.isArray(midiPlayback.deletedSectionMarkers)
+          ? midiPlayback.deletedSectionMarkers.slice()
+          : [],
+        midiDataBase64: midiArrayBufferToBase64(midiData)
+      };
+      const json = JSON.stringify(song, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const baseName = midiName.replace(/\.[^.]+$/, '') || 'Untitled MIDI';
+      const suggestedName = baseName + '.midi-song.json';
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = suggestedName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+      midiRememberSong(song, suggestedName).catch(function(e){ console.error('[midi] remember song failed:', e); });
+      setStatus('Song saved: ' + suggestedName);
+    } catch (error) {
+      console.error('[midi] Could not save song:', error);
+      setStatus('Song save error: ' + (error.message || error));
+    }
+    return;
+  }
+
   try {
     const midiData = midiPlayback.rawData;
     const midiName = midiPlayback.fileName || 'Untitled MIDI';
@@ -1518,6 +1538,10 @@ async function midiSaveSong() {
       loopEndSeconds: midiPlayback.loopEndSeconds,
       looping: midiPlayback.looping,
       chordProgression: (document.getElementById('chordProgressionEditor') || {}).value || '',
+      chordScrollNudgeSteps: Number(window.chordScrollNudgeSteps) || 0,
+      chordScrollNudgeNoteValue: Number(window.chordScrollNudgeNoteValue) || 16,
+      chordLatencyCompPx: Number(window.chordLatencyCompPx) || 0,
+      chordHighlightCompMs: Number(window.chordHighlightCompMs) || 0,
       addedSectionMarkers: Array.isArray(midiPlayback.addedSectionMarkers)
         ? midiPlayback.addedSectionMarkers.map(function(mark) {
             return { tick: mark.tick, seconds: mark.seconds, text: mark.text, markerType: 'marker' };
@@ -1534,11 +1558,6 @@ async function midiSaveSong() {
     const baseName = midiName.replace(/\.[^.]+$/, '') || 'Untitled MIDI';
     const suggestedName = baseName + '.midi-song.json';
 
-    /*
-       Use the browser's real Save As dialog when the File System Access
-       API is available. The picker is opened directly from the keyboard
-       shortcut, so the browser treats it as a user-initiated save.
-    */
     if (typeof window.showSaveFilePicker === 'function') {
       const handle = await window.showSaveFilePicker({
         suggestedName: suggestedName,
@@ -1562,7 +1581,6 @@ async function midiSaveSong() {
       return;
     }
 
-    /* Fallback for browsers that do not support showSaveFilePicker. */
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -1637,6 +1655,13 @@ function midiLoadSongPicker() {
       localStorage.setItem(MIDI_ACTIVE_SONG_KEY,songRecord.id);
       chordDisplayJumpOnNextUpdate=false;
       midiLoadParsed(parsed,midiName,buffer);
+
+      if (Number.isFinite(song.chordScrollNudgeSteps)) window.chordScrollNudgeSteps = song.chordScrollNudgeSteps;
+      if (Number.isFinite(song.chordScrollNudgeNoteValue)) window.chordScrollNudgeNoteValue = song.chordScrollNudgeNoteValue;
+      if (Number.isFinite(song.chordLatencyCompPx)) window.chordLatencyCompPx = song.chordLatencyCompPx;
+      if (Number.isFinite(song.chordHighlightCompMs)) window.chordHighlightCompMs = song.chordHighlightCompMs;
+      if (typeof window.chordRefreshNudgeUI === 'function') window.chordRefreshNudgeUI();
+      if (typeof chordApplyNudgeVisual === 'function') chordApplyNudgeVisual();
 
       if (Number.isFinite(song.bpm)) {
         midiPlayback.bpm = Math.max(5, song.bpm);
@@ -1748,7 +1773,7 @@ function midiOpenFilePicker() {
         chordDisplayJumpOnNextUpdate=false;
         midiLoadParsed(parsed,record.name,buffer);
         const importedChordEditor = document.getElementById('chordProgressionEditor');
-        if (importedChordEditor) importedChordEditor.value = '';
+        if (importedChordEditor) { chordAutoTemplatePending = true; importedChordEditor.value = ''; }
         updateChordDisplay();
 
         midiUpdateBpmReadout();
@@ -1768,9 +1793,7 @@ function midiOpenFilePicker() {
 
 /* =========================================================
    MIDI PARSER
-   =========================================================
-   Directly based on the parser in the current 3566 app.
-*/
+   ========================================================= */
 
 function midiReadUint16(view, offset) {
   return view.getUint16(offset, false);
@@ -2433,16 +2456,12 @@ function midiGetTimeSignatureEvents(parsed) {
     })
     .sort(function(a, b) { return a.tick - b.tick; });
 
-  // If a MIDI file has no time-signature event, retain the app's old 4/4
-  // behavior as a fallback. We do not try to infer a pickup from note data.
   if (!result.length || result[0].tick > 0) {
     result.unshift({tick: 0, numerator: 4, denominator: 4});
   } else if (result[0].tick === 0) {
-    // Keep the first explicit event at tick 0.
     result[0].tick = 0;
   }
 
-  // If several events occur at the same tick, the last one wins.
   const deduped = [];
   result.forEach(function(sig) {
     if (deduped.length && deduped[deduped.length - 1].tick === sig.tick) {
@@ -2474,8 +2493,6 @@ function midiGetBarlineTicks(maxTick) {
     const barTicks = tpq * sig.numerator * 4 / sig.denominator;
     if (!(barTicks > 0)) continue;
 
-    // The beginning of the song and every time-signature change are barlines.
-    // We deliberately do not infer pickup measures from note positions.
     if (!barlines.length || Math.abs(barlines[barlines.length - 1] - startTick) > 0.000001) {
       barlines.push(startTick);
     }
@@ -2692,9 +2709,6 @@ function midiMetronomeScheduler() {
   }
 
   if (info.beatKey !== midiPlayback.metronomeLastBeatKey) {
-    // The first beat after a toggle, seek, loop restart, or BPM change is
-    // determined from the current MIDI position, so the metronome remains
-    // locked to the MIDI beat grid rather than to wall-clock intervals.
     midiMetronomeClick(info.beatInBar === 0);
     midiPlayback.metronomeLastBeatKey = info.beatKey;
   }
@@ -2854,7 +2868,10 @@ function midiLoadParsed(parsed, name, rawData) {
       const remembered = localStorage.getItem('midiChordProgression:' + String(midiPlayback.fileName || '').trim().toLowerCase());
       if (remembered !== null) rememberedChordEditor.value = remembered;
     } catch (e) {}
+    chordAutoTemplatePending = !String(rememberedChordEditor.value || '').trim();
   }
+  const automaticEndBeat=chordGetDefaultEndingBeat();
+  chordSetScrollCalibration(chordScrollStartBeat,automaticEndBeat);
   setStatus('MIDI loaded: ' + midiPlayback.fileName);
 }
 
@@ -2873,6 +2890,27 @@ function midiGetCurrentTime() {
     elapsed / speedScale,
     midiPlayback.durationSeconds
   );
+}
+
+/*
+  Visual-only clock for the chord grid. Same as midiGetCurrentTime(),
+  but offset by a small audio-latency constant. Playback and MIDI
+  scheduling are NOT affected.
+*/
+function midiGetVisualTime() {
+  const AUDIO_LATENCY_SECONDS = 0.00;   // tune this later
+  return Math.max(0, midiGetCurrentTime() - AUDIO_LATENCY_SECONDS);
+}
+
+/*
+  Visual-only clock for the chord grid. It returns the same value as
+  midiGetCurrentTime() minus a small constant, compensating for the
+  audible output latency of the SF2 synth / audio worklet. Playback,
+  note scheduling, and MIDI timing are untouched.
+*/
+function midiGetVisualTime() {
+  const AUDIO_LATENCY_SECONDS = 0.10;   // tune this: 0.05 .. 0.25
+  return Math.max(0, midiGetCurrentTime() - AUDIO_LATENCY_SECONDS);
 }
 
 function midiSnapTimeToBeat(seconds) {
@@ -2950,10 +2988,6 @@ async function midiStartPlayback(startAtSourceSeconds) {
 
   if (sf2Synth) {
     try {
-      // Explicitly release every note before rebuilding/restarting playback.
-      // This is especially important at loop boundaries, where a note can
-      // legitimately extend past Loop End and therefore has no note-off
-      // event before the restart point.
       const notesToRelease = midiPlayback.activeNotes.slice();
 
       for (const active of notesToRelease) {
@@ -2962,8 +2996,6 @@ async function midiStartPlayback(startAtSourceSeconds) {
         } catch (e) {}
       }
 
-      // Also clear sustain on every channel so a sustained note cannot remain
-      // audible after the loop jumps back to Loop Start.
       for (let channel = 0; channel < 16; channel++) {
         try {
           synth.controllerChange(channel, 64, 0);
@@ -2987,10 +3019,6 @@ async function midiStartPlayback(startAtSourceSeconds) {
   midiMetronomeResetSync();
   midiMetronomeStartTimer();
 
-  // Rebuild the MIDI state at the resume point.
-  // This restores program/controller state and re-triggers notes that
-  // were already sounding when the user paused, so sustained notes
-  // continue instead of disappearing on resume.
   let eventIndex = 0;
   const resumeStateNotes = [];
 
@@ -3231,7 +3259,7 @@ function midiStopPlayback() {
 
   midiPlayback.activeNotes = [];
   midiPlayback.pausedTimeSeconds = 0;
-  midiPlayback.chordDisplayKeepEnd = true;
+  midiPlayback.chordDisplayKeepEnd = false;
 
   sendCommand('midi-stopped', {
     time: 0
@@ -3406,8 +3434,6 @@ function midiMoveLoopRangeByBars(deltaBars) {
     midiGetBarBeatLabelForSeconds(midiPlayback.loopEndSeconds)
   );
 
-  // If Loop Mode is currently playing, apply the moved range immediately.
-  // Otherwise the new range will be used the next time Loop Mode starts.
   if (midiPlayback.looping) {
     midiPlayback.pausedTimeSeconds = midiPlayback.loopStartSeconds;
 
@@ -3664,8 +3690,6 @@ function midiRemoveTimestamp() {
 
 /* =========================================================
    F1 HELP WINDOW
-   Non-blocking so MIDI playback timers and note-off events
-   continue running while the shortcut list is open.
    ========================================================= */
 
 let shortcutHelpOverlay = null;
@@ -3730,16 +3754,10 @@ function midiJumpToRehearsalMark(name) {
     return item.text.trim().toLowerCase() === targetName;
   });
 
-  // Prefer genuine MIDI Marker/Cue Point events over ordinary Text events.
-  // This prevents an ordinary text item with the same name from being
-  // mistaken for the structural section marker.
   const structuralMatch = exactMatches.find(function(item) {
     return item.markerType === 'marker' || item.markerType === 'cuePoint';
   });
 
-  // Ordinary MIDI Text events are intentionally NOT accepted as rehearsal
-  // marks.  Only actual Marker/Cue Point meta-events count as structural
-  // Section Marks.
   const mark = structuralMatch;
 
   if (!mark) {
@@ -3784,10 +3802,6 @@ function midiJumpToPreviousMarker() {
     return;
   }
 
-  // Determine the current section from the displayed Section Marks list,
-  // using the last displayed marker at or before the current playback time.
-  // This remains valid no matter how many seconds have passed since the
-  // section marker.
   let currentIndex = -1;
   for (let i = 0; i < markers.length; i++) {
     if (markers[i].seconds <= currentSeconds + 0.000001) {
@@ -3938,10 +3952,6 @@ function midiJumpToNextMarker() {
     return;
   }
 
-  // Determine the current section from the displayed Section Marks list,
-  // then move exactly one displayed section forward.  This means Next
-  // Section also works at any point after the current marker, not only
-  // immediately around the marker itself.
   let currentIndex = -1;
   for (let i = 0; i < markers.length; i++) {
     if (markers[i].seconds <= currentSeconds + 0.000001) {
@@ -3977,12 +3987,11 @@ function midiJumpToNextMarker() {
 window.midiChordEditorEditing = false;
 
 window.addEventListener('keydown', function(e) {
-  // While entering a Section Marker name or Chord Editor text, all app shortcuts are disabled.
-  // Those controls have their own normal text-editing behavior.
   if (window.midiMarkerNameEditing || window.midiChordEditorEditing) return;
+  const activeBeatCell = document.activeElement && document.activeElement.closest && document.activeElement.closest('.chord-beat-cell[contenteditable="true"]');
+  if (activeBeatCell) return;
 
   if (e.key === 'F11') {
-    // Let the browser's native F11 fullscreen handling work.
     return;
   }
 
@@ -4061,11 +4070,6 @@ window.addEventListener('keydown', function(e) {
       midiChangeBpm(-5);
       break;
 
-    case '0':
-      e.preventDefault();
-      midiRestoreOriginalBpm();
-      break;
-
     case 'ArrowRight':
     case 'd':
     case 'D':
@@ -4118,42 +4122,6 @@ window.addEventListener('keydown', function(e) {
       midiJumpToCurrentSectionStart();
       break;
 
-    case '1':
-      e.preventDefault();
-      midiJumpToMarkerNumber(1);
-      break;
-    case '2':
-      e.preventDefault();
-      midiJumpToMarkerNumber(2);
-      break;
-    case '3':
-      e.preventDefault();
-      midiJumpToMarkerNumber(3);
-      break;
-    case '4':
-      e.preventDefault();
-      midiJumpToMarkerNumber(4);
-      break;
-    case '5':
-      e.preventDefault();
-      midiJumpToMarkerNumber(5);
-      break;
-    case '6':
-      e.preventDefault();
-      midiJumpToMarkerNumber(6);
-      break;
-    case '7':
-      e.preventDefault();
-      midiJumpToMarkerNumber(7);
-      break;
-    case '8':
-      e.preventDefault();
-      midiJumpToMarkerNumber(8);
-      break;
-    case '9':
-      e.preventDefault();
-      midiJumpToMarkerNumber(9);
-      break;
     case '`':
       e.preventDefault();
       midiStartPlayback(0).catch(function(error) {
@@ -4175,16 +4143,6 @@ window.addEventListener('keydown', function(e) {
     case 'End':
       e.preventDefault();
       midiJumpToNextMarker();
-      break;
-
-    case '1':
-      e.preventDefault();
-      midiJumpToRehearsalMark('Verse 1');
-      break;
-
-    case '2':
-      e.preventDefault();
-      midiJumpToRehearsalMark('Chorus 1');
       break;
 
     case 'F1':
@@ -4220,8 +4178,6 @@ window.addEventListener('keydown', function(e) {
 
 /* =========================================================
    MIDI CLOCK MESSAGE
-   The main app can use this later if it needs continuous
-   MIDI playback position updates.
    ========================================================= */
 
 let midiLastDisplayedMarkerKey = null;
@@ -4331,12 +4287,6 @@ function updateSeekTrack(){
     return;
   }
 
-  // Use exactly the same structural section markers that drive the
-  // Section buttons. Each section owns the continuous interval from its
-  // marker up to (but not including) the next marker.
-  // Only genuine structural MIDI Marker/Cue Point events control the
-  // section coloring of the playback slider. Do not create a gray section
-  // segment when there are no structural markers.
   const rawStructural=typeof midiGetStructuralMarkers==='function'
     ? midiGetStructuralMarkers() : [];
   const sections=rawStructural.slice().sort(function(a,b){
@@ -4354,9 +4304,6 @@ function updateSeekTrack(){
 
     const color=sectionColorForText(sections[i].text) || '#ff4fa3';
 
-    // If at least one real MIDI section marker exists, keep the whole
-    // slider colored. The area before the first marker uses that first
-    // section's color rather than introducing an unrelated gray segment.
     const segmentStart=Math.max(pos,start);
     if(i===0 && start>0){
       stops.push(color+' 0% '+(start/dur*100)+'%');
@@ -4370,13 +4317,10 @@ function updateSeekTrack(){
     stops.push(lastColor+' '+(pos/dur*100)+'% 100%');
   }
 
-  // With no structural MIDI markers, leave the track neutral rather than
-  // showing a fake gray section. The normal slider track remains visible.
   el.style.background=stops.length
     ? 'linear-gradient(to right,'+stops.join(',')+')'
     : 'transparent';
 
-  // Yellow Loop Range remains on the top half of the playback slider.
   const overlay=$('uiSeekLoopOverlay');
   if(overlay){
     const ls=Number(midiPlayback&&midiPlayback.loopStartSeconds);
@@ -4396,9 +4340,6 @@ function updateSeekTrack(){
     }
   }
 
-  // Existing MIDI Section Markers are shown as short pink vertical ticks
-  // on the top edge of the slider. They deliberately sit above the yellow
-  // Loop Range so both guides remain visible at the same time.
   if(markerLayer){
     markerLayer.innerHTML='';
     const structural=typeof midiGetStructuralMarkers==='function'
@@ -4424,233 +4365,49 @@ function updateSeekTrack(){
   }
 }
 let seeking=false;let seekWasPlaying=false;function refresh(){if(typeof midiPlayback==='undefined')return;const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0,dur=Number(midiPlayback.durationSeconds)||0,bpm=Number(midiPlayback.bpm)||0,tr=Number(midiPlayback.transposeSemitones)||0;$('uiNow').textContent=fmt(now);$('uiDur').textContent=fmt(dur);$('uiSeek').max=String(dur);updateSeekTrack();if(!seeking)$('uiSeek').value=String(Math.min(now,dur));$('uiFile').textContent=midiPlayback.fileName||'No MIDI loaded';if($('uiBpm'))$('uiBpm').textContent=bpm?Math.round(bpm):'—';if($('uiTranspose'))$('uiTranspose').textContent=(tr>0?'+':'')+tr+' semitone'+(Math.abs(tr)===1?'':'s');if($('loopToggle'))$('loopToggle').classList.toggle('loop-on',!!midiPlayback.looping);refreshMarkers()}
-$('uiMidi').onclick=()=>call('midiOpenFilePicker');$('uiSf2').onclick=()=>call('sf2OpenFilePicker');$('uiFull').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();$('uiPlay').onclick=()=>call('midiStartOrPausePlayback');$('uiStop').onclick=()=>call('midiStopPlayback');$('uiSave').onclick=()=>call('midiSaveSong');$('uiJson').onclick=()=>call('midiLoadSongPicker');$('uiSongs').addEventListener('change',()=>{const id=$('uiSongs').value;if(id)localStorage.setItem('karaokeBandMidiControllerActiveSong',id)});$('uiLoad').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;localStorage.setItem('karaokeBandMidiControllerActiveSong',id);const list=await midiSongDbGetAll();const r=list.find(x=>String(x.id)===id);if(r)await midiLoadStoredSong(r);refresh()};$('uiDelete').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll(),r=list.find(x=>String(x.id)===id);if(r&&confirm('Delete saved song “'+(r.name||'Untitled Song')+'”?')){await midiSongDbDelete(r.id);refreshSongs()}};
-$('uiSeek').addEventListener('pointerdown',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;seeking=true;seekWasPlaying=!!midiPlayback.playing;if(seekWasPlaying)call('midiStopPlayback');if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(Number($('uiSeek').value),true)});$('uiSeek').addEventListener('input',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;$('uiNow').textContent=fmt(t);if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false)});$('uiSeek').addEventListener('pointerup',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false);if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});$('uiSeek').addEventListener('change',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false);if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});[['bpmM5',-5],['bpmM1',-1],['bpmP1',1],['bpmP5',5]].forEach(([id,d])=>$(id).onclick=()=>call('midiChangeBpm',d));$('bpmOrig').onclick=()=>call('midiRestoreOriginalBpm');$('metronomeVolDown').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(-0.05)};$('metronomeVolUp').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(0.05)};$('masterVolDown').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(-0.10)};$('masterVolUp').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(0.10)};midiUpdateVolumeButtons();$('trDown').onclick=()=>call('midiTranspose',-1);$('trUp').onclick=()=>call('midiTranspose',1);$('trReset').onclick=()=>{if(typeof midiPlayback!=='undefined')call('midiTranspose',-(Number(midiPlayback.transposeSemitones)||0));};$('loopToggle').onclick=()=>call('midiToggleLoop');$('prev').onclick=()=>call('midiJumpToPreviousMarker');$('next').onclick=()=>call('midiJumpToNextMarker');$('tsPL').onclick=()=>call('midiRecordTimestamp','P+L');$('tsL').onclick=()=>call('midiRecordTimestamp','L');$('tsRemove').onclick=()=>call('midiRemoveTimestamp');
+$('uiMidi').onclick=()=>call('midiOpenFilePicker');$('uiSf2').onclick=()=>call('sf2OpenFilePicker');$('uiFull').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();$('uiPlay').onclick=()=>call('midiStartOrPausePlayback');$('uiStop').onclick=()=>call('midiStopPlayback');$('uiSave').onclick=()=>{
+  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!midiPlayback.rawData){
+    show('No MIDI loaded.');
+    return;
+  }
+  call('midiSaveSong');
+};$('uiJson').onclick=()=>call('midiLoadSongPicker');$('uiSongs').addEventListener('change',()=>{const id=$('uiSongs').value;if(id)localStorage.setItem('karaokeBandMidiControllerActiveSong',id)});$('uiLoad').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;localStorage.setItem('karaokeBandMidiControllerActiveSong',id);const list=await midiSongDbGetAll();const r=list.find(x=>String(x.id)===id);if(r)await midiLoadStoredSong(r);refresh()};$('uiDelete').onclick=async()=>{const id=$('uiSongs').value;if(!id)return;const list=await midiSongDbGetAll(),r=list.find(x=>String(x.id)===id);if(r&&confirm('Delete saved song “'+(r.name||'Untitled Song')+'”?')){await midiSongDbDelete(r.id);refreshSongs()}};
+$('uiSeek').addEventListener('pointerdown',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;seeking=true;seekWasPlaying=!!midiPlayback.playing;if(seekWasPlaying)call('midiStopPlayback');if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(Number($('uiSeek').value),true)});$('uiSeek').addEventListener('input',()=>{if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;$('uiNow').textContent=fmt(t);if(typeof window.syncAllDragViewsFromSeconds==='function')window.syncAllDragViewsFromSeconds(t,'slider');else if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false)});$('uiSeek').addEventListener('pointerup',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false);if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});$('uiSeek').addEventListener('change',()=>{if(!seeking)return;seeking=false;const t=Number($('uiSeek').value);midiPlayback.pausedTimeSeconds=t;if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(t,false);if(seekWasPlaying)call('midiStartPlayback',t);seekWasPlaying=false;refresh()});[['bpmM5',-5],['bpmM1',-1],['bpmP1',1],['bpmP5',5]].forEach(([id,d])=>$(id).onclick=()=>call('midiChangeBpm',d));$('bpmOrig').onclick=()=>call('midiRestoreOriginalBpm');$('metronomeVolDown').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(-0.05)};$('metronomeVolUp').onclick=()=>{if(typeof midiChangeMetronomeVolume==='function')midiChangeMetronomeVolume(0.05)};$('masterVolDown').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(-0.10)};$('masterVolUp').onclick=()=>{if(typeof midiChangeMasterVolume==='function')midiChangeMasterVolume(0.10)};midiUpdateVolumeButtons();$('trDown').onclick=()=>call('midiTranspose',-1);$('trUp').onclick=()=>call('midiTranspose',1);$('trReset').onclick=()=>{if(typeof midiPlayback!=='undefined')call('midiTranspose',-(Number(midiPlayback.transposeSemitones)||0));};$('loopToggle').onclick=()=>call('midiToggleLoop');$('prev').onclick=()=>call('midiJumpToPreviousMarker');$('next').onclick=()=>call('midiJumpToNextMarker');$('tsPL').onclick=()=>call('midiRecordTimestamp','P+L');$('tsL').onclick=()=>call('midiRecordTimestamp','L');$('tsRemove').onclick=()=>call('midiRemoveTimestamp');
 setInterval(refresh,200);refreshSongs();refresh();
 })();
 </script>
 <script>
 (function(){
 'use strict';
-const timeline=document.getElementById('midiTimeline');
-const info=document.getElementById('uiTimelineInfo');
-const pointStatus=document.getElementById('timelinePointStatus');
-let beats=[];let tapStep='start';let lastBeatCount=0;
-const fmt=x=>{x=Math.max(0,Number(x)||0);return Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0')};
-function countBeats(){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter||typeof midiGetTickForSeconds!=='function')return 0;return Math.max(1,Math.ceil(midiGetTickForSeconds(Number(midiPlayback.durationSeconds)||0)/midiPlayback.parsed.ticksPerQuarter));}
-function beatTime(n){if(typeof midiGetSecondsForTick!=='function'||!midiPlayback.parsed)return 0;return midiGetSecondsForTick(n*midiPlayback.parsed.ticksPerQuarter);}
-function barNumberForBeatIndex(i){
-  if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return 1;
-  const tick=Math.max(0,Math.round(i*midiPlayback.parsed.ticksPerQuarter));
-  const barlines=typeof midiGetBarlineTicks==='function'?midiGetBarlineTicks(tick):[];
-  let barNumber=1;
-  for(let j=0;j<barlines.length;j++){
-    if(barlines[j]<=tick+0.000001)barNumber=j+1;
-    else break;
-  }
-  return barNumber;
-}
-function resetTapStep(){tapStep='start';if(pointStatus)pointStatus.textContent='Tap a beat for Loop Start. The next tap will set Loop End.';}
-function sectionClassForTime(seconds){
-  if(typeof midiGetStructuralMarkers!=='function')return '';
-  const sections=midiGetStructuralMarkers().slice().sort(function(a,b){
-    return (Number(a.seconds)||0)-(Number(b.seconds)||0);
-  });
-  let current=null;
-  for(let i=0;i<sections.length;i++){
-    if(Number(sections[i].seconds)<=seconds+0.000001)current=sections[i];
-    else break;
-  }
-  if(!current)return '';
-  const normalized=String(current.text||'').toLowerCase().replace(/[^a-z]+/g,' ');
-  if(/\bpre\s*chorus\b|\bprechorus\b/.test(normalized))return 'section-prechorus';
-  if(/\bchorus\b/.test(normalized))return 'section-chorus';
-  if(/\bverse\b/.test(normalized))return 'section-verse';
-  if(/\bintro\b/.test(normalized))return 'section-intro';
-  if(/\boutro\b/.test(normalized))return 'section-outro';
-  if(/\bbridge\b/.test(normalized))return 'section-bridge';
-  if(/\binstrumental\b/.test(normalized))return 'section-instrumental';
-  return 'section-pink';
-}
-function render(){
-  const n=countBeats();
-  if(n===lastBeatCount&&beats.length)return;
-  lastBeatCount=n;beats=[];timeline.innerHTML='';
-  if(!n){timeline.classList.add('empty');timeline.textContent='Load a MIDI file to show the song beats.';info.textContent='Load a MIDI song';resetTapStep();return;}
-  timeline.classList.remove('empty');info.textContent=n+' beats · 1 beat per cell · '+midiGetTimeSignatureSummary();
-  const frag=document.createDocumentFragment();
-  for(let i=0;i<n;i++){
-    const b=document.createElement('button');b.type='button';b.className='beat '+sectionClassForTime(beatTime(i));b.dataset.beat=i;
-    b.innerHTML=(i===0||barNumberForBeatIndex(i)!==barNumberForBeatIndex(i-1)?'<span class="beat-bar-number">Bar '+barNumberForBeatIndex(i)+'</span>':'<span class="beat-bar-number"></span>')+'<span class="beat-number">Beat '+(i+1)+'</span><span class="beat-time">'+fmt(beatTime(i))+'</span>';
-    const tpq=midiPlayback.parsed.ticksPerQuarter;
-    midiAppendBarlineToBeat(b,i*tpq,(i+1)*tpq);
-    frag.appendChild(b);beats.push(b);
-  }
-  timeline.appendChild(frag);update();
-}
-function chooseBeat(i){
-  if(tapStep==='start'){
-    const start=beatTime(i);midiPlayback.loopStartSeconds=start;midiPlayback.loopEndSeconds=null;midiPlayback.looping=false;tapStep='end';
-    if(pointStatus)pointStatus.textContent='Loop Start Beat '+(i+1)+' set ('+fmt(start)+'). Tap another beat for Loop End.';
-    const loop=document.getElementById('loopToggle');if(loop){loop.textContent='🔁';loop.classList.remove('loop-on');}update();return;
-  }
-  const start=midiPlayback.loopStartSeconds;
-  if(start===null){tapStep='start';chooseBeat(i);return;}
-  const end=beatTime(Math.min(i+1,beats.length));tapStep='start';
-  if(end<=start){if(pointStatus)pointStatus.textContent='Loop End must be after Loop Start. Next tap will set a new Loop Start.';update();return;}
-  midiPlayback.loopEndSeconds=end;midiPlayback.looping=true;
-  const loop=document.getElementById('loopToggle');if(loop){loop.textContent='🔁';loop.classList.add('loop-on');}
-  if(pointStatus)pointStatus.textContent='Loop set: Beats '+(Math.max(0,Math.floor(midiGetTickForSeconds(start)/(midiPlayback.parsed.ticksPerQuarter||480)))+1)+'–'+(i+1)+' ('+fmt(start)+' – '+fmt(end)+'). Next tap will set a new Loop Start.';
-  const status=document.getElementById('uiStatus');if(status)status.textContent='Loop selected and ON. Playback started from Loop Start.';
-  try{if(typeof midiStartPlayback==='function')midiStartPlayback(start);}catch(_){}update();
-}
-function currentBeatIndexForPlayback(){
-  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return 0;
-  const now=typeof midiGetCurrentTime==='function'?midiGetCurrentTime():0;
-  const tick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(now):0;
-  return Math.max(0,Math.floor(tick/midiPlayback.parsed.ticksPerQuarter));
-}
-let loopCenterLocked=true;
-let markerCenterLocked=true;
-function centerBeatInTimeline(view,beatIndex,beatCount,forceCenter){
-  if(!view||!beatCount||!forceCenter)return;
-  const child=view.children[beatIndex];
-  if(!child)return;
-  const childCenter=child.offsetLeft+(child.offsetWidth/2);
-  const desired=childCenter-(view.clientWidth/2);
-  const maxScroll=Math.max(0,view.scrollWidth-view.clientWidth);
-  view.scrollLeft=Math.max(0,Math.min(maxScroll,desired));
-}
-function syncBeatTimelines(center){
-  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;
-  const cur=currentBeatIndexForPlayback();
-  if(beats.length){
-    beats.forEach(function(b,i){b.classList.toggle('current',i===cur);});
-    if(center)centerBeatInTimeline(timeline,cur,beats.length,loopCenterLocked);
-    updateTimelineView();
-  }
-  if(markerBeats.length){
-    markerBeats.forEach(function(b,i){b.classList.toggle('current',i===cur);});
-    if(center)centerBeatInTimeline(markerTimeline,cur,markerBeats.length,markerCenterLocked);
-    updateMarkerView();
-  }
-}
-function updateCenterLockButton(button,locked,label){
-  if(!button)return;
-  button.textContent=locked?'🔒':'🔓';
-  button.classList.toggle('locked',locked);
-  button.classList.toggle('unlocked',!locked);
-  button.setAttribute('aria-label',(locked?'Unlock ':'Lock ')+label+' center');
-  button.title=locked?'Unlock white frame from center':'Lock white frame to center';
-}
-function toggleLoopCenterLock(){
-  loopCenterLocked=!loopCenterLocked;
-  updateCenterLockButton(document.getElementById('loopCenterLock'),loopCenterLocked,'Loop Selector');
-  syncBeatTimelines(true);
-}
-function toggleMarkerCenterLock(){
-  markerCenterLocked=!markerCenterLocked;
-  updateCenterLockButton(document.getElementById('markerCenterLock'),markerCenterLocked,'Section Marker');
-  syncBeatTimelines(true);
-}
-function seekToBeat(i,keepPlaying){
-  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return;
-  const clamped=Math.max(0,Math.min(i,Math.max(beats.length,markerBeats.length)-1));
-  const target=beatTime(clamped);
-  midiPlayback.pausedTimeSeconds=target;
-  const seek=document.getElementById('uiSeek');
-  if(seek)seek.value=String(target);
-  const nowEl=document.getElementById('uiNow');
-  if(nowEl)nowEl.textContent=fmt(target);
-  if(keepPlaying){
-    try{if(typeof midiStartPlayback==='function')midiStartPlayback(target);}catch(_){}
-  }
-  syncBeatTimelines(true);
-}
-function update(){
-  if(!beats.length||typeof midiPlayback==='undefined')return;
-  const cur=currentBeatIndexForPlayback();let lo=null,hi=null;
-  const tpq=midiPlayback.parsed&&midiPlayback.parsed.ticksPerQuarter||480;
-  if(midiPlayback.loopStartSeconds!=null&&midiPlayback.loopEndSeconds!=null){
-    const st=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiPlayback.loopStartSeconds):0;
-    const et=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(Math.max(0,midiPlayback.loopEndSeconds-0.0001)):0;
-    lo=Math.max(0,Math.min(beats.length-1,Math.floor(st/tpq)));
-    hi=Math.max(lo,Math.min(beats.length-1,Math.floor(et/tpq)));
-  }else if(midiPlayback.loopStartSeconds!=null){
-    const st=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiPlayback.loopStartSeconds):0;
-    lo=Math.max(0,Math.min(beats.length-1,Math.floor(st/tpq)));
-  }
-  const sectionClasses=[
-    'section-verse','section-chorus','section-prechorus',
-    'section-intro','section-outro','section-bridge',
-    'section-instrumental','section-pink'
-  ];
-  beats.forEach(function(b,i){
-    sectionClasses.forEach(function(name){b.classList.remove(name);});
-    const sectionClass=sectionClassForTime(beatTime(i));
-    if(sectionClass)b.classList.add(sectionClass);
-    b.classList.toggle('current',i===cur);
-    b.classList.toggle('selected',lo!==null&&hi!==null&&i>=lo&&i<=hi);
-    b.classList.toggle('anchor',lo!==null&&i===lo);
-    b.classList.toggle('loop-start-pending',lo!==null&&hi===null&&i===lo);
-  });
-  syncBeatTimelines(false);
-}
-
-function syncAllDragViewsFromSeconds(seconds,sourceTimeline){
-  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return 0;
-  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  const target=Math.max(0,Math.min(duration,Number(seconds)||0));
-  midiPlayback.pausedTimeSeconds=target;
-  const seek=document.getElementById('uiSeek');
-  if(seek)seek.value=String(target);
-  const nowEl=document.getElementById('uiNow');
-  if(nowEl)nowEl.textContent=fmt(target);
-  if(typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(target,false);
-  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
-  const tick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(target):0;
-  const beatPosition=Math.max(0,Number(tick)||0)/tpq;
-  const scrollForBeat=function(view){
-    if(!view)return;
-    const desired=(beatPosition*48)+24-(view.clientWidth/2);
-    const maxScroll=Math.max(0,view.scrollWidth-view.clientWidth);
-    view.scrollLeft=Math.max(0,Math.min(maxScroll,desired));
-  };
-  if(sourceTimeline!==timeline)scrollForBeat(timeline);
-  if(sourceTimeline!==markerTimeline)scrollForBeat(markerTimeline);
-  syncBeatTimelines(false);
-  return target;
-}
-function timelineSecondsFromScroll(view){
+const timelineSecondsFromScroll=function(view){
   if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!view)return 0;
   const tpq=midiPlayback.parsed.ticksPerQuarter||480;
   const beatPosition=Math.max(0,(view.scrollLeft+(view.clientWidth/2)-24)/48);
   const tick=beatPosition*tpq;
   const target=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(tick):0;
   return Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,target));
-}
-
-function updateTimelineView(){const view=document.getElementById('timelineView');if(!view||!beats.length){if(view)view.textContent='All beats';return;}const first=Math.max(0,Math.floor(timeline.scrollLeft/48));const visible=Math.max(1,Math.ceil(timeline.clientWidth/48));const last=Math.min(beats.length,first+visible);view.textContent='Beats '+(first+1)+'–'+last+' / '+beats.length;}
-let dragState=null;
-timeline.addEventListener('pointerdown',e=>{if(!beats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.beat');const wasPlaying=!!midiPlayback.playing;if(wasPlaying)call('midiStopPlayback');dragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:timeline.scrollLeft,moved:false,beatTarget:beatTarget,wasPlaying:wasPlaying};timeline.setPointerCapture?.(e.pointerId);});
-timeline.addEventListener('pointermove',e=>{if(!dragState||e.pointerId!==dragState.pointerId)return;const dx=e.clientX-dragState.startX;if(Math.abs(dx)>6)dragState.moved=true;if(dragState.moved){timeline.scrollLeft=dragState.startScrollLeft-dx;syncAllDragViewsFromSeconds(timelineSecondsFromScroll(timeline),timeline);updateTimelineView();e.preventDefault();}});
-function finishTimelineDrag(e){if(!dragState||e.pointerId!==dragState.pointerId)return;const state=dragState;dragState=null;timeline.classList.remove('dragging');if(state.moved){const target=timelineSecondsFromScroll(timeline);syncAllDragViewsFromSeconds(target,timeline);if(state.wasPlaying)call('midiStartPlayback',target);e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){if(tapStep==='start')seekToBeat(i,state.wasPlaying);chooseBeat(i);}else if(state.wasPlaying)call('midiStartPlayback',timelineSecondsFromScroll(timeline));e.preventDefault();timeline.dataset.suppressClick='1';setTimeout(()=>{delete timeline.dataset.suppressClick;},120);}}
-timeline.addEventListener('pointerup',finishTimelineDrag);timeline.addEventListener('pointercancel',finishTimelineDrag);timeline.addEventListener('click',e=>{if(timeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete timeline.dataset.suppressClick;}},{capture:true});
-timeline.addEventListener('scroll',updateTimelineView,{passive:true});
-const loopCenterLockButton=document.getElementById('loopCenterLock');
-const markerCenterLockButton=document.getElementById('markerCenterLock');
-if(loopCenterLockButton){
-  loopCenterLockButton.addEventListener('pointerdown',function(e){e.stopPropagation();});
-  loopCenterLockButton.addEventListener('click',function(e){e.stopPropagation();toggleLoopCenterLock();});
-}
-if(markerCenterLockButton){
-  markerCenterLockButton.addEventListener('pointerdown',function(e){e.stopPropagation();});
-  markerCenterLockButton.addEventListener('click',function(e){e.stopPropagation();toggleMarkerCenterLock();});
-}
-updateCenterLockButton(loopCenterLockButton,loopCenterLocked,'Loop Selector');
-updateCenterLockButton(markerCenterLockButton,markerCenterLocked,'Section Marker');
-
-const markerTimeline=document.getElementById('sectionMarkerTimeline');
+};
+function beatTime(n){return typeof midiGetSecondsForTick==='function'&&midiPlayback.parsed?midiGetSecondsForTick(Math.max(0,n)*(midiPlayback.parsed.ticksPerQuarter||480)):0;}
+function countBeats(){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter||typeof midiGetTickForSeconds!=='function')return 0;return Math.max(1,Math.ceil(midiGetTickForSeconds(Number(midiPlayback.durationSeconds)||0)/midiPlayback.parsed.ticksPerQuarter));}
+function barNumberForBeatIndex(i){if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return 1;const tick=Math.max(0,Math.round(i*midiPlayback.parsed.ticksPerQuarter));const bars=typeof midiGetBarlineTicks==='function'?midiGetBarlineTicks(tick):[];let n=1;for(let j=0;j<bars.length;j++){if(bars[j]<=tick+0.000001)n=j+1;else break;}return n;}
+function sectionClassForTime(seconds){if(typeof midiGetStructuralMarkers!=='function')return '';const sections=midiGetStructuralMarkers().slice().sort((a,b)=>(Number(a.seconds)||0)-(Number(b.seconds)||0));let current=null;for(let i=0;i<sections.length;i++){if(Number(sections[i].seconds)<=seconds+0.000001)current=sections[i];else break;}if(!current)return '';const n=String(current.text||'').toLowerCase().replace(/[^a-z]+/g,' ');if(/\bpre\s*chorus\b|\bprechorus\b/.test(n))return 'section-prechorus';if(/\bchorus\b/.test(n))return 'section-chorus';if(/\bverse\b/.test(n))return 'section-verse';if(/\bintro\b/.test(n))return 'section-intro';if(/\boutro\b/.test(n))return 'section-outro';if(/\bbridge\b/.test(n))return 'section-bridge';if(/\binstrumental\b/.test(n))return 'section-instrumental';return 'section-pink';}
+let loopSetMode=false;
+let loopFirstSelectedTick=null;
+function updateLoopSetModeButton(){const b=document.getElementById('loopSetMode');if(!b)return;b.classList.toggle('active',loopSetMode);b.setAttribute('aria-pressed',loopSetMode?'true':'false');b.title=loopSetMode?'Tap two beats in Chord Progression to set the loop range':'Set Loop Points on Chord Progression';}
+function enterLoopSetMode(){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;loopSetMode=!loopSetMode;loopFirstSelectedTick=null;if(loopSetMode){midiPlayback.loopStartSeconds=null;midiPlayback.loopEndSeconds=null;midiPlayback.looping=false;const t=document.getElementById('loopToggle');if(t)t.classList.remove('loop-on');}updateLoopSetModeButton();if(typeof window.chordClearLoopSelection==='function')window.chordClearLoopSelection();if(typeof setStatus==='function')setStatus(loopSetMode?'Loop selection mode: tap any beat, then another beat.':'Loop selection mode off.');}
+function selectLoopBeat(startTick,endTick,label){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const lo=Math.min(startTick,endTick);const hi=Math.max(startTick,endTick);const start=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(lo):0;const end=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(hi):start;midiPlayback.loopStartSeconds=start;midiPlayback.loopEndSeconds=end>start?end:null;midiPlayback.looping=!!midiPlayback.loopEndSeconds;if(midiPlayback.looping){loopSetMode=false;loopFirstSelectedTick=null;updateLoopSetModeButton();const t=document.getElementById('loopToggle');if(t)t.classList.remove('loop-on');}if(typeof setStatus==='function')setStatus('Loop selected: '+label);if(typeof window.chordRefreshLoopSelection==='function')window.chordRefreshLoopSelection();if(typeof window.refresh==='function')window.refresh();}
+function handleChordLoopCell(cell){if(!loopSetMode||!cell||typeof midiPlayback==='undefined'||!midiPlayback.parsed)return false;const tpq=midiPlayback.parsed.ticksPerQuarter||480;const barIndex=Math.max(0,Number(cell.dataset.barIndex)||0);const beatOffset=Math.max(0,Number(cell.dataset.beatOffset)||0);const sig=typeof window.chordGetTimeSignatureAtBar==='function'?window.chordGetTimeSignatureAtBar(barIndex):{numerator:4,denominator:4};const beatTicks=tpq*4/Math.max(1,Number(sig.denominator)||4);const maxTick=Math.max(1,(barIndex+2)*tpq*64);const bars=typeof midiGetBarlineTicks==='function'?midiGetBarlineTicks(maxTick):[];const barStart=bars[Math.min(barIndex,Math.max(0,bars.length-1))]||barIndex*tpq*(Number(sig.numerator)||4)*4/(Number(sig.denominator)||4);const tick=barStart+beatOffset*beatTicks;if(loopFirstSelectedTick===null){loopFirstSelectedTick=tick;if(typeof setStatus==='function')setStatus('First loop point selected: Beat '+(beatOffset+1)+'. Select the second point.');return true;}const first=loopFirstSelectedTick;const lo=Math.min(first,tick);const hi=Math.max(first,tick)+beatTicks;selectLoopBeat(lo,hi,'Beat '+(Math.floor(lo/tpq)+1)+'–'+(Math.floor((hi-0.000001)/tpq)+1));return true;}
+window.chordLoopCellHandler=handleChordLoopCell;
+window.chordLoopSetMode=()=>loopSetMode;
+let markerTimeline=null;
+window.syncAllDragViewsFromSeconds=function(seconds,source){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return 0;const dur=Math.max(0,Number(midiPlayback.durationSeconds)||0);const target=Math.max(0,Math.min(dur,Number(seconds)||0));midiPlayback.pausedTimeSeconds=target;const seek=document.getElementById('uiSeek');if(seek)seek.value=String(target);const now=document.getElementById('uiNow');if(now)now.textContent=(typeof fmt==='function'?fmt(target):target);if(source!=='chord'&&typeof window.chordSetVisualFromSeek==='function')window.chordSetVisualFromSeek(target,false);if(source!=='marker'&&markerTimeline){const tpq=midiPlayback.parsed.ticksPerQuarter||480;const tick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(target):0;const beat=Math.max(0,Number(tick)||0)/tpq;const desired=beat*48+24-markerTimeline.clientWidth/2;const max=Math.max(0,markerTimeline.scrollWidth-markerTimeline.clientWidth);markerTimeline.scrollLeft=Math.max(0,Math.min(max,desired));}if(typeof updateSeekTrack==='function')updateSeekTrack();return target;};
+function seekToBeat(i,keepPlaying){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const n=countBeats();const index=Math.max(0,Math.min(Number(i)||0,Math.max(0,n-1)));const target=beatTime(index);midiPlayback.pausedTimeSeconds=target;window.syncAllDragViewsFromSeconds(target,'marker');if(keepPlaying&&typeof midiStartPlayback==='function')midiStartPlayback(target).catch(function(e){console.error('[marker] playback error:',e);});}
+let markerCenterLocked=true;function syncMarkerCenter(){if(!markerCenterLocked||!markerTimeline||!markerBeats.length||typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const tick=typeof midiGetTickForSeconds==='function'?midiGetTickForSeconds(midiGetCurrentTime()):0;const beat=Math.max(0,Math.floor(tick/(midiPlayback.parsed.ticksPerQuarter||480)));const child=markerBeats[Math.min(beat,markerBeats.length-1)];if(!child)return;const desired=child.offsetLeft+child.offsetWidth/2-markerTimeline.clientWidth/2;const max=Math.max(0,markerTimeline.scrollWidth-markerTimeline.clientWidth);markerTimeline.scrollLeft=Math.max(0,Math.min(max,desired));}
+function toggleMarkerCenterLock(){markerCenterLocked=!markerCenterLocked;const b=document.getElementById('markerCenterLock');if(b){b.textContent=markerCenterLocked?'🔒':'🔓';b.title=markerCenterLocked?'Unlock white frame from center':'Lock white frame to center';}syncMarkerCenter();}
+const markerLockButton=document.getElementById('markerCenterLock');if(markerLockButton)markerLockButton.addEventListener('click',function(e){e.stopPropagation();toggleMarkerCenterLock();});
+const metronomeToggle=document.getElementById('metronomeToggle');
+if(metronomeToggle)metronomeToggle.addEventListener('click',midiToggleMetronome);
+markerTimeline=document.getElementById('sectionMarkerTimeline');
 const markerEditor=document.getElementById('sectionMarkerEditor');
 const markerView=document.getElementById('sectionMarkerView');
 const markerInfo=document.getElementById('sectionMarkerInfo');
@@ -4816,6 +4573,7 @@ function renderMarkers(){
     }else{b.removeAttribute('title');b.setAttribute('aria-label','Beat '+(i+1)+', add Section Marker');}
   });
   updateMarkerView();
+  syncMarkerCenter();
 }
 function updateMarkerView(){
   if(!markerView||!markerBeats.length){if(markerView)markerView.textContent='All beats';return;}
@@ -4823,18 +4581,16 @@ function updateMarkerView(){
   if(!markerEditor.hidden&&pendingMarkerBeat!==null)positionMarkerEditor(pendingMarkerBeat);
 }
 markerTimeline.addEventListener('pointerdown',function(e){if(!markerBeats.length||e.button!==undefined&&e.button!==0)return;const beatTarget=e.target.closest?.('.marker-beat');const wasPlaying=!!midiPlayback.playing;if(wasPlaying)call('midiStopPlayback');markerDragState={pointerId:e.pointerId,startX:e.clientX,startScrollLeft:markerTimeline.scrollLeft,moved:false,beatTarget:beatTarget,wasPlaying:wasPlaying};markerTimeline.setPointerCapture?.(e.pointerId);});
-markerTimeline.addEventListener('pointermove',function(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const dx=e.clientX-markerDragState.startX;if(Math.abs(dx)>6)markerDragState.moved=true;if(markerDragState.moved){markerTimeline.scrollLeft=markerDragState.startScrollLeft-dx;syncAllDragViewsFromSeconds(timelineSecondsFromScroll(markerTimeline),markerTimeline);updateMarkerView();e.preventDefault();}});
-function finishMarkerDrag(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const state=markerDragState;markerDragState=null;markerTimeline.classList.remove('dragging');if(state.moved){const target=timelineSecondsFromScroll(markerTimeline);syncAllDragViewsFromSeconds(target,markerTimeline);if(state.wasPlaying)call('midiStartPlayback',target);e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){seekToBeat(i,state.wasPlaying);openMarkerEditor(i);}e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);}}
+markerTimeline.addEventListener('pointermove',function(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const dx=e.clientX-markerDragState.startX;if(Math.abs(dx)>6)markerDragState.moved=true;if(markerDragState.moved){markerTimeline.scrollLeft=markerDragState.startScrollLeft-dx;window.syncAllDragViewsFromSeconds(timelineSecondsFromScroll(markerTimeline),'marker');updateMarkerView();e.preventDefault();}});
+function finishMarkerDrag(e){if(!markerDragState||e.pointerId!==markerDragState.pointerId)return;const state=markerDragState;markerDragState=null;markerTimeline.classList.remove('dragging');if(state.moved){const target=timelineSecondsFromScroll(markerTimeline);window.syncAllDragViewsFromSeconds(target,'marker');if(state.wasPlaying)call('midiStartPlayback',target);e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);return;}if(state.beatTarget){const i=Number(state.beatTarget.dataset.beat);if(Number.isInteger(i)){seekToBeat(i,state.wasPlaying);openMarkerEditor(i);}e.preventDefault();markerTimeline.dataset.suppressClick='1';setTimeout(function(){delete markerTimeline.dataset.suppressClick;},120);}}
 markerTimeline.addEventListener('pointerup',finishMarkerDrag);markerTimeline.addEventListener('pointercancel',finishMarkerDrag);markerTimeline.addEventListener('click',function(e){if(markerTimeline.dataset.suppressClick==='1'){e.preventDefault();e.stopPropagation();delete markerTimeline.dataset.suppressClick;}},{capture:true});markerTimeline.addEventListener('scroll',updateMarkerView,{passive:true});
-setInterval(function(){syncBeatTimelines(true);},200);
+setInterval(syncMarkerCenter,200);
 document.addEventListener('pointerdown',function(e){
   if(!markerEditor||markerEditor.hidden)return;
   if(markerEditor.contains(e.target))return;
   closeMarkerEditor();
 });
 window.addEventListener('resize',function(){if(markerEditor&&!markerEditor.hidden&&pendingMarkerBeat!==null)positionMarkerEditor(pendingMarkerBeat);});
-const metronomeToggle=document.getElementById('metronomeToggle');
-if(metronomeToggle)metronomeToggle.addEventListener('click',midiToggleMetronome);
 const exportButton=document.getElementById('exportMarkedMidi');
 if(exportButton)exportButton.addEventListener('click',async()=>{
   if(!midiPlayback.rawData||!midiPlayback.parsed){setStatus('No MIDI loaded.');return;}
@@ -4843,9 +4599,6 @@ if(exportButton)exportButton.addEventListener('click',async()=>{
   const baseName=(midiPlayback.fileName||'Untitled MIDI').replace(/\.[^.]+$/,'')||'Untitled MIDI';
   const fileName=(markers.length||deleted.length)?baseName+'_with_section_markers.mid':baseName+'.mid';
 
-  // Build and validate the complete MIDI synchronously from the button click.
-  // This happens before the Save As dialog, so an invalid export can never
-  // leave behind a newly-created 0-byte file.
   let output;
   try {
     output=midiBuildExportBytesWithSectionMarkers();
@@ -4870,6 +4623,7 @@ if(exportButton)exportButton.addEventListener('click',async()=>{
     catch(error){ setStatus('MIDI export error: '+(error.message||error)); }
   }
 });
+
 function chordSymbolTokens(text){
   const source=String(text||'').replace(/[|,;]/g,' ');
   const tokenRe=/(?:^|\s)([A-Ga-g](?:#|b)?(?:maj(?:7|9|11|13)?|min(?:7|9|11|13)?|m(?:7|9|11|13)?|dim(?:7)?|aug|sus(?:2|4)?|add(?:2|4|9|11|13)|6|7|9|11|13)?(?:\/[A-Ga-g](?:#|b)?)?)(?=\s|$)/g;
@@ -4904,15 +4658,79 @@ function chordHasExplicitTimeSignatures(){
     return sig&&Number(sig.numerator)>0&&Number(sig.denominator)>0&&Number.isFinite(Number(sig.tick));
   }));
 }
+function chordGetFirstNoteTick(){
+  if(!midiPlayback.parsed||!Array.isArray(midiPlayback.parsed.tracks))return 0;
+  let first=Infinity;
+  midiPlayback.parsed.tracks.forEach(function(track){
+    if(!Array.isArray(track))return;
+    track.forEach(function(event){
+      if(!event||event.type!=='noteOn'||Number(event.velocity)<=0)return;
+      const tick=Number(event.tick);
+      if(Number.isFinite(tick)&&tick>=0&&tick<first)first=tick;
+    });
+  });
+  return Number.isFinite(first)?Math.max(0,Math.round(first)):0;
+}
+
+function chordGetMusicalBarlines(maxTick){
+  if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return [];
+  const tpq=midiPlayback.parsed.ticksPerQuarter;
+  maxTick=Math.max(0,Number(maxTick)||0);
+  const signatures=midiGetTimeSignatureEvents(midiPlayback.parsed);
+  if(!signatures.length)return [0];
+
+  const firstSig=signatures[0];
+  const firstBarTicks=tpq*firstSig.numerator*4/firstSig.denominator;
+  const firstNoteTick=chordGetFirstNoteTick();
+  const pickupTicks=(firstNoteTick>0&&firstNoteTick<firstBarTicks)?firstNoteTick:0;
+  const barlines=[0];
+  let cursor=0;
+
+  if(pickupTicks>0&&pickupTicks<=maxTick){
+    barlines.push(pickupTicks);
+    cursor=pickupTicks;
+  }
+
+  for(let i=0;i<signatures.length;i++){
+    const sig=signatures[i];
+    const sigTick=Math.max(0,Number(sig.tick)||0);
+    const nextSigTick=i+1<signatures.length
+      ?Math.max(sigTick,Number(signatures[i+1].tick)||sigTick)
+      :Infinity;
+    const barTicks=tpq*sig.numerator*4/sig.denominator;
+    if(!(barTicks>0))continue;
+
+    if(sigTick>cursor+0.000001){
+      if(sigTick<=maxTick+0.000001)barlines.push(sigTick);
+      cursor=sigTick;
+    }
+
+    if(i===0&&pickupTicks>0&&cursor<pickupTicks)cursor=pickupTicks;
+    if(cursor<sigTick)cursor=sigTick;
+
+    let next=cursor+barTicks;
+    const segmentEnd=Math.min(maxTick,nextSigTick);
+    while(next<=segmentEnd+0.000001&&next<=maxTick+0.000001){
+      if(Math.abs(next-(barlines[barlines.length-1]||0))>0.000001)barlines.push(next);
+      cursor=next;
+      next+=barTicks;
+    }
+  }
+
+  return Array.from(new Set(barlines.map(function(t){return Math.round(t*1000)/1000;})))
+    .filter(function(t){return t>=0&&t<=maxTick+0.000001;})
+    .sort(function(a,b){return a-b;});
+}
+
 function chordGetTimeSignatureAtBar(barIndex){
   if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return chordGetManualTimeSignature();
+  const maxTick=Math.max(1,(Math.max(0,barIndex)+2)*midiPlayback.parsed.ticksPerQuarter*64);
+  const barlines=chordGetMusicalBarlines(maxTick);
+  const barTick=barlines[Math.min(Math.max(0,barIndex),Math.max(0,barlines.length-1))]||0;
   const explicit=Array.isArray(midiPlayback.parsed.timeSignatures)?midiPlayback.parsed.timeSignatures.filter(function(sig){
     return sig&&Number(sig.numerator)>0&&Number(sig.denominator)>0&&Number.isFinite(Number(sig.tick));
   }).sort(function(a,b){return Number(a.tick)-Number(b.tick);}):[];
   if(!explicit.length)return chordGetManualTimeSignature();
-  const maxTick=Math.max(1,(Math.max(0,barIndex)+2)*midiPlayback.parsed.ticksPerQuarter*64);
-  const barlines=midiGetBarlineTicks(maxTick);
-  const barTick=barlines[Math.min(Math.max(0,barIndex),Math.max(0,barlines.length-1))]||0;
   let active=explicit[0];
   for(let i=0;i<explicit.length;i++){
     if(Number(explicit[i].tick)<=barTick+0.000001)active=explicit[i];
@@ -4933,6 +4751,347 @@ function chordUpdateGridTimeSignatureControl(){
     }catch(e){}
   }
 }
+window.chordGetTimeSignatureAtBar=chordGetTimeSignatureAtBar;
+let chordBeatEditState=null;
+
+function chordGetBeatCell(barIndex,beatOffset){
+  return document.querySelector(
+    '#chordDisplayTrack .chord-beat-cell[data-bar-index="' + barIndex + '"][data-beat-offset="' + beatOffset + '"]'
+  );
+}
+
+function chordNormalizeChordToken(raw){
+  const value=String(raw||'').replace(/\u200B/g,'').trim();
+  if(!value||value==='_')return '_';
+
+  const parts=value.split(/\s+/);
+  const out=parts.map(function(part){
+    if(!part||part==='_')return '_';
+
+    const slashIndex=part.indexOf('/');
+
+    function normRoot(token){
+      if(!token)return token;
+      let i=0;
+      while(i<token.length&&!/[A-Ga-g]/.test(token.charAt(i)))i++;
+      if(i>=token.length)return token;
+      return token.slice(0,i)+token.charAt(i).toUpperCase()+token.slice(i+1);
+    }
+
+    if(slashIndex<0){
+      return normRoot(part);
+    }
+
+    const main=part.slice(0,slashIndex);
+    const bass=part.slice(slashIndex+1);
+    return normRoot(main)+'/'+normRoot(bass);
+  });
+
+  return out.join(' ');
+}
+
+function chordNormalizeBeatCell(cell){
+  if(!cell)return;
+  const cleaned=cell.textContent.replace(/\u200B/g,'').trim();
+  cell.textContent=cleaned||'_';
+}
+
+function chordSetEditorBeatValue(barIndex,beatOffset,value){
+  const editor=document.getElementById('chordProgressionEditor');
+  if(!editor)return;
+
+  const targetBar=Math.max(0,Number(barIndex)||0);
+  const targetBeat=Math.max(0,Number(beatOffset)||0);
+  const newValue=String(value||'_').replace(/\u200B/g,'').trim()||'_';
+
+  const lines=String(editor.value||'').split(/\r?\n/);
+  let currentBar=0;
+
+  for(let lineIndex=0;lineIndex<lines.length;lineIndex++){
+    const parts=lines[lineIndex].split('|');
+
+    for(let partIndex=0;partIndex<parts.length;partIndex++){
+      if(!parts[partIndex].trim())continue;
+
+      if(currentBar===targetBar){
+        const sig=chordGetTimeSignatureAtBar(targetBar);
+        const columns=Math.max(1,Math.round(sig.numerator));
+        const tokens=parts[partIndex].trim().split(/\s+/).filter(Boolean);
+
+        while(tokens.length<columns)tokens.push('_');
+
+        tokens[targetBeat]=newValue;
+        parts[partIndex]=tokens.join(' ');
+        lines[lineIndex]=parts.join('|');
+
+        editor.value=lines.join('\n');
+        chordRememberProgression();
+        return;
+      }
+
+      currentBar++;
+    }
+  }
+}
+
+function chordCommitBeatCell(cell){
+  if(!cell)return;
+
+  const value=chordNormalizeChordToken(
+    String(cell.textContent||'').replace(/\u200B/g,'').trim()||'_'
+  );
+
+  chordSetEditorBeatValue(
+    Number(cell.dataset.barIndex),
+    Number(cell.dataset.beatOffset),
+    value
+  );
+
+  cell.textContent=value;
+}
+
+function chordFocusBeatCell(cell){
+  if(!cell)return;
+  cell.focus();
+  const range=document.createRange();
+  range.selectNodeContents(cell);
+  range.collapse(false);
+  const selection=window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+  cell.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+
+function chordStartBeatEdit(cell){
+  if(!cell)return;
+
+  if(chordBeatEditState&&chordBeatEditState.cell!==cell){
+    chordFinishBeatEdit(false);
+  }
+
+  chordBeatEditState={
+    cell:cell,
+    barIndex:Number(cell.dataset.barIndex),
+    beatOffset:Number(cell.dataset.beatOffset)
+  };
+
+  window.midiChordEditorEditing=true;
+  cell.contentEditable='true';
+  cell.classList.add('beat-editing');
+
+  if(cell.textContent.trim()==='_'){
+    cell.textContent='\u200B';
+  }
+
+  chordFocusBeatCell(cell);
+}
+
+function chordFinishBeatEdit(restoreFocus=true){
+  if(!chordBeatEditState)return;
+
+  const cell=chordBeatEditState.cell;
+  chordCommitBeatCell(cell);
+
+  cell.contentEditable='false';
+  cell.classList.remove('beat-editing');
+
+  const finishedCell=cell;
+  chordBeatEditState=null;
+  window.midiChordEditorEditing=false;
+
+  if(restoreFocus){
+    finishedCell.focus();
+  }
+
+  updateChordDisplay();
+}
+
+function chordMoveBeatEditTo(barIndex,beatOffset){
+  const target=chordGetBeatCell(barIndex,beatOffset);
+  if(!target)return;
+
+  const oldCell=chordBeatEditState?chordBeatEditState.cell:null;
+
+  if(oldCell){
+    chordCommitBeatCell(oldCell);
+    oldCell.contentEditable='false';
+    oldCell.classList.remove('beat-editing');
+  }
+
+  chordBeatEditState={
+    cell:target,
+    barIndex:Number(barIndex),
+    beatOffset:Number(beatOffset)
+  };
+
+  window.midiChordEditorEditing=true;
+  target.contentEditable='true';
+  target.classList.add('beat-editing');
+
+  if(target.textContent.trim()==='_'){
+    target.textContent='\u200B';
+  }
+
+  chordFocusBeatCell(target);
+}
+
+function chordHandleBeatCellInput(e,cell){
+  if(!chordBeatEditState||chordBeatEditState.cell!==cell)return;
+
+  if(cell.textContent.indexOf('\u200B')!==-1){
+    const selection=window.getSelection();
+    const text=cell.textContent.replace(/\u200B/g,'');
+    cell.textContent=text;
+
+    if(selection){
+      const range=document.createRange();
+      range.selectNodeContents(cell);
+      range.collapse(false);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  }
+}
+
+function chordHandleBeatCellKeydown(e,cell){
+  if(!chordBeatEditState||chordBeatEditState.cell!==cell)return;
+
+  if(
+    cell.textContent.trim()==='_' &&
+    e.key.length===1 &&
+    e.key!==' '
+  ){
+    cell.textContent='';
+  }
+
+  const bar=Number(cell.dataset.barIndex);
+  const beat=Number(cell.dataset.beatOffset);
+  const sig=chordGetTimeSignatureAtBar(bar);
+  const beats=Math.max(1,Math.round(sig.numerator));
+
+  if(e.key===' '){
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(beat+1<beats){
+      chordMoveBeatEditTo(bar,beat+1);
+    }else{
+      const next=chordGetBeatCell(bar+1,0);
+      if(next){
+        chordMoveBeatEditTo(bar+1,0);
+      }else{
+        chordFinishBeatEdit(true);
+      }
+    }
+    return;
+  }
+
+  if(e.key==='ArrowRight'){
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(beat+1<beats){
+      chordMoveBeatEditTo(bar,beat+1);
+    }else{
+      const next=chordGetBeatCell(bar+1,0);
+      if(next)chordMoveBeatEditTo(bar+1,0);
+    }
+    return;
+  }
+
+  if(e.key==='ArrowLeft'){
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(beat>0){
+      chordMoveBeatEditTo(bar,beat-1);
+    }else{
+      const previousBar=bar-1;
+      if(previousBar>=0){
+        const previousSig=chordGetTimeSignatureAtBar(previousBar);
+        const previousBeats=Math.max(1,Math.round(previousSig.numerator));
+        const previous=chordGetBeatCell(previousBar,previousBeats-1);
+        if(previous)chordMoveBeatEditTo(previousBar,previousBeats-1);
+      }
+    }
+    return;
+  }
+
+  if(e.key==='ArrowUp'){
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(bar>0){
+      const target=chordGetBeatCell(bar-1,beat);
+      if(target)chordMoveBeatEditTo(bar-1,beat);
+    }
+    return;
+  }
+
+  if(e.key==='ArrowDown'){
+    e.preventDefault();
+    e.stopPropagation();
+
+    const target=chordGetBeatCell(bar+1,beat);
+    if(target)chordMoveBeatEditTo(bar+1,beat);
+    return;
+  }
+
+  if(e.key==='Tab'&&e.shiftKey){
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(bar>0){
+      const target=chordGetBeatCell(bar-1,0);
+      if(target)chordMoveBeatEditTo(bar-1,0);
+    }
+    return;
+  }
+
+  if(e.key==='Tab'){
+  e.preventDefault();
+  e.stopPropagation();
+
+  const target=chordGetBeatCell(bar+1,0);
+  if(target){
+    chordMoveBeatEditTo(bar+1,0);
+  }
+  return;
+}
+
+if(e.key==='Escape'){
+  e.preventDefault();
+  e.stopPropagation();
+
+  const currentCell=chordBeatEditState&&chordBeatEditState.cell;
+  if(currentCell){
+    currentCell.contentEditable='false';
+    currentCell.classList.remove('beat-editing');
+  }
+
+  chordBeatEditState=null;
+  window.midiChordEditorEditing=false;
+
+  updateChordDisplay();
+  return;
+}
+
+if(e.key==='Enter'){
+  e.preventDefault();
+  e.stopPropagation();
+
+  const nextBar=bar+1;
+  const nextCell=chordGetBeatCell(nextBar,0);
+
+  if(nextCell){
+    chordMoveBeatEditTo(nextBar,0);
+  }else{
+    chordFinishBeatEdit(true);
+  }
+  return;
+}
+}
+
 function chordRenderBarGrid(bar,barIndex){
   const sig=chordGetTimeSignatureAtBar(barIndex);
   const columns=Math.max(1,Math.round(sig.numerator));
@@ -4941,14 +5100,51 @@ function chordRenderBarGrid(bar,barIndex){
   grid.className='chord-beat-grid';
   grid.style.setProperty('--chord-grid-columns',String(columns));
   grid.dataset.timeSignature=String(sig.numerator)+'/'+String(sig.denominator);
+
   for(let i=0;i<columns;i++){
     const cell=document.createElement('div');
     cell.className='chord-beat-cell';
+    cell.dataset.barIndex=String(barIndex);
+    cell.dataset.beatOffset=String(i);
     cell.textContent=tokens[i]||'_';
+
+    cell.addEventListener('dblclick',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      chordStartBeatEdit(cell);
+    });
+
+    cell.addEventListener('keydown',function(e){
+      chordHandleBeatCellKeydown(e,cell);
+    });
+
+    cell.addEventListener('input',function(e){
+      chordHandleBeatCellInput(e,cell);
+    });
+
     grid.appendChild(cell);
   }
+
   return grid;
 }
+
+document.addEventListener('dblclick',function(e){
+  const cell=e.target.closest&&e.target.closest('.chord-beat-cell');
+  if(!cell)return;
+  chordStartBeatEdit(cell);
+});
+
+function chordRefreshLoopSelection(){
+  const root=document.getElementById('chordDisplayTrack');if(!root)return;
+  root.querySelectorAll('.chord-beat-cell.loop-point-range,.chord-beat-cell.loop-point-start,.chord-beat-cell.loop-point-end').forEach(function(c){c.classList.remove('loop-point-range','loop-point-start','loop-point-end');});
+  if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;
+  const start=Number(midiPlayback.loopStartSeconds);const end=Number(midiPlayback.loopEndSeconds);
+  if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)return;
+  const st=Math.round(midiGetTickForSeconds(start));const et=Math.round(midiGetTickForSeconds(end));
+  root.querySelectorAll('.chord-beat-cell').forEach(function(c){const b=Number(c.dataset.barIndex),o=Number(c.dataset.beatOffset);const sig=window.chordGetTimeSignatureAtBar(b);const tpq=midiPlayback.parsed.ticksPerQuarter||480;const beatTicks=tpq*4/Math.max(1,Number(sig.denominator)||4);const bars=midiGetBarlineTicks(Math.max(1,(b+2)*tpq*64));const barStart=bars[Math.min(b,Math.max(0,bars.length-1))]||0;const tick=barStart+o*beatTicks;if(tick>=st-0.5&&tick<et-0.5)c.classList.add('loop-point-range');if(Math.abs(tick-st)<0.5)c.classList.add('loop-point-start');if(Math.abs(tick-(et-beatTicks))<0.5)c.classList.add('loop-point-end');});
+}
+function chordClearLoopSelection(){chordRefreshLoopSelection();}
+window.chordRefreshLoopSelection=chordRefreshLoopSelection;window.chordClearLoopSelection=chordClearLoopSelection;
 function chordRenderLineRow(line){
   const row=document.createElement('div');
   row.className='chord-display-row';
@@ -4989,28 +5185,354 @@ let chordDisplayHorizontal = false;
 let chordHorizontalTargetOffset = 0;
 let chordHorizontalVisualOffset = 0;
 let chordHorizontalCurrentBar = -1;
+
+/* === NEW: manual nudge controls with note-value selector & auto-sync === */
+var chordScrollNudgeSixteenths = 0; // kept for backward compatibility
+var chordScrollAutoSyncInProgress = false;
+
+function chordScrollNudgeStepTicks(){
+  const tpq = (midiPlayback && midiPlayback.parsed && midiPlayback.parsed.ticksPerQuarter) || 480;
+  const denom = Math.max(1, Number(window.chordScrollNudgeNoteValue) || 16);
+  return Math.max(1, tpq * 4 / denom);
+}
+
+function chordGetNudgeLabel(){
+  const map = {4:'1/4', 8:'1/8', 16:'1/16', 32:'1/32', 64:'1/64'};
+  return map[Number(window.chordScrollNudgeNoteValue) || 16] || '1/16';
+}
+
+function chordUpdateNudgeUI(){
+  const offsetVal = document.getElementById('nudgeOffsetValue');
+  const noteSel = document.getElementById('nudgeNoteValue');
+  if(offsetVal){
+    const prefix = window.chordScrollNudgeSteps > 0 ? '+' : '';
+    offsetVal.textContent = prefix + window.chordScrollNudgeSteps + ' × ' + chordGetNudgeLabel();
+  }
+  if(noteSel && String(noteSel.value) !== String(window.chordScrollNudgeNoteValue)){
+    noteSel.value = String(window.chordScrollNudgeNoteValue);
+  }
+  const latSlider = document.getElementById('latencyCompSlider');
+  const latValue = document.getElementById('latencyCompValue');
+  if(latSlider) latSlider.value = String(window.chordLatencyCompPx);
+  if(latValue) latValue.textContent = window.chordLatencyCompPx + ' px';
+  const hlSlider = document.getElementById('highlightLatSlider');
+  const hlValue = document.getElementById('highlightLatValue');
+  if(hlSlider) hlSlider.value = String(window.chordHighlightCompMs);
+  if(hlValue) hlValue.textContent = window.chordHighlightCompMs + ' ms';
+}
+
+function chordApplyNudgeVisual(){
+  const stepTicks = chordScrollNudgeStepTicks();
+  const sixteenthTicks = Math.max(1, ((midiPlayback && midiPlayback.parsed && midiPlayback.parsed.ticksPerQuarter) || 480) / 4);
+  window.chordScrollNudgeSixteenths = (window.chordScrollNudgeSteps * stepTicks) / sixteenthTicks;
+  if(typeof updateChordDisplay === 'function') updateChordDisplay();
+}
+
+/* === AUTO-SYNC (deterministic, marker-based) ===
+   Looks for a MIDI Marker (FF 06) or Cue Point (FF 07) whose text equals
+   "Bar 1 Beat 1" (case-insensitive, whitespace/NUL/CR-stripped) and uses
+   its tick position as the true Bar 1 Beat 1 anchor.
+
+   The nudge offset is then set to negative of the step distance from tick 0,
+   so the Grid's Bar 1 Beat 1 lands exactly on the marker.
+
+   If no such marker exists, the offset is left unchanged and a clear status
+   message is shown. No guessing, no heuristics. */
+function chordAutoSyncFindAnchorTick(){
+  if(!midiPlayback || !midiPlayback.parsed || !Array.isArray(midiPlayback.parsed.tracks)){
+    return null;
+  }
+  const target = 'bar 1 beat 1';
+  let bestTick = null;
+
+  function normalize(text){
+    if(typeof text !== 'string') return '';
+    return text.replace(/[\u0000\r\n\t]/g, ' ').trim().toLowerCase();
+  }
+
+  midiPlayback.parsed.tracks.forEach(function(track){
+    if(!Array.isArray(track)) return;
+    track.forEach(function(ev){
+      if(!ev) return;
+      if(ev.type !== 'marker') return;
+      // Accept Marker (FF 06), Cue Point (FF 07), and Text (FF 01).
+      // REAPER sometimes writes Shift+M markers as any of these depending
+      // on context, so we accept all three to be safe.
+      if(ev.markerType !== 'marker' &&
+         ev.markerType !== 'cuePoint' &&
+         ev.markerType !== 'text') return;
+      if(typeof ev.tick !== 'number' || !Number.isFinite(ev.tick)) return;
+      const name = normalize(ev.text);
+      if(name !== target) return;
+      if(bestTick === null || ev.tick < bestTick){
+        bestTick = ev.tick;
+      }
+    });
+  });
+
+  return bestTick;
+}
+
+/* Measures the Grid's own pickup compensation at the marker's tick, then
+   sets the nudge so that the Grid's Bar 1 Beat 1 lands exactly on the
+   marker. Works for any pickup length and any internal Grid logic. */
+function chordAutoSyncMeasureCurrentBar1Tick(){
+  // Returns the tick at which the Grid currently (with the active nudge
+  // value) considers "Bar 1 Beat 1" to be, according to the same math
+  // used by chordGetBarPosition. We do this by binary-searching the
+  // playback seconds at which the display position equals the position
+  // that corresponds to Bar 1 Beat 1.
+
+  const editor = document.getElementById('chordProgressionEditor');
+  if(!editor || !midiPlayback || !midiPlayback.parsed) return null;
+  const parsed = chordParseEditorText(editor.value);
+  if(!parsed.bars.length) return null;
+
+  // The "position" of Bar 1 Beat 1 is whatever chordGetBarPosition
+  // returns for seconds = 0 of the grid. But we want the *tick* that
+  // corresponds to the grid's own idea of Bar 1 Beat 1. Since the
+  // grid's bar 1 is by definition the first bar in the chord text,
+  // we walk the barlines used by chordGetBarPosition and find the
+  // tick of bar index 0.
+  const durationSeconds = Math.max(0, Number(midiPlayback.durationSeconds) || 0);
+  const tpq = midiPlayback.parsed.ticksPerQuarter || 480;
+  const maxTick = Math.max(1, (parsed.bars.length + 2) * tpq * 64);
+  const barlines = chordGetMusicalBarlines(maxTick);
+  if(!barlines.length) return null;
+
+  // Bar index 0's tick is barlines[0], BUT chordGetBarPosition maps
+  // playback time -> bar index by using midiGetTickForSeconds. And
+  // chordGetMusicalBarlines ALREADY includes pickup handling. So the
+  // grid's "Bar 1 Beat 1" is at musical barline index 0 — the first
+  // barline after any pickup the code detected.
+  const gridBar1Tick = barlines[0];
+
+  // Now apply the current nudge offset in the same way
+  // chordGetSmoothDisplayPosition does, to get the tick that the Grid
+  // *actually* uses as its effective Bar 1 Beat 1 right now.
+  const stepTicks = chordScrollNudgeStepTicks();
+  const tickOffset = stepTicks * window.chordScrollNudgeSteps;
+
+  // The nudge shifts the *tick used to look up the display position*,
+  // which is equivalent to shifting the effective grid bar 1 tick by
+  // the same amount.
+  return gridBar1Tick - tickOffset;
+}
+
+async function chordAutoSyncNow(){
+  if(window.chordScrollAutoSyncInProgress) return;
+  if(!midiPlayback || !midiPlayback.parsed){
+    setStatus('Load a MIDI file first, then try Auto-sync.');
+    return;
+  }
+  window.chordScrollAutoSyncInProgress = true;
+  setStatus("Auto-sync: aligning Grid's Bar 1 to the MIDI marker...");
+  try {
+    await new Promise(function(r){ setTimeout(r, 0); });
+
+    const anchorTick = chordAutoSyncFindAnchorTick();
+    if(anchorTick === null){
+      setStatus("Auto-sync: no 'Bar 1 Beat 1' marker found in this MIDI. Offset unchanged.");
+      return;
+    }
+
+    const stepTicks = chordScrollNudgeStepTicks();
+    if(!(stepTicks > 0)){
+      setStatus('Auto-sync: invalid step size.');
+      return;
+    }
+
+    // The grid's bar 0 begins at tick 0 (its first barline). We want
+    // bar 0 to be centered in the reading zone exactly at anchorTick.
+    // chordGetSmoothDisplayPosition shifts the display by tickOffset,
+    // so the effective tick the grid reads at anchorTick is:
+    //     effectiveTick = anchorTick + tickOffset
+    // We want effectiveTick to be tick 0 (start of bar 0):
+    //     tickOffset = -anchorTick
+    //     nudgeSteps = -anchorTick / stepTicks
+    // Compute the raw value, then round.
+    const rawSteps = -(anchorTick / stepTicks);
+    const roundedSteps = Math.round(rawSteps);
+
+    // Reset and apply
+    window.chordScrollNudgeSteps = roundedSteps;
+    chordApplyNudgeVisual();
+    chordUpdateNudgeUI();
+
+    midiPlayback.pausedTimeSeconds = 0;
+    midiPlayback.chordDisplayKeepEnd = false;
+    chordDisplayLastText = null;
+    chordDisplayVisualPosition = 0;
+    chordDisplayTargetPosition = 0;
+    chordApplyNudgeVisual();
+
+    const prefix = chordScrollNudgeSteps > 0 ? '+' : '';
+    setStatus(
+      "Auto-sync complete. Marker at tick " + anchorTick +
+      " → " + prefix + chordScrollNudgeSteps + ' × ' + chordGetNudgeLabel()
+    );
+  } catch(error){
+    console.error('[chord] Auto-sync error:', error);
+    setStatus('Auto-sync error: ' + (error.message || error));
+  } finally {
+    window.chordScrollAutoSyncInProgress = false;
+  }
+}
+
+function chordGetBarPosition(parsed,seconds){
+  if(!parsed||!parsed.bars.length||!midiPlayback.parsed)return {barIndex:0,fraction:0,linePosition:0};
+  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
+  const target=Math.max(0,Math.min(duration,Number(seconds)||0));
+  const tick=Math.max(0,midiGetTickForSeconds(target));
+  const tpq=midiPlayback.parsed.ticksPerQuarter||480;
+  const maxTick=Math.max(tick+tpq*16,(parsed.bars.length+2)*tpq*64);
+  const barlines=chordGetMusicalBarlines(maxTick);
+  if(!barlines.length)return {barIndex:0,fraction:0,linePosition:0};
+
+  let barIndex=0;
+  for(let i=0;i<barlines.length;i++){
+    if(barlines[i]<=tick+0.000001)barIndex=i;else break;
+  }
+  barIndex=Math.max(0,Math.min(barIndex,parsed.bars.length-1));
+
+  const startTick=barlines[Math.min(barIndex,barlines.length-1)]||0;
+  let endTick=barlines[Math.min(barIndex+1,barlines.length-1)];
+  if(typeof endTick!=='number'||endTick<=startTick){
+    const sig=chordGetTimeSignatureAtBar(barIndex);
+    const barTicks=tpq*4*sig.numerator/sig.denominator;
+    endTick=startTick+Math.max(1,barTicks);
+  }
+
+  let fraction=endTick>startTick
+    ?Math.max(0,Math.min(0.999999,(tick-startTick)/(endTick-startTick)))
+    :0;
+  if(barIndex>=parsed.bars.length-1&&target>=duration-0.000001)fraction=1;
+
+  const bar=parsed.bars[barIndex];
+  const lineIndex=parsed.lines.findIndex(function(line){return line.lineIndex===bar.lineIndex;});
+  const line=Math.max(0,lineIndex);
+  const lineBars=(lineIndex>=0&&parsed.lines[lineIndex].bars)?parsed.lines[lineIndex].bars.length:1;
+  let barOffset=0;
+  if(lineIndex>=0)barOffset=Math.max(0,parsed.lines[lineIndex].bars.findIndex(function(item){return item===bar;}));
+  return {barIndex:barIndex,fraction:fraction,linePosition:line+(barOffset+fraction)/Math.max(1,lineBars)};
+}
 function chordGetSmoothDisplayPosition(parsed,secondsOverride){
   if(!parsed.lines.length)return 0;
   if(!midiPlayback.parsed||!parsed.bars.length)return 0;
   const hasOverride=typeof secondsOverride==='number'&&Number.isFinite(secondsOverride);
   const displayTime=hasOverride
-    ? Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,secondsOverride))
-    : ((midiPlayback.chordDisplayKeepEnd && !midiPlayback.playing)
-      ? Number(midiPlayback.durationSeconds)||0
-      : midiGetCurrentTime());
-  const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
-  if(!duration||parsed.lines.length===1)return 0;
-
-  // Keep the same single continuous time axis as v101, but account for the
-  // two leading spacer rows and the actual Reading Zone position. The previous
-  // version omitted those offsets, so the real chord rows drifted too far up.
-  const normalized=Math.max(0,Math.min(1,displayTime/duration));
-  const linePosition=normalized*Math.max(0,parsed.lines.length-1);
+    ?Math.max(0,Math.min(Number(midiPlayback.durationSeconds)||0,secondsOverride))
+    :((midiPlayback.chordDisplayKeepEnd&&!midiPlayback.playing)
+      ?Number(midiPlayback.durationSeconds)||0
+      :midiGetVisualTime());
+  const linePosition=chordGetBarPosition(parsed,displayTime).linePosition;
   const viewport=document.getElementById('chordDisplayViewport');
   const readingZoneRows=viewport
-    ?Math.max(0,(viewport.clientHeight/2-26)/52)
+    ?Math.max(0,(viewport.clientHeight/2-26)/52) + 0.15
     :1.5;
-  return Math.max(0,linePosition+2-readingZoneRows);
+  let position = Math.max(0,linePosition+2-readingZoneRows);
+
+  // Apply manual nudge offset (visual only). Uses the selected note-value
+  // step size so 1/4, 1/8, 1/16, and 1/32 all work correctly.
+  if(midiPlayback.parsed && window.chordScrollNudgeSteps !== 0){
+    const stepTicks = chordScrollNudgeStepTicks();
+    const tickOffset = stepTicks * window.chordScrollNudgeSteps;
+
+    const baseTick = midiGetTickForSeconds(displayTime);
+    const shiftedTick = Math.max(0, baseTick + tickOffset);
+    const shiftedSeconds = midiGetSecondsForTick(shiftedTick);
+    const shiftedLinePosition = chordGetBarPosition(parsed, shiftedSeconds).linePosition;
+    position = Math.max(0, shiftedLinePosition + 2 - readingZoneRows);
+  }
+
+  // Visual-only latency compensation, in pixels. Does not affect audio
+  // or MIDI timing in any way. Just shifts the grid on screen.
+  position += window.chordLatencyCompPx / 52;   // 52px per row
+
+  return position;
+}
+function chordGetMidiBarCount(){
+  if(!midiPlayback.parsed||!midiPlayback.parsed.ticksPerQuarter)return 0;
+  const durationTick=Math.max(0,midiGetTickForSeconds(Number(midiPlayback.durationSeconds)||0));
+  if(durationTick<=0)return 1;
+
+  const tpq=midiPlayback.parsed.ticksPerQuarter;
+  const barlines=chordGetMusicalBarlines(Math.max(durationTick,tpq*16));
+  if(!barlines.length)return 1;
+
+  const lastStart=Number(barlines[barlines.length-1])||0;
+  let count=Math.max(1,barlines.length-1);
+  if(durationTick>lastStart+0.000001)count++;
+  return Math.max(1,count);
+}
+function chordGetDefaultEndingBeat(){
+  const bars=chordGetMidiBarCount();
+  const sig=chordGetManualTimeSignature();
+  return Math.max(1,bars*Math.max(1,Math.round(sig.numerator)));
+}
+window.chordGetDefaultEndingBeat=chordGetDefaultEndingBeat;
+
+function chordSetScrollCalibration(startBeat,endBeat){
+  let start=Math.round(Number(startBeat));
+  let end=Math.round(Number(endBeat));
+  if(!Number.isFinite(start))start=1;
+  if(!Number.isFinite(end))end=start+1;
+  if(start===0)start=start>0?1:-1;
+  if(end===0)end=end>start?1:-1;
+  if(end<=start)end=start+1;
+  chordScrollStartBeat=start;
+  chordScrollEndBeat=end;
+  const startEl=document.getElementById('chordStartBeatValue');
+  const endEl=document.getElementById('chordEndBeatValue');
+  if(startEl)startEl.textContent=String(start);
+  if(endEl)endEl.textContent=String(end);
+  try{
+    localStorage.setItem('midiChordScrollStartBeat',String(start));
+    localStorage.setItem('midiChordScrollEndBeat',String(end));
+  }catch(e){}
+  updateChordScrollInfo();
+  if(typeof updateChordDisplay==='function')updateChordDisplay();
+}
+window.chordSetScrollCalibration=chordSetScrollCalibration;
+
+function updateChordScrollInfo(){
+  const info=document.getElementById('chordScrollInfo');
+  if(!info)return;
+  const bars=chordGetMidiBarCount();
+  if(!bars){info.textContent='Load a MIDI file to calculate its bar count.';return;}
+  const span=Math.max(1,chordScrollEndBeat-chordScrollStartBeat);
+  info.textContent=bars+' MIDI bar'+(bars===1?'':'s')+' • '+span+' calculated beats • smooth continuous scrolling';
+}
+function chordGenerateMidiTemplate(){
+  const editor=document.getElementById('chordProgressionEditor');
+  if(!editor||!midiPlayback.parsed)return;
+  const bars=chordGetMidiBarCount();
+  if(!bars)return;
+  const lines=[];
+  for(let i=0;i<bars;i++){
+    const sig=chordGetTimeSignatureAtBar(i);
+    const columns=Math.max(1,Math.round(sig.numerator));
+    lines.push(Array(columns).fill('_').join(' '));
+  }
+  editor.value=lines.join('\n');
+  chordAutoTemplatePending=false;
+  chordRememberProgression();
+  chordDisplayLastText=null;
+  updateChordScrollInfo();
+  updateChordDisplay();
+  const status=document.getElementById('chordEditorStatus');
+  if(status)status.textContent='MIDI bar template generated: '+bars+' line'+(bars===1?'':'s')+'. Each line represents one MIDI bar.';
+}
+function chordLoadScrollCalibration(){
+  let start=1,end=chordGetDefaultEndingBeat();
+  try{
+    const savedStart=Number(localStorage.getItem('midiChordScrollStartBeat'));
+    const savedEnd=Number(localStorage.getItem('midiChordScrollEndBeat'));
+    if(Number.isFinite(savedStart)&&savedStart!==0)start=Math.round(savedStart);
+    if(Number.isFinite(savedEnd)&&savedEnd!==0)end=Math.round(savedEnd);
+  }catch(e){}
+  if(end<=start)end=start+1;
+  chordSetScrollCalibration(start,end);
 }
 function chordSectionClassForSeconds(seconds){
   if(typeof midiGetStructuralMarkers!=='function')return '';
@@ -5055,7 +5577,7 @@ function chordRestoreRememberedProgression(){
 function chordGetCurrentBarIndex(parsed){
   if(!parsed||!parsed.bars.length||!midiPlayback.parsed)return 0;
   const tick=Math.max(0,midiGetTickForSeconds(midiGetCurrentTime()));
-  const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+  const barlines=chordGetMusicalBarlines(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
   let barIndex=0;
   for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
   return Math.max(0,Math.min(barIndex,parsed.bars.length-1));
@@ -5106,25 +5628,45 @@ function chordUpdateVisualCurrentRow(){
   const parsed=chordParseEditorText(editor.value);
   if(!parsed.lines.length)return;
   const rows=[...track.querySelectorAll('.chord-display-row')];
-  const first=2;
-  const last=Math.min(rows.length-3,first+parsed.lines.length-1);
-  if(last<first)return;
-  const viewportRect=viewport.getBoundingClientRect();
-  const viewportCenter=viewportRect.top+(viewport.clientHeight/2);
-  let nearest=first;
-  let nearestDistance=Infinity;
-  for(let index=first;index<=last;index++){
-    const rowRect=rows[index].getBoundingClientRect();
-    const distance=Math.abs((rowRect.top+(rowRect.height/2))-viewportCenter);
-    if(distance<nearestDistance){nearestDistance=distance;nearest=index;}
+  if(!rows.length)return;
+  if(!midiPlayback || !midiPlayback.parsed) return;
+
+  // Highlight the bar that is actually playing RIGHT NOW, based on the
+  // barline tick boundaries. Switches precisely at Beat 1 of each bar
+  // because that's exactly where a new barline begins.
+  const highlightTime = Math.max(0, midiGetVisualTime() + window.chordHighlightCompMs / 1000);
+  const tick = Math.max(0, midiGetTickForSeconds(highlightTime));
+  const barlines = midiGetBarlineTicks(Math.max(tick, midiPlayback.parsed.ticksPerQuarter * 16));
+  let barIndex = 0;
+  for(let i = 0; i < barlines.length; i++){
+    if(barlines[i] <= tick + 0.000001) barIndex = i;
+    else break;
   }
-  rows.forEach(function(row,index){row.classList.toggle('current',index===nearest);});
+  barIndex = Math.max(0, Math.min(barIndex, parsed.bars.length - 1));
+
+  // Map that bar index to its editor line.
+  const bar = parsed.bars[barIndex];
+  const lineIndex = parsed.lines.findIndex(function(line){
+    return line.lineIndex === bar.lineIndex;
+  });
+  const currentLineIndex = Math.max(0, lineIndex);
+
+  const highlightRowIndex = 2 + currentLineIndex;   // 2 spacer rows on top
+  rows.forEach(function(row, index){
+    row.classList.toggle('current', index === highlightRowIndex);
+  });
 }
 function updateChordDisplay(){
   const editor=document.getElementById('chordProgressionEditor');
   const track=document.getElementById('chordDisplayTrack');
   if(!editor||!track)return;
+  if(chordBeatEditState&&chordBeatEditState.cell&&document.contains(chordBeatEditState.cell))return;
   chordUpdateGridTimeSignatureControl();
+  if(chordAutoTemplatePending&&midiPlayback.parsed&&!String(editor.value||'').trim()){
+    chordGenerateMidiTemplate();
+    return;
+  }
+  updateChordScrollInfo();
   const parsed=chordParseEditorText(editor.value);
   if(chordDisplayHorizontal){
     const editorText=editor.value;
@@ -5145,8 +5687,12 @@ function updateChordDisplay(){
     track.style.transform='translate3d('+(-chordHorizontalVisualOffset)+'px,0,0)';
     return;
   }
-  if(!parsed.lines.length){
-    track.innerHTML='<div class="chord-display-row empty">No chord progression entered.</div><div class="chord-display-row empty">&nbsp;</div><div class="chord-display-row empty">&nbsp;</div><div class="chord-display-row empty">&nbsp;</div>';
+if(!parsed.lines.length){
+  if(midiPlayback.parsed){
+    chordGenerateMidiTemplate();
+    return;
+  }
+  track.innerHTML='<div class="chord-display-row empty">No chord progression entered.</div><div class="chord-display-row empty">&nbsp;</div><div class="chord-display-row empty">&nbsp;</div><div class="chord-display-row empty">&nbsp;</div>';
     chordDisplayLastText=editor.value;
     chordDisplayTargetPosition=0;
     chordDisplayVisualPosition=0;
@@ -5164,8 +5710,8 @@ function updateChordDisplay(){
   }
   let currentIndex=0;
   if(midiPlayback.parsed&&parsed.bars.length){
-    const tick=Math.max(0,midiGetTickForSeconds(midiGetCurrentTime()));
-    const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+    const tick=Math.max(0,midiGetTickForSeconds(midiGetVisualTime()));
+    const barlines=chordGetMusicalBarlines(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
     let barIndex=0;
     for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
     barIndex=Math.min(barIndex,parsed.bars.length-1);
@@ -5175,8 +5721,8 @@ function updateChordDisplay(){
   const currentRowIndex=currentIndex+2;
   let currentSectionClass='';
   if(midiPlayback.parsed&&parsed.bars.length){
-    const tick=Math.max(0,midiGetTickForSeconds(midiGetCurrentTime()));
-    const barlines=midiGetBarlineTicks(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
+    const tick=Math.max(0,midiGetTickForSeconds(midiGetVisualTime()));
+    const barlines=chordGetMusicalBarlines(Math.max(tick,midiPlayback.parsed.ticksPerQuarter*16));
     let barIndex=0;
     for(let i=0;i<barlines.length;i++){if(barlines[i]<=tick+0.000001)barIndex=i;else break;}
     barIndex=Math.min(barIndex,parsed.bars.length-1);
@@ -5201,9 +5747,10 @@ function updateChordDisplay(){
     }
   });
   chordDisplayTargetPosition=chordGetSmoothDisplayPosition(parsed);
-  if(chordDisplayJumpOnNextUpdate){chordDisplayVisualPosition=chordDisplayTargetPosition;chordDisplayJumpOnNextUpdate=false;}
+  chordDisplayVisualPosition=chordDisplayTargetPosition;
+  chordDisplayJumpOnNextUpdate=false;
   track.style.transform='translate3d(0,'+(-chordDisplayVisualPosition*52)+'px,0)';
-  chordUpdateVisualCurrentRow();
+  chordRefreshLoopSelection();
 }
 function chordSetVisualFromSeek(seconds,forceBase){
   const viewport=document.getElementById('chordDisplayViewport');
@@ -5258,16 +5805,15 @@ function chordGetHorizontalPlaybackOffset(parsed){
   const viewport=document.getElementById('chordDisplayViewport');
   const track=document.getElementById('chordDisplayTrack');
   if(!viewport||!track||!parsed||!parsed.bars.length)return 0;
-  const bars=track.querySelectorAll('.chord-horizontal-bar');
-  if(!bars.length)return 0;
-
-  // Horizontal playback uses the same single continuous time axis as the
-  // vertical view. This deliberately avoids easing toward each new bar.
   const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
   if(!duration)return 0;
-  const normalized=Math.max(0,Math.min(1,midiGetCurrentTime()/duration));
+  const tick=Math.max(0,midiGetTickForSeconds(midiGetCurrentTime()));
+  const totalTick=Math.max(tick,midiGetTickForSeconds(duration));
+  const tpq=Math.max(1,Number(midiPlayback.parsed.ticksPerQuarter)||480);
+  const totalBeats=Math.max(1,totalTick/tpq);
+  const beatProgress=Math.max(0,Math.min(1,tick/(totalBeats*tpq)));
   const maxOffset=Math.max(0,track.scrollWidth-viewport.clientWidth);
-  return normalized*maxOffset;
+  return beatProgress*maxOffset;
 }
 function animateChordDisplay(){
   const track=document.getElementById('chordDisplayTrack');
@@ -5493,11 +6039,13 @@ function chordBeginDrag(e){
   const viewport=document.getElementById('chordDisplayViewport');
   if(!viewport||!midiPlayback||!midiPlayback.parsed)return;
   if(e.pointerType==='mouse'&&e.button!==0)return;
-  chordDragState={pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,startTime:midiGetCurrentTime(),moved:false,wasPlaying:!!midiPlayback.playing,previewStarted:false};
+  chordDragState={pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,startTime:midiGetCurrentTime(),moved:false,wasPlaying:!!midiPlayback.playing,previewStarted:false,beatCell:e.target.closest?.('.chord-beat-cell')};
   chordDragPreviewSeconds=chordDragState.startTime;
   chordDragVisualStart=chordDisplayHorizontal?chordHorizontalVisualOffset:chordDisplayVisualPosition;
   viewport.classList.add('chord-dragging');
-  try{viewport.setPointerCapture(e.pointerId);}catch(err){}
+  if(!chordDragState.beatCell){
+    try{viewport.setPointerCapture(e.pointerId);}catch(err){}
+  }
   e.preventDefault();
 }
 function chordCenterDragPreview(){
@@ -5545,10 +6093,11 @@ function chordMoveDrag(e){
   if(Math.abs(dx)>=6||Math.abs(dy)>=6)chordDragState.moved=true;
   if(chordDragState.moved){
     if(chordDragState.wasPlaying&&!chordDragState.previewStarted){
-      chordDragState.startTime=midiGetCurrentTime();
+      // Keep audio playing during the drag. We only remember that it
+      // was playing, so on release we can seek to the highlighted bar
+      // and continue seamlessly.
       chordDragState.previewStarted=true;
       chordDragVisualStart=chordDisplayHorizontal?chordHorizontalVisualOffset:chordDisplayVisualPosition;
-      midiStopPlayback();
     }
     const directionDelta=chordDisplayHorizontal?-axisDelta:-axisDelta;
     const duration=Math.max(0,Number(midiPlayback.durationSeconds)||0);
@@ -5560,6 +6109,7 @@ function chordMoveDrag(e){
     midiPlayback.pausedTimeSeconds=chordDragPreviewSeconds;
     updateChordDisplay();
     chordCenterDragPreview();
+    if(typeof window.syncAllDragViewsFromSeconds==='function')window.syncAllDragViewsFromSeconds(chordDragPreviewSeconds,'chord');
   }
   e.preventDefault();
 }
@@ -5572,7 +6122,7 @@ function chordEndDrag(e){
   const delta=chordDisplayHorizontal?(state.startX-e.clientX):(state.startY-e.clientY);
   if(Math.abs(delta)<6&&!state.moved){
     chordDragPreviewSeconds=null;
-    if(typeof midiStartOrPausePlayback==='function')midiStartOrPausePlayback();
+    if(state.beatCell&&typeof window.chordLoopCellHandler==='function'&&window.chordLoopCellHandler(state.beatCell)){e.preventDefault();return;}
     e.preventDefault();
     return;
   }
@@ -5588,6 +6138,45 @@ function chordEndDrag(e){
     chordCenterDragPreview();
     chordDragPreviewSeconds=null;
   }
+  if(typeof window.syncAllDragViewsFromSeconds==='function')window.syncAllDragViewsFromSeconds(target,'chord');
+
+  // Snap playback to Beat 1 of the currently highlighted bar so drag
+  // lands exactly on a bar line and continues from there.
+  if(midiPlayback && midiPlayback.parsed){
+    const editor = document.getElementById('chordProgressionEditor');
+    const parsed = chordParseEditorText(editor.value);
+    if(parsed.bars.length){
+      // Which bar is highlighted right now?
+      const tick = Math.max(0, midiGetTickForSeconds(midiGetVisualTime()));
+      const barlines = midiGetBarlineTicks(Math.max(tick, midiPlayback.parsed.ticksPerQuarter * 16));
+      let barIndex = 0;
+      for(let i = 0; i < barlines.length; i++){
+        if(barlines[i] <= tick + 0.000001) barIndex = i;
+        else break;
+      }
+      barIndex = Math.max(0, Math.min(barIndex, parsed.bars.length - 1));
+
+      // Snap the seconds value to that bar's first barline tick.
+      const targetTick = barlines[Math.min(barIndex, barlines.length - 1)];
+      const snappedSeconds = Math.max(0, Math.min(
+        Number(midiPlayback.durationSeconds) || 0,
+        midiGetSecondsForTick(targetTick)
+      ));
+
+      midiPlayback.pausedTimeSeconds = snappedSeconds;
+
+      if(state.wasPlaying){
+        midiStartPlayback(snappedSeconds).catch(function(err){
+          console.error('[chord] Drag snap playback error:', err);
+        });
+      } else {
+        if(typeof window.syncAllDragViewsFromSeconds === 'function'){
+          window.syncAllDragViewsFromSeconds(snappedSeconds, 'chord');
+        }
+      }
+    }
+  }
+
   e.preventDefault();
 }
 function chordInitDragControls(){
@@ -5632,6 +6221,17 @@ function chordInitDragControls(){
   const clear=document.getElementById('chordClear');
   const status=document.getElementById('chordEditorStatus');
   const gridTimeSignature=document.getElementById('chordGridTimeSignature');
+  chordLoadScrollCalibration();
+  const startDown=document.getElementById('chordStartBeatDown');
+  const startUp=document.getElementById('chordStartBeatUp');
+  const endDown=document.getElementById('chordEndBeatDown');
+  const endUp=document.getElementById('chordEndBeatUp');
+  const templateButton=document.getElementById('chordGenerateTemplate');
+  if(startDown)startDown.addEventListener('click',function(){chordSetScrollCalibration(chordScrollStartBeat-1,chordScrollEndBeat);});
+  if(startUp)startUp.addEventListener('click',function(){chordSetScrollCalibration(chordScrollStartBeat+1,chordScrollEndBeat);});
+  if(endDown)endDown.addEventListener('click',function(){chordSetScrollCalibration(chordScrollStartBeat,chordScrollEndBeat-1);});
+  if(endUp)endUp.addEventListener('click',function(){chordSetScrollCalibration(chordScrollStartBeat,chordScrollEndBeat+1);});
+  if(templateButton)templateButton.addEventListener('click',function(){chordGenerateMidiTemplate();});
   const chordViewSwitch=document.getElementById('chordViewSwitch');
   if(chordViewSwitch)chordViewSwitch.addEventListener('click',function(){
     chordDisplayHorizontal=!chordDisplayHorizontal;
@@ -5654,14 +6254,25 @@ function chordInitDragControls(){
   const chordFocusToggle=document.getElementById('chordFocusToggle');
   if(chordFocusToggle)chordFocusToggle.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();chordToggleExpanded();});
   chordInitDragControls();
+  const loopSetButton=document.getElementById('loopSetMode');
+  if(loopSetButton)loopSetButton.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();enterLoopSetMode();});
+  updateLoopSetModeButton();
   if(!editor)return;
   window.midiChordEditorEditing=false;
   editor.addEventListener('focus',function(){window.midiChordEditorEditing=true;});
   editor.addEventListener('blur',function(){window.midiChordEditorEditing=false;});
   editor.addEventListener('input',function(){chordRememberProgression();updateChordDisplay();});
+  editor.addEventListener('dblclick',function(){
+    const pos=editor.selectionStart;
+    const text=editor.value;
+    let start=pos,end=pos;
+    while(start>0&&!/[\s|]/.test(text[start-1]))start--;
+    while(end<text.length&&!/[\s|]/.test(text[end]))end++;
+    if(start<end){editor.focus();editor.setSelectionRange(start,end);}
+  });
   if(gridTimeSignature)gridTimeSignature.addEventListener('change',function(){try{localStorage.setItem('midiChordGridTimeSignature',gridTimeSignature.value);}catch(e){}updateChordDisplay();});
   if(analyze)analyze.addEventListener('click',function(){midiAnalyzeChordBeats();});
-  if(clear)clear.addEventListener('click',function(){editor.value='';chordRememberProgression();updateChordDisplay();const analyzeOutput=document.getElementById('chordAnalyzeOutput');const detectOutput=document.getElementById('chordDetectOutput');if(analyzeOutput)analyzeOutput.open=false;if(detectOutput)detectOutput.open=false;if(status)status.textContent='Chord progression cleared.';});
+  if(clear)clear.addEventListener('click',function(){chordAutoTemplatePending=false;editor.value='';chordRememberProgression();updateChordDisplay();const analyzeOutput=document.getElementById('chordAnalyzeOutput');const detectOutput=document.getElementById('chordDetectOutput');if(analyzeOutput)analyzeOutput.open=false;if(detectOutput)detectOutput.open=false;if(status)status.textContent='Chord progression cleared.';});
   if(detect)detect.addEventListener('click',function(){
     const detected=midiExtractExplicitChordProgression();
     const output=document.getElementById('chordDetectOutput');
@@ -5683,10 +6294,133 @@ function chordInitDragControls(){
   setInterval(updateChordDisplay,50);
 })();
 
-setInterval(()=>{render();update();updateTimelineView();renderMarkers();},200);
+/* === NEW: nudge controls with note-value selector & auto-sync === */
+(function initNudgeControls(){
+  const minusBtn = document.getElementById('nudgeMinus16th');
+  const plusBtn = document.getElementById('nudgePlus16th');
+  const noteSel = document.getElementById('nudgeNoteValue');
+  const autoBtn = document.getElementById('nudgeAutoSync');
+
+  if(noteSel) noteSel.addEventListener('change', function(){
+    const v = Number(noteSel.value);
+    if(Number.isFinite(v) && v > 0){
+      window.chordScrollNudgeNoteValue = v;
+    }
+    chordUpdateNudgeUI();
+    chordApplyNudgeVisual();
+  });
+
+  if(minusBtn) minusBtn.addEventListener('click',function(){
+    window.chordScrollNudgeSteps = (Number(window.chordScrollNudgeSteps) || 0) - 1;
+    chordApplyNudgeVisual();
+    chordUpdateNudgeUI();
+  });
+
+  if(plusBtn) plusBtn.addEventListener('click',function(){
+    window.chordScrollNudgeSteps = (Number(window.chordScrollNudgeSteps) || 0) + 1;
+    chordApplyNudgeVisual();
+    chordUpdateNudgeUI();
+  });
+
+  if(autoBtn) autoBtn.addEventListener('click', function(){
+    chordAutoSyncNow();
+  });
+
+  chordUpdateNudgeUI();
+
+  const latSlider = document.getElementById('latencyCompSlider');
+  const latValue = document.getElementById('latencyCompValue');
+  if(latSlider){
+    try {
+      const saved = Number(localStorage.getItem('chordLatencyCompPx'));
+      if(Number.isFinite(saved) && !Number.isFinite(Number(window.chordLatencyCompPx))){ window.chordLatencyCompPx = saved; }
+    } catch(e){}
+    latSlider.value = String(window.chordLatencyCompPx);
+    if(latValue) latValue.textContent = window.chordLatencyCompPx + ' px';
+
+    latSlider.addEventListener('input', function(){
+      window.chordLatencyCompPx = Number(latSlider.value) || 0;
+      if(latValue) latValue.textContent = window.chordLatencyCompPx + ' px';
+      try { localStorage.setItem('chordLatencyCompPx', String(window.chordLatencyCompPx)); } catch(e){}
+      if(typeof updateChordDisplay === 'function') updateChordDisplay();
+    });
+  }
+
+  const hlSlider = document.getElementById('highlightLatSlider');
+  const hlValue = document.getElementById('highlightLatValue');
+  if(hlSlider){
+    try {
+      const saved = Number(localStorage.getItem('chordHighlightCompMs'));
+      if(Number.isFinite(saved) && !Number.isFinite(Number(window.chordHighlightCompMs))){ window.chordHighlightCompMs = saved; }
+    } catch(e){}
+    hlSlider.value = String(window.chordHighlightCompMs);
+    if(hlValue) hlValue.textContent = window.chordHighlightCompMs + ' ms';
+
+    hlSlider.addEventListener('input', function(){
+      window.chordHighlightCompMs = Number(hlSlider.value) || 0;
+      if(hlValue) hlValue.textContent = window.chordHighlightCompMs + ' ms';
+      try { localStorage.setItem('chordHighlightCompMs', String(window.chordHighlightCompMs)); } catch(e){}
+      if(typeof updateChordDisplay === 'function') updateChordDisplay();
+    });
+  }
+
+  window.chordScrollNudgeSteps = chordScrollNudgeSteps;
+  window.chordScrollNudgeNoteValue = chordScrollNudgeNoteValue;
+  window.chordLatencyCompPx = chordLatencyCompPx;
+  window.chordHighlightCompMs = chordHighlightCompMs;
+
+  // Expose a refresh hook so song-load code can sync UI to the restored values.
+  window.chordRefreshNudgeUI = function(){
+    const noteSel = document.getElementById('nudgeNoteValue');
+    if(noteSel && String(noteSel.value) !== String(window.chordScrollNudgeNoteValue)){
+      noteSel.value = String(window.chordScrollNudgeNoteValue);
+    }
+    const offsetVal = document.getElementById('nudgeOffsetValue');
+    if(offsetVal){
+      const prefix = window.chordScrollNudgeSteps > 0 ? '+' : '';
+      offsetVal.textContent = prefix + window.chordScrollNudgeSteps + ' × ' + chordGetNudgeLabel();
+    }
+    const latSlider = document.getElementById('latencyCompSlider');
+    const latValue = document.getElementById('latencyCompValue');
+    if(latSlider) latSlider.value = String(window.chordLatencyCompPx);
+    if(latValue) latValue.textContent = window.chordLatencyCompPx + ' px';
+    const hlSlider = document.getElementById('highlightLatSlider');
+    const hlValue = document.getElementById('highlightLatValue');
+    if(hlSlider) hlSlider.value = String(window.chordHighlightCompMs);
+    if(hlValue) hlValue.textContent = window.chordHighlightCompMs + ' ms';
+  };
+})();
+
 renderMarkers();
+
+/* === TEMP DEBUG HOOK — remove after debugging === */
+window.__dbg = function(){
+  try {
+    const editor = document.getElementById('chordProgressionEditor');
+    if(!editor) return {err:'no editor'};
+    const parsed = chordParseEditorText(editor.value);
+    const barlines = chordGetMusicalBarlines(200000);
+    return {
+      anchor: chordAutoSyncFindAnchorTick(),
+      nudgeSteps: chordScrollNudgeSteps,
+      noteValue: chordScrollNudgeNoteValue,
+      tpq: midiPlayback.parsed.ticksPerQuarter,
+      firstBarlines: barlines.slice(0, 10),
+      scoreLines: parsed.lines.length,
+      scoreBars: parsed.bars.length,
+      firstNoteTick: chordGetFirstNoteTick(),
+      currentTime: midiGetCurrentTime(),
+      measuredBar1Tick: chordAutoSyncMeasureCurrentBar1Tick()
+    };
+  } catch(e){
+    return {err: String(e)};
+  }
+};
+/* === END TEMP DEBUG HOOK === */
+
 })();
 </script>
 
 </body>
 </html>
+```
