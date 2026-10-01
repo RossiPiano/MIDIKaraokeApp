@@ -164,7 +164,7 @@ loop-icon-button,.square-icon-button{width:48px;height:48px;min-width:48px;min-h
 .chord-display-viewport.chord-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 @media(max-width:700px){.chord-display-details.chord-display-expanded .chord-display-viewport{height:calc(100vh - 145px);min-height:300px}}
 .chord-display-track{will-change:transform;transform:translateY(0)}
-.chord-display-row{height:52px;min-height:52px;box-sizing:border-box;padding:4px 6px;display:block;overflow:hidden;border-radius:7px;color:#d7e0eb;font-size:clamp(13px,2.4vw,18px);font-weight:750;line-height:1.25;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.chord-display-row:not(.current){border-radius:0}.chord-beat-grid{display:grid;grid-template-columns:repeat(var(--chord-grid-columns,4),minmax(0,1fr));width:100%;height:100%;min-width:0}.chord-beat-cell{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px;box-sizing:border-box;overflow:hidden;white-space:nowrap;text-overflow:clip;border-right:1px solid rgba(255,255,255,.08);caret-color:#fff;outline:none}.chord-beat-cell.beat-editing{outline:2px solid #7dbcf0;outline-offset:-2px;background:rgba(125,188,240,.12);color:#fff;cursor:text}.chord-beat-cell:last-child{border-right:0}.chord-grid-manual{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px 8px;color:var(--muted);font-size:12px}.chord-grid-manual label{display:flex;align-items:center;gap:6px}.chord-grid-manual select{height:34px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}
+.chord-display-row{height:52px;min-height:52px;box-sizing:border-box;padding:4px 6px;display:block;overflow:hidden;border-radius:7px;color:#d7e0eb;font-size:clamp(13px,2.4vw,18px);font-weight:750;line-height:1.25;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.chord-display-row:not(.current){border-radius:0}.chord-beat-grid{display:grid;grid-template-columns:repeat(var(--chord-grid-columns,4),minmax(0,1fr));width:100%;height:100%;min-width:0}.chord-beat-cell{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px;box-sizing:border-box;overflow:hidden;white-space:nowrap;text-overflow:clip;border-right:1px solid rgba(255,255,255,.08);caret-color:#fff;outline:none}.chord-beat-cell.empty-beat{background:#000!important;color:transparent!important;border-right-color:#000!important;box-shadow:none!important;cursor:default}.chord-beat-cell.beat-editing{outline:2px solid #7dbcf0;outline-offset:-2px;background:rgba(125,188,240,.12);color:#fff;cursor:text}.chord-beat-cell:last-child{border-right:0}.chord-grid-manual{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px 8px;color:var(--muted);font-size:12px}.chord-grid-manual label{display:flex;align-items:center;gap:6px}.chord-grid-manual select{height:34px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}
 .chord-display-row.section-verse{background:rgba(47,125,98,.28)}.chord-display-row.section-chorus{background:rgba(143,63,80,.28)}.chord-display-row.section-prechorus{background:rgba(184,111,43,.28)}.chord-display-row.section-intro,.chord-display-row.section-outro{background:rgba(63,143,168,.28)}.chord-display-row.section-bridge{background:rgba(118,86,160,.28)}.chord-display-row.section-instrumental{background:rgba(58,67,79,.28)}.chord-display-row.section-pink{background:rgba(255,79,163,.28)}.chord-display-row.current{background:#245b82;color:#fff;box-shadow:inset 0 0 0 2px #7dbcf0}.chord-display-row.current.section-verse{background:#2f7d62;box-shadow:inset 0 0 0 2px #2b9e70}.chord-display-row.current.section-chorus{background:#8f3f50;box-shadow:inset 0 0 0 2px #b84d58}.chord-display-row.current.section-prechorus{background:#b86f2b;box-shadow:inset 0 0 0 2px #d89b2b}.chord-display-row.current.section-intro,.chord-display-row.current.section-outro{background:#3f8fa8;box-shadow:inset 0 0 0 2px #67c7e8}.chord-display-row.current.section-bridge{background:#7656a0;box-shadow:inset 0 0 0 2px #9b6fd0}.chord-display-row.current.section-instrumental{background:#3a434f;box-shadow:inset 0 0 0 2px #59616b}.chord-display-row.current.section-pink{background:#ff4fa3;box-shadow:inset 0 0 0 2px #ff8bc4}
 .chord-display-row.empty{color:#5f6b78}
 .chord-display-view-switch{display:flex;justify-content:center;margin:0 0 8px}.chord-view-switch{min-height:38px;height:38px;padding:5px 14px;font-size:14px;border-radius:9px}.chord-display-horizontal{height:104px;padding:4px 0}.chord-display-horizontal .chord-display-track{display:flex;align-items:stretch;width:max-content;min-width:100%;height:100%;gap:8px;padding:0}.chord-display-horizontal .chord-horizontal-bar{width:220px;min-width:220px;height:96px;min-height:96px;box-sizing:border-box;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.035);color:#697481;opacity:.48;display:flex;align-items:stretch;transition:background .12s ease,box-shadow .12s ease,color .12s ease,opacity .12s ease}.chord-beat-cell.loop-point-range{background:#e5b93f!important;color:#111!important;box-shadow:inset 0 0 0 2px #c99d22}.chord-beat-cell.loop-point-first,.chord-beat-cell.loop-point-start,.chord-beat-cell.loop-point-end{background:#e5b93f!important;color:#111!important;box-shadow:inset 0 0 0 2px #fff}#uiPlay,#uiStop,#loopToggle{background:var(--panel2);border-color:var(--border)}#loopToggle.loop-on{background:#e5b93f!important;border-color:#c99d22!important;color:#111!important;box-shadow:inset 0 0 0 2px #c99d22!important}.chord-display-horizontal .chord-horizontal-bar.current{opacity:1;color:#fff;background:#245b82;box-shadow:inset 0 0 0 2px #7dbcf0}.chord-display-horizontal .chord-horizontal-bar.section-verse.current{background:#2f7d62;box-shadow:inset 0 0 0 2px #2b9e70}.chord-display-horizontal .chord-horizontal-bar.section-chorus.current{background:#8f3f50;box-shadow:inset 0 0 0 2px #b84d58}.chord-display-horizontal .chord-horizontal-bar.section-prechorus.current{background:#b86f2b;box-shadow:inset 0 0 0 2px #d89b2b}.chord-display-horizontal .chord-horizontal-bar.section-intro.current,.chord-display-horizontal .chord-horizontal-bar.section-outro.current{background:#3f8fa8;box-shadow:inset 0 0 0 2px #67c7e8}.chord-display-horizontal .chord-horizontal-bar.section-bridge.current{background:#7656a0;box-shadow:inset 0 0 0 2px #9b6fd0}.chord-display-horizontal .chord-horizontal-bar.section-instrumental.current{background:#3a434f;box-shadow:inset 0 0 0 2px #59616b}.chord-display-horizontal .chord-horizontal-bar.section-pink.current{background:#ff4fa3;box-shadow:inset 0 0 0 2px #ff8bc4}.chord-display-horizontal .chord-horizontal-bar .chord-beat-grid{font-size:clamp(13px,2.4vw,18px)}.chord-display-horizontal .chord-horizontal-bar .chord-beat-cell{justify-content:center;padding:2px 5px;border-right:1px solid rgba(255,255,255,.12)}.chord-display-horizontal .chord-horizontal-bar .chord-beat-cell:last-child{border-right:0}.chord-display-horizontal .chord-horizontal-bar.current .chord-beat-cell{border-right-color:rgba(255,255,255,.2)}
@@ -4423,7 +4423,7 @@ function enterPlaceMarkerMode(){
 function updateLoopSetModeButton(){const b=document.getElementById('loopSetMode');if(!b)return;b.classList.toggle('active',loopSetMode);b.setAttribute('aria-pressed',loopSetMode?'true':'false');b.title=loopSetMode?'Tap two beats in Chord Progression to set the loop range':'Set Loop Points on Chord Progression';}
 function enterLoopSetMode(){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;loopSetMode=!loopSetMode;loopFirstSelectedTick=null;if(loopSetMode){midiPlayback.loopStartSeconds=null;midiPlayback.loopEndSeconds=null;midiPlayback.looping=false;const t=document.getElementById('loopToggle');if(t)t.classList.remove('loop-on');}updateLoopSetModeButton();if(typeof window.chordClearLoopSelection==='function')window.chordClearLoopSelection();if(typeof setStatus==='function')setStatus(loopSetMode?'Loop selection mode: tap any beat, then another beat.':'Loop selection mode off.');}
 function selectLoopBeat(startTick,endTick,label){if(typeof midiPlayback==='undefined'||!midiPlayback.parsed)return;const lo=Math.min(startTick,endTick);const hi=Math.max(startTick,endTick);const start=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(lo):0;const end=typeof midiGetSecondsForTick==='function'?midiGetSecondsForTick(hi):start;midiPlayback.loopStartSeconds=start;midiPlayback.loopEndSeconds=end>start?end:null;midiPlayback.looping=!!midiPlayback.loopEndSeconds;if(midiPlayback.looping){loopSetMode=false;loopFirstSelectedTick=null;updateLoopSetModeButton();const t=document.getElementById('loopToggle');if(t)t.classList.remove('loop-on');}if(typeof setStatus==='function')setStatus('Loop selected: '+label);if(typeof window.chordRefreshLoopSelection==='function')window.chordRefreshLoopSelection();if(typeof window.refresh==='function')window.refresh();}
-function handleChordLoopCell(cell){if(!loopSetMode||!cell||typeof midiPlayback==='undefined'||!midiPlayback.parsed)return false;const tpq=midiPlayback.parsed.ticksPerQuarter||480;const barIndex=Math.max(0,Number(cell.dataset.barIndex)||0);const beatOffset=Math.max(0,Number(cell.dataset.beatOffset)||0);const sig=typeof window.chordGetTimeSignatureAtBar==='function'?window.chordGetTimeSignatureAtBar(barIndex):{numerator:4,denominator:4};const beatTicks=tpq*4/Math.max(1,Number(sig.denominator)||4);const maxTick=Math.max(1,(barIndex+2)*tpq*64);const bars=typeof midiGetBarlineTicks==='function'?midiGetBarlineTicks(maxTick):[];const barStart=bars[Math.min(barIndex,Math.max(0,bars.length-1))]||barIndex*tpq*(Number(sig.numerator)||4)*4/(Number(sig.denominator)||4);const tick=barStart+beatOffset*beatTicks;if(loopFirstSelectedTick===null){loopFirstSelectedTick=tick;cell.classList.add('loop-point-first');if(typeof setStatus==='function')setStatus('First loop point selected: Beat '+(beatOffset+1)+'. Select the second point.');return true;}document.querySelectorAll('.chord-beat-cell.loop-point-first').forEach(function(c){c.classList.remove('loop-point-first');});const first=loopFirstSelectedTick;const lo=Math.min(first,tick);const hi=Math.max(first,tick)+beatTicks;selectLoopBeat(lo,hi,'Beat '+(Math.floor(lo/tpq)+1)+'–'+(Math.floor((hi-0.000001)/tpq)+1));return true;}
+function handleChordLoopCell(cell){if(!loopSetMode||!cell||cell.dataset.realBeat==='false'||typeof midiPlayback==='undefined'||!midiPlayback.parsed)return false;const tpq=midiPlayback.parsed.ticksPerQuarter||480;const barIndex=Math.max(0,Number(cell.dataset.barIndex)||0);const beatOffset=Math.max(0,Number(cell.dataset.beatOffset)||0);const sig=typeof window.chordGetTimeSignatureAtBar==='function'?window.chordGetTimeSignatureAtBar(barIndex):{numerator:4,denominator:4};const beatTicks=tpq*4/Math.max(1,Number(sig.denominator)||4);const maxTick=Math.max(1,(barIndex+2)*tpq*64);const bars=typeof midiGetBarlineTicks==='function'?midiGetBarlineTicks(maxTick):[];const barStart=bars[Math.min(barIndex,Math.max(0,bars.length-1))]||barIndex*tpq*(Number(sig.numerator)||4)*4/(Number(sig.denominator)||4);const tick=barStart+beatOffset*beatTicks;if(loopFirstSelectedTick===null){loopFirstSelectedTick=tick;cell.classList.add('loop-point-first');if(typeof setStatus==='function')setStatus('First loop point selected: Beat '+(beatOffset+1)+'. Select the second point.');return true;}document.querySelectorAll('.chord-beat-cell.loop-point-first').forEach(function(c){c.classList.remove('loop-point-first');});const first=loopFirstSelectedTick;const lo=Math.min(first,tick);const hi=Math.max(first,tick)+beatTicks;selectLoopBeat(lo,hi,'Beat '+(Math.floor(lo/tpq)+1)+'–'+(Math.floor((hi-0.000001)/tpq)+1));return true;}
 window.chordLoopCellHandler=handleChordLoopCell;
 window.chordLoopSetMode=()=>loopSetMode;
 window.chordPlaceMarkerMode=()=>placeMarkerMode;
@@ -4513,7 +4513,7 @@ function replaceMarkersAtBeat(beatIndex, texts){
   const root=document.getElementById('chordDisplayTrack');
   if(root&&midiPlayback.parsed){
     const tpq=midiPlayback.parsed.ticksPerQuarter||480;
-    root.querySelectorAll('.chord-beat-cell').forEach(function(cell){
+    root.querySelectorAll('.chord-beat-cell[data-real-beat="true"]').forEach(function(cell){
       cell.classList.remove('has-section-marker');
       const b=Number(cell.dataset.barIndex);
       const o=Number(cell.dataset.beatOffset);
@@ -5164,19 +5164,29 @@ if(e.key==='Enter'){
 
 function chordRenderBarGrid(bar,barIndex){
   const sig=chordGetTimeSignatureAtBar(barIndex);
-  const columns=Math.max(1,Math.round(sig.numerator));
+  const visualNumerator=(Number(sig.numerator)===6&&Number(sig.denominator)===8)?4:Math.max(1,Math.round(sig.numerator));
+  const groupCount=Math.max(1,Math.ceil(visualNumerator/4));
   const tokens=String(bar&&bar.text||'').trim().split(/\s+/).filter(Boolean);
   const grid=document.createElement('div');
   grid.className='chord-beat-grid';
-  grid.style.setProperty('--chord-grid-columns',String(columns));
+  grid.style.setProperty('--chord-grid-columns','4');
   grid.dataset.timeSignature=String(sig.numerator)+'/'+String(sig.denominator);
+  grid.dataset.visualNumerator=String(visualNumerator);
 
-  for(let i=0;i<columns;i++){
-    const cell=document.createElement('div');
-    cell.className='chord-beat-cell';
-    cell.dataset.barIndex=String(barIndex);
-    cell.dataset.beatOffset=String(i);
-    cell.textContent=tokens[i]||'_';
+  for(let i=0;i<groupCount;i++){
+    const group=document.createElement('div');
+    group.className='chord-beat-grid';
+    group.style.setProperty('--chord-grid-columns','4');
+
+    for(let j=0;j<4;j++){
+      const beatIndex=i*4+j;
+      const cell=document.createElement('div');
+      const isEmpty=beatIndex>=visualNumerator;
+      cell.className='chord-beat-cell'+(isEmpty?' empty-beat':'');
+      cell.dataset.barIndex=String(barIndex);
+      cell.dataset.beatOffset=String(beatIndex);
+      cell.dataset.realBeat=isEmpty?'false':'true';
+      cell.textContent=isEmpty?'':(tokens[beatIndex]||'_');
 
     const markerTpq=midiPlayback.parsed&&midiPlayback.parsed.ticksPerQuarter||480;
     const markerSig=chordGetTimeSignatureAtBar(barIndex);
@@ -5189,6 +5199,7 @@ function chordRenderBarGrid(bar,barIndex){
     if(typeof markerListAtBeat==='function'&&markerListAtBeat(markerBeatIndex).length)cell.classList.add('has-section-marker');
 
     cell.addEventListener('click',function(e){
+      if(cell.dataset.realBeat==='false')return;
       if(typeof window.chordPlaceMarkerMode==='function'&&window.chordPlaceMarkerMode()){
         e.preventDefault();
         e.stopPropagation();
@@ -5208,6 +5219,7 @@ function chordRenderBarGrid(bar,barIndex){
     });
 
     cell.addEventListener('dblclick',function(e){
+      if(cell.dataset.realBeat==='false')return;
       e.preventDefault();
       e.stopPropagation();
       chordStartBeatEdit(cell);
@@ -5221,7 +5233,10 @@ function chordRenderBarGrid(bar,barIndex){
       chordHandleBeatCellInput(e,cell);
     });
 
-    grid.appendChild(cell);
+      group.appendChild(cell);
+    }
+
+    grid.appendChild(group);
   }
 
   return grid;
@@ -5229,7 +5244,7 @@ function chordRenderBarGrid(bar,barIndex){
 
 document.addEventListener('dblclick',function(e){
   const cell=e.target.closest&&e.target.closest('.chord-beat-cell');
-  if(!cell)return;
+  if(!cell||cell.dataset.realBeat==='false')return;
   chordStartBeatEdit(cell);
 });
 
@@ -5240,7 +5255,7 @@ function chordRefreshLoopSelection(){
   const start=Number(midiPlayback.loopStartSeconds);const end=Number(midiPlayback.loopEndSeconds);
   if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)return;
   const st=Math.round(midiGetTickForSeconds(start));const et=Math.round(midiGetTickForSeconds(end));
-  root.querySelectorAll('.chord-beat-cell').forEach(function(c){const b=Number(c.dataset.barIndex),o=Number(c.dataset.beatOffset);const sig=window.chordGetTimeSignatureAtBar(b);const tpq=midiPlayback.parsed.ticksPerQuarter||480;const beatTicks=tpq*4/Math.max(1,Number(sig.denominator)||4);const bars=midiGetBarlineTicks(Math.max(1,(b+2)*tpq*64));const barStart=bars[Math.min(b,Math.max(0,bars.length-1))]||0;const tick=barStart+o*beatTicks;if(tick>=st-0.5&&tick<et-0.5)c.classList.add('loop-point-range');if(Math.abs(tick-st)<0.5)c.classList.add('loop-point-start');if(Math.abs(tick-(et-beatTicks))<0.5)c.classList.add('loop-point-end');});
+  root.querySelectorAll('.chord-beat-cell[data-real-beat="true"]').forEach(function(c){const b=Number(c.dataset.barIndex),o=Number(c.dataset.beatOffset);const sig=window.chordGetTimeSignatureAtBar(b);const tpq=midiPlayback.parsed.ticksPerQuarter||480;const beatTicks=tpq*4/Math.max(1,Number(sig.denominator)||4);const bars=midiGetBarlineTicks(Math.max(1,(b+2)*tpq*64));const barStart=bars[Math.min(b,Math.max(0,bars.length-1))]||0;const tick=barStart+o*beatTicks;if(tick>=st-0.5&&tick<et-0.5)c.classList.add('loop-point-range');if(Math.abs(tick-st)<0.5)c.classList.add('loop-point-start');if(Math.abs(tick-(et-beatTicks))<0.5)c.classList.add('loop-point-end');});
 }
 function chordClearLoopSelection(){chordRefreshLoopSelection();}
 window.chordRefreshLoopSelection=chordRefreshLoopSelection;window.chordClearLoopSelection=chordClearLoopSelection;
