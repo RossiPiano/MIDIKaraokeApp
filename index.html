@@ -260,7 +260,6 @@ Em _ Am _ | Dm C/E F _ | Gsus4 _ G7 | C _ _ _ |"></textarea>
 
     <details class="chord-display-details" id="chordDisplayDetails" open>
       <summary><span class="chord-display-heading">🎼 Chord Progression</span><span class="chord-display-summary-actions"><button id="chordFocusToggle" class="chord-display-expand-button" type="button" aria-label="Extend Chord Progression height" title="Extend Chord Progression height">↕</button><span>▾</span></span></summary>
-      <div class="chord-display-view-switch"><button id="chordViewSwitch" class="chord-view-switch" type="button" aria-pressed="false">↔ Horizontal scrolling</button></div>
       <div class="chord-display-viewport" id="chordDisplayViewport" aria-live="polite">
         <div class="chord-display-track" id="chordDisplayTrack">
           <div class="chord-display-row empty">No chord progression entered.</div>
@@ -2658,7 +2657,7 @@ function midiEnsureMetronomeMasterGain(ctx) {
   return midiPlayback.metronomeMasterGain;
 }
 
-function midiMetronomeClick(accent) {
+function midiMetronomeClick(accent,delaySeconds) {
   if (!midiPlayback.metronomeOn) return;
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) return;
@@ -2671,48 +2670,68 @@ function midiMetronomeClick(accent) {
     midiEnsureMetronomeMasterGain(ctx);
     if (ctx.state === 'suspended') ctx.resume().catch(function() {});
 
+    const startTime=ctx.currentTime+Math.max(0,Number(delaySeconds)||0);
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(accent ? 1500 : 850, ctx.currentTime);
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    osc.frequency.setValueAtTime(accent ? 1500 : 850, startTime);
+    gain.gain.setValueAtTime(0.0001, startTime);
     gain.gain.exponentialRampToValueAtTime(
       (accent ? 0.42 : 0.27) * midiPlayback.metronomeVolume,
-      ctx.currentTime + 0.002
+      startTime + 0.002
     );
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.055);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.055);
     osc.connect(gain);
     gain.connect(midiEnsureMetronomeMasterGain(ctx));
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.06);
+    osc.start(startTime);
+    osc.stop(startTime + 0.06);
   } catch (error) {
     console.error('[metronome] Click error:', error);
   }
 }
 
 function midiMetronomeResetSync() {
-  if (!midiPlayback.metronomeOn) {
-    midiPlayback.metronomeLastBeatKey = null;
-    return;
-  }
-  const info = midiMetronomeBeatInfo(midiGetCurrentTime());
-  midiPlayback.metronomeLastBeatKey = info ? info.beatKey : null;
+  midiPlayback.metronomeLastBeatKey = null;
+  midiPlayback.metronomeScheduledBeatKey = null;
 }
 
 function midiMetronomeScheduler() {
   if (!midiPlayback.metronomeOn || !midiPlayback.playing || !midiPlayback.parsed) return;
 
-  const info = midiMetronomeBeatInfo(midiGetCurrentTime());
+  const nowSeconds=midiGetCurrentTime();
+  const info=midiMetronomeBeatInfo(nowSeconds);
   if (!info) return;
 
-  if (midiPlayback.metronomeLastBeatKey === null) {
-    midiPlayback.metronomeLastBeatKey = info.beatKey;
-    return;
+  const speedScale=midiPlayback.sourceBpm/midiPlayback.bpm;
+  const beatStartTick=info.signatureTick+
+    info.localBeatIndex*info.beatTicks;
+  const beatStartSeconds=midiGetSecondsForTick(beatStartTick);
+
+  if(
+    midiPlayback.metronomeLastBeatKey!==info.beatKey &&
+    midiPlayback.metronomeScheduledBeatKey!==info.beatKey &&
+    nowSeconds>=beatStartSeconds
+  ){
+    midiMetronomeClick(info.beatInBar===0);
+    midiPlayback.metronomeLastBeatKey=info.beatKey;
   }
 
-  if (info.beatKey !== midiPlayback.metronomeLastBeatKey) {
-    midiMetronomeClick(info.beatInBar === 0);
-    midiPlayback.metronomeLastBeatKey = info.beatKey;
+  const nextBeatTick=beatStartTick+info.beatTicks;
+  const nextBeatSeconds=midiGetSecondsForTick(nextBeatTick);
+  const delaySeconds=Math.max(0,(nextBeatSeconds-nowSeconds)*speedScale);
+  const nextBeatKey=String(info.signatureTick)+':'+String(info.localBeatIndex+1);
+
+  if(
+    midiPlayback.metronomeLastBeatKey!==nextBeatKey &&
+    midiPlayback.metronomeScheduledBeatKey!==nextBeatKey &&
+    delaySeconds<=0.1
+  ){
+    midiMetronomeClick(
+      ((info.beatInBar+1)%info.beatCount)===0,
+      delaySeconds
+    );
+    midiPlayback.metronomeScheduledBeatKey=nextBeatKey;
+    midiPlayback.metronomeLastBeatKey=nextBeatKey;
   }
 }
 
@@ -6333,25 +6352,6 @@ function chordInitDragControls(){
   if(endDown)endDown.addEventListener('click',function(){chordSetScrollCalibration(chordScrollStartBeat,chordScrollEndBeat-1);});
   if(endUp)endUp.addEventListener('click',function(){chordSetScrollCalibration(chordScrollStartBeat,chordScrollEndBeat+1);});
   if(templateButton)templateButton.addEventListener('click',function(){chordGenerateMidiTemplate();});
-  const chordViewSwitch=document.getElementById('chordViewSwitch');
-  if(chordViewSwitch)chordViewSwitch.addEventListener('click',function(){
-    chordDisplayHorizontal=!chordDisplayHorizontal;
-    chordViewSwitch.setAttribute('aria-pressed',chordDisplayHorizontal?'true':'false');
-    chordViewSwitch.textContent=chordDisplayHorizontal?'↕ Vertical scrolling':'↔ Horizontal scrolling';
-    const viewport=document.getElementById('chordDisplayViewport');
-    if(viewport)viewport.classList.toggle('chord-display-horizontal',chordDisplayHorizontal);
-    chordDisplayLastText=null;
-    chordHorizontalCurrentBar=-1;
-    if(chordDisplayHorizontal){
-      chordHorizontalTargetOffset=0;
-      chordHorizontalVisualOffset=0;
-      chordDisplayJumpOnNextUpdate=true;
-    }else{
-      chordDisplayVisualPosition=chordDisplayTargetPosition;
-      chordDisplayJumpOnNextUpdate=true;
-    }
-    updateChordDisplay();
-  });
   const chordFocusToggle=document.getElementById('chordFocusToggle');
   if(chordFocusToggle)chordFocusToggle.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();chordToggleExpanded();});
   chordInitDragControls();
